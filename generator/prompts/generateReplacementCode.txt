@@ -2,7 +2,7 @@ You will be given the following:
 - a file of [PARAM0] code, where each line starts with a line number
 - a modification request for a feature to change in the code
 
-You must output the following JSON object:
+You must output the following JSON object that contains modifications that will address the modification request:
 {
     modifications: [
         {
@@ -15,6 +15,7 @@ You must output the following JSON object:
         }
     ]
 }
+
 
 FILE ([PARAM1]):
 

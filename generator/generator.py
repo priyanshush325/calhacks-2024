@@ -65,17 +65,83 @@ for file in projectTree:
 with open("./generator/promptList.json", 'r') as f:
     promptList = json.load(f)
 
+    promptObjectList = []
+    i = 0
     for prompt in promptList["prompts"]:
-        appPrompt = generatePrompt("./generator/prompts/generateReplacementCode.txt", [
-            "React",
-            "App.jsx",
-            readFile(appFile),
-            prompt
-        ])
+        # add an object to the list with the prompt and the status
+        promptObjectList.append({
+            "prompt": prompt,
+            "status": "PENDING",
+            "id": f"{i}"
+        })
+        i += 1
+
+    while True:
+        # find the first prompt that is pending
+        promptObject = None
+        for pO in promptObjectList:
+            if pO["status"] == "PENDING":
+                promptObject = pO
+                break
+
+        if promptObject is None:
+            print("All prompts have been completed.")
+            break
+
+        print(f"Processing prompt {promptObject['id']}")
+        appPrompt = generatePrompt(
+            "./generator/prompts/generateReplacementCode.txt", [
+                "React",
+                "App.jsx",
+                readFile(appFile),
+                promptObject["prompt"]
+            ])
 
         response = requestGPT(client, MODEL, appPrompt)
+        print("=====================================")
         print(response)
+        print("=====================================")
         mods = parseModificationObjectsFromString(response)
-        print(mods)
-        modifyFile(appFile, mods)
-        print("App.jsx modified successfully!")
+        result = modifyFile(appFile, mods)
+        if result == "PRETTIER_ERROR":
+
+            print("Prettier error number 1")
+
+            correctionPrompt = generatePrompt(
+                "./generator/prompts/generateReplacementCode.txt", [
+                    "React",
+                    "App.jsx",
+                    readFile(appFile),
+                    "There was an error running prettier on the file. Check for missing opening or closing tags, missing statements, etc. Please correct the code to fix the error."
+                ])
+
+            response = requestGPT(client, MODEL, correctionPrompt)
+            mods = parseModificationObjectsFromString(response)
+            newResult = modifyFile(appFile, mods)
+            if newResult == "PRETTIER_ERROR":
+                print("Prettier error number 2")
+                break
+            else:
+                print("App.jsx fixed successfully!")
+                promptObject["status"] = "COMPLETE"
+        elif result == "SUCCESS":
+            print("App.jsx modified successfully!")
+            promptObject["status"] = "COMPLETE"
+
+    # for prompt in promptList["prompts"]:
+    #     appPrompt = generatePrompt("./generator/prompts/generateReplacementCode.txt", [
+    #         "React",
+    #         "App.jsx",
+    #         readFile(appFile),
+    #         prompt
+    #     ])
+
+    #     response = requestGPT(client, MODEL, appPrompt)
+    #     print(response)
+    #     mods = parseModificationObjectsFromString(response)
+    #     print(mods)
+    #     result = modifyFile(appFile, mods)
+    #     if result == "RETRY":
+
+    #         break
+    #     print("App.jsx modified successfully!")

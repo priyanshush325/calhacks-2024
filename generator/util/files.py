@@ -15,8 +15,14 @@ class FileModification:
 
 
 def modifyFile(filePath, modifications):
+
+    lines = []
+
     with open(filePath, 'r') as file:
         lines = file.readlines()
+
+    # save the original lines
+    originalLines = lines.copy()
 
     for modification in modifications:
 
@@ -35,8 +41,18 @@ def modifyFile(filePath, modifications):
     with open(filePath, 'w') as file:
         file.writelines(lines)
 
-    # run prettier on the file
-    subprocess.run(["npx", "prettier", "--write", filePath])
+    # run prettier on the file and check the error output ("npx", "prettier", "--write", filePath)
+    result = subprocess.run(["npx", "prettier", "--write", filePath])
+    if result.returncode != 0:
+        print("An error occurred while running prettier on the file.")
+
+        # # restore the original file
+        # with open(filePath, 'w') as file:
+        #     file.writelines(originalLines)
+
+        return "PRETTIER_ERROR"
+
+    return "SUCCESS"
 
 
 def parseModificationObjectsFromString(modificationsString):
