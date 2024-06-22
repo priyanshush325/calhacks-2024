@@ -19,8 +19,6 @@ def fetchProjectTree():
 
     try:
         for root, dirs, files in os.walk(directory):
-            print(f"Visiting {root}, Directories: {
-                  dirs}, Files: {files}")  # Debugging output
             for file in files:
                 projectTree.append(os.path.join(root, file))
     except Exception as e:
