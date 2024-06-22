@@ -1,0 +1,26 @@
+You will be given the following:
+- a file of [PARAM0] code, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object:
+{
+    modifications: [
+        {
+            startLine: number,
+            endLine: number,
+            code: "code that replaces the existing code from startLine to endLine inclusive"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+FILE ([PARAM1]):
+
+[PARAM2]
+
+END OF FILE
+
+Modification Request:
+[PARAM3]
