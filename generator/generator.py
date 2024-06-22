@@ -19,6 +19,8 @@ def fetchProjectTree():
 
     try:
         for root, dirs, files in os.walk(directory):
+            print(f"Visiting {root}, Directories: {
+                  dirs}, Files: {files}")  # Debugging output
             for file in files:
                 projectTree.append(os.path.join(root, file))
     except Exception as e:
@@ -39,107 +41,149 @@ def readFile(file):
     return "\n".join(lines)
 
 
-projectTree = fetchProjectTree()
-# print(projectTree)
-# print(readFile(projectTree[0]))
+def addPrompt(prompt):
+    with open("./generator/promptList.json", 'r') as f:
+        promptList = json.load(f)
 
-# find app.tsx in the project tree
-appFile = ""
-for file in projectTree:
-    if "App.jsx" in file:
-        appFile = file
-        break
+        promptList["prompts"].append(prompt)
 
-# appPrompt = generatePromt("./generator/prompts/generateReplacementCode.txt", [
-#     "React",
-#     "App.jsx",
-#     readFile(appFile),
-#     "Modify the page so that every time the user clicks the button, it displays a random number between 1 and 100. Change the button text to say 'Generate Random Number'. Display the random number the paragraph element below the button.",
-# ])
+        with open("./generator/promptList.json", 'w') as f:
+            json.dump(promptList, f)
 
-# open the file promptList.json
-# for each prompt in the list, generate a prompt and send it to the API
+    return
 
-with open("./generator/promptList.json", 'r') as f:
-    promptList = json.load(f)
 
-    promptObjectList = []
-    i = 0
-    for prompt in promptList["prompts"]:
-        # add an object to the list with the prompt and the status
-        promptObjectList.append({
-            "prompt": prompt,
-            "status": "PENDING",
-            "id": f"{i}"
-        })
-        i += 1
+def clearPrompts():
+    with open("./generator/promptList.json", 'w') as f:
+        json.dump({"prompts": []}, f)
 
-    while True:
-        # find the first prompt that is pending
-        promptObject = None
-        for pO in promptObjectList:
-            if pO["status"] == "PENDING":
-                promptObject = pO
-                break
+    return
 
-        if promptObject is None:
-            print("All prompts have been completed.")
+
+clearPrompts()
+
+
+def handlePrompt(prompt):
+    projectTree = fetchProjectTree()
+    # print(projectTree)
+    # print(readFile(projectTree[0]))
+
+    # find app.tsx in the project tree
+    appFile = ""
+    for file in projectTree:
+        if "App.jsx" in file:
+            appFile = file
             break
 
-        print(f"Processing prompt {promptObject['id']}")
-        appPrompt = generatePrompt(
+    # appPrompt = generatePromt("./generator/prompts/generateReplacementCode.txt", [
+    #     "React",
+    #     "App.jsx",
+    #     readFile(appFile),
+    #     "Modify the page so that every time the user clicks the button, it displays a random number between 1 and 100. Change the button text to say 'Generate Random Number'. Display the random number the paragraph element below the button.",
+    # ])
+
+    # open the file promptList.json
+    # for each prompt in the list, generate a prompt and send it to the API
+
+    # with open("./generator/promptList.json", 'r') as f:
+    #     promptList = json.load(f)
+
+    #     promptObjectList = []
+    #     i = 0
+    #     for prompt in promptList["prompts"]:
+    #         # add an object to the list with the prompt and the status
+    #         promptObjectList.append({
+    #             "prompt": prompt,
+    #             "status": "PENDING",
+    #             "id": f"{i}"
+    #         })
+    #         i += 1
+
+    #     while True:
+    #         # find the first prompt that is pending
+    #         promptObject = None
+    #         for pO in promptObjectList:
+    #             if pO["status"] == "PENDING":
+    #                 promptObject = pO
+    #                 break
+
+    #         if promptObject is None:
+    #             print("All prompts have been completed.")
+    #             break
+
+    #         promptObject["status"] = "IN_PROGRESS"
+
+    promptObject = {
+        "prompt": prompt,
+        "id": "0"
+    }
+    print(f"Processing prompt {promptObject['id']}")
+    appPrompt = generatePrompt(
+        "./generator/prompts/generateReplacementCode.txt", [
+            "React",
+            "App.jsx",
+            readFile(appFile),
+            promptObject["prompt"]
+        ])
+
+    response = requestGPT(client, MODEL, appPrompt)
+    print("=====================================")
+    print(response)
+    print("=====================================")
+    mods = parseModificationObjectsFromString(response)
+    result = modifyFile(appFile, mods)
+    if result == "PRETTIER_ERROR":
+
+        print("Prettier error number 1")
+
+        correctionPrompt = generatePrompt(
             "./generator/prompts/generateReplacementCode.txt", [
                 "React",
                 "App.jsx",
                 readFile(appFile),
-                promptObject["prompt"]
+                "There was an error running prettier on the file. Check for missing opening or closing tags, missing statements, etc. Please correct the code to fix the error."
             ])
 
-        response = requestGPT(client, MODEL, appPrompt)
-        print("=====================================")
-        print(response)
-        print("=====================================")
+        response = requestGPT(client, MODEL, correctionPrompt)
         mods = parseModificationObjectsFromString(response)
-        result = modifyFile(appFile, mods)
-        if result == "PRETTIER_ERROR":
-
-            print("Prettier error number 1")
-
-            correctionPrompt = generatePrompt(
-                "./generator/prompts/generateReplacementCode.txt", [
-                    "React",
-                    "App.jsx",
-                    readFile(appFile),
-                    "There was an error running prettier on the file. Check for missing opening or closing tags, missing statements, etc. Please correct the code to fix the error."
-                ])
-
-            response = requestGPT(client, MODEL, correctionPrompt)
-            mods = parseModificationObjectsFromString(response)
-            newResult = modifyFile(appFile, mods)
-            if newResult == "PRETTIER_ERROR":
-                print("Prettier error number 2")
-                break
-            else:
-                print("App.jsx fixed successfully!")
-                promptObject["status"] = "COMPLETE"
-        elif result == "SUCCESS":
-            print("App.jsx modified successfully!")
+        newResult = modifyFile(appFile, mods)
+        if newResult == "PRETTIER_ERROR":
+            print("Prettier error number 2")
+            return
+        else:
+            print("App.jsx fixed successfully!")
             promptObject["status"] = "COMPLETE"
+    elif result == "SUCCESS":
+        print("App.jsx modified successfully!")
 
-    # for prompt in promptList["prompts"]:
-    #     appPrompt = generatePrompt("./generator/prompts/generateReplacementCode.txt", [
-    #         "React",
-    #         "App.jsx",
-    #         readFile(appFile),
-    #         prompt
-    #     ])
+        # for prompt in promptList["prompts"]:
+        #     appPrompt = generatePrompt("./generator/prompts/generateReplacementCode.txt", [
+        #         "React",
+        #         "App.jsx",
+        #         readFile(appFile),
+        #         prompt
+        #     ])
 
-    #     response = requestGPT(client, MODEL, appPrompt)
-    #     print(response)
-    #     mods = parseModificationObjectsFromString(response)
-    #     print(mods)
-    #     result = modifyFile(appFile, mods)
-    #     if result == "RETRY":
+        #     response = requestGPT(client, MODEL, appPrompt)
+        #     print(response)
+        #     mods = parseModificationObjectsFromString(response)
+        #     print(mods)
+        #     result = modifyFile(appFile, mods)
+        #     if result == "RETRY":
 
-    #         break
-    #     print("App.jsx modified successfully!")
+        #         break
+        #     print("App.jsx modified successfully!")
+
+
+while True:
+    # clearPrompts()
+    newPrompt = input("Add prompt:")
+
+    # addPrompt(newPrompt)
+    handlePrompt(newPrompt)
+
+    # choice = input("Add another prompt? (y/n): ")
+    # if choice.lower() != 'y':
+    #     break
+
+    # addPrompt(input("Add prompt: "))
