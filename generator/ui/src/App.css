@@ -229,7 +229,7 @@ button {
 	box-sizing: border-box;
 	padding: 0.5rem;
 	border-radius: 0.5rem;
-	display: flex;
+	/* display: flex; */
 	justify-content: center;
 	align-items: center;
 
