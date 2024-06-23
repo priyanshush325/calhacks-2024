@@ -2,6 +2,10 @@ import json
 import subprocess
 import os
 
+from pyppeteer import launch
+import asyncio
+from bs4 import BeautifulSoup
+
 
 # FileModification type
 # - type: str ("INSERT" or "REPLACE" or "DELETE")
@@ -190,3 +194,42 @@ def readFile(file, includeLineNumbers=True):
             lines[i] = lines[i]
 
     return "\n".join(lines)
+
+
+# # Asynchronous function to check for compile errors
+# async def checkPage(localhostLink):
+#     print(f"Checking for compile error in {localhostLink}")
+
+#     async def visit_link():
+#         browser = await launch(headless=True)
+#         page = await browser.newPage()
+#         await page.goto(localhostLink)
+#         # wait for selector #root
+#         await page.waitForSelector("#root")
+#         await page.waitFor(1000)
+#         content = await page.content()
+#         await browser.close()
+#         return content
+
+#     content = await visit_link()
+#     print(f"Content: {content}")
+#     soup = BeautifulSoup(content, 'html.parser')
+
+#     # find the vite-error-overlay element
+#     error_overlay = soup.find('vite-error-overlay')
+
+#     print(f"Error overlay: {error_overlay}")
+
+#     if error_overlay:
+#         print("Compile error found!")
+#         # print all the content of the error overlay
+#         print(error_overlay.)
+#         return "COMPILE_ERROR", error_overlay
+#     else:
+#         print("No compile error found!")
+#         return "SUCCESS", None
+
+
+# def checkForCompileError(localhostLink):
+#     res, error = asyncio.run(checkPage(localhostLink))
+#     return res, error

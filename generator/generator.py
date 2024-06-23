@@ -10,6 +10,12 @@ from util.prompting import *
 from util.coding import *
 from util.coding import ProjectInfo
 
+import subprocess
+import threading
+import queue
+import sys
+import time
+
 load_dotenv()
 
 parser = argparse.ArgumentParser()
@@ -27,7 +33,7 @@ MODEL = "gpt-4o"
 # PROJECT_DIRECTORY = "./frontend/src"
 PROJECT_SOURCE_DIRECTORY = args.directory + "/src"
 
-#Search through Project source directory for .priyanshu file
+# Search through Project source directory for .priyanshu file
 search_pattern = os.path.join(args.directory, "*.priyanshu")
 
 files = glob.glob(search_pattern)
@@ -38,7 +44,7 @@ if len(files) != 1:
 
 print(f"Found .priyanshu file: {files[0]}")
 print(f"Project source directory: {PROJECT_SOURCE_DIRECTORY}")
-print(f"Listening on port {args.port}")
+# print(f"Listening on port {args.port}")
 print("---------------------------------------")
 INFO_PATH = files[0]
 
@@ -48,9 +54,59 @@ INFO_PATH = files[0]
 PROJECT_INFO = ProjectInfo(
     "Calculator App", PROJECT_SOURCE_DIRECTORY, INFO_PATH)
 
+LOCALHOST_PORT = 5173
+
+##########################
+# Start the webserver
+##########################
+
+WEBSERVER_OUTPUT = "./generator-logs/webserver.txt"
+WEBSERVER_OUTPUT_ABSOLUTE = os.path.abspath(WEBSERVER_OUTPUT)
+if not os.path.exists("./generator-logs"):
+    os.mkdir("./generator-logs")
+if not os.path.exists(WEBSERVER_OUTPUT):
+    with open(WEBSERVER_OUTPUT, 'w') as f:
+        f.write("")
+originalDirectory = os.getcwd()
+os.chdir(args.directory)
+command = f"npm run dev"
+command += f" 2>{WEBSERVER_OUTPUT_ABSOLUTE}"
+command += f" 1>{WEBSERVER_OUTPUT_ABSOLUTE}"
+command += f" < /dev/null &"
+process = subprocess.Popen(
+    command,
+    shell=True,
+    text=True
+)
+os.chdir(originalDirectory)
+
+##########################
 
 while True:
     newPrompt = input("Add prompt: ")
     # handleFeaturePrompt(newPrompt)
 
-    createActionPlan(newPrompt, client, MODEL, PROJECT_INFO)
+    if newPrompt.startswith("xx"):
+        print("You're welcome!")
+        break
+    elif newPrompt.startswith("!fix"):
+        print("Fixing the error")
+
+        error_lines = get_latest_error_lines(WEBSERVER_OUTPUT_ABSOLUTE)
+
+        if len(error_lines) == 0:
+            print("No error found")
+            continue
+
+        pr = "Fix the following error.\n"
+        if len(newPrompt) > 10:
+            pr += newPrompt[5:]
+
+        pr += "\n".join(error_lines)
+
+        createActionPlan(pr, client, MODEL, PROJECT_INFO)
+
+    elif len(newPrompt) < 10:
+        pass
+    else:
+        createActionPlan(newPrompt, client, MODEL, PROJECT_INFO)
