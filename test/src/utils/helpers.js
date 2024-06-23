@@ -9,7 +9,12 @@ function handleCalculate(expression) {
         console.error("Error evaluating expression:", error);
         return null;
     }
+
+    // Function to validate username and password
+    function validateCredentials(username, password) {
+        return username === "demo" && password === "demo";
+    }
 }
 
 // Exporting the handleCalculate function
-export { handleCalculate };
+export { handleCalculate, validateCredentials };
