@@ -38,6 +38,15 @@ class FileAction:
         self.prompt = prompt
         self.contextFiles = contextFiles
 
+    def to_dict(self):
+        return {
+            "action": self.action,
+            "filePath": self.filePath,
+            "prompt": self.prompt,
+            "contextFiles": self.contextFiles
+        }
+
+
 
 def createActionPlan(userPrompt, client, MODEL, projectInfo):
 

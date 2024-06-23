@@ -101,8 +101,16 @@ def confirmActions():
 
 @app.route("/prompt", methods=["POST"])
 def prompt():
-    processPrompt(request.json["prompt"])
-    return "success", 200
+    global PENDING_ACTIONS
+    if PENDING_ACTIONS is not None:
+        return "Action in progress", 400
+    
+    actions, statusCode = processPrompt(request.json["prompt"])
+    action_plan_dict = {
+        "commands": actions["commands"],
+        "actions": [action.to_dict() for action in actions["actions"]]
+    }
+    return jsonify(action_plan_dict), statusCode
 
 @app.route("/info", methods=["POST"])
 def info():
@@ -135,7 +143,13 @@ def info():
 
 @app.route("/confirm", methods=["POST"])
 def confirm():
+    global PENDING_ACTIONS
+    if request.json["confirm"] == False:
+        PENDING_ACTIONS = None
+        return "success", 200
+    
     confirmActions()
+    PENDING_ACTIONS = None
     return "success", 200
 
 if __name__ == "__main__":
