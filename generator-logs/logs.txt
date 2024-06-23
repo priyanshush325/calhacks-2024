@@ -3194,3 +3194,3648 @@ Update the App component to only display 'Hello World'. Remove any references to
 
 
 
+===============
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+create a red button that says click me in app 
+
+
+
+===============
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+create a red button that says click me in app 
+
+
+
+===============
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+create a red button that says click me in app jsx
+
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+add a red button that says click me to app
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "./frontend/src/App.jsx",
+            "action": "MODIFY",
+            "prompt": "Add a red button that says 'Click me' to the App component. Use Tailwind CSS classes for styling.",
+            "contextFiles": ["./frontend/src/main.jsx"]
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+add a red button that says click me to app
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "./frontend/src/App.jsx",
+            "action": "MODIFY",
+            "prompt": "Add a red button that says 'Click me' to the App component. Use Tailwind CSS classes for styling.",
+            "contextFiles": ["./frontend/src/App.css"]
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+add a red button that says click me to app
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "./frontend/src/App.jsx",
+            "action": "MODIFY",
+            "prompt": "Add a red button that says 'Click me' to the App component. Use Tailwind CSS classes for styling.",
+            "contextFiles": ["./frontend/src/App.css"]
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+add a red button that says click me to app
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "./frontend/src/App.jsx",
+            "action": "MODIFY",
+            "prompt": "Add a red button that says 'Click me' to the App component. Use Tailwind CSS classes for styling.",
+            "contextFiles": ["./frontend/src/main.jsx"]
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted BEFORE startLine (between startLine-1 and startLine) 
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/assets/react.svg
+
+CONTEXT FILES:
+
+/* ./frontend/src/main.jsx */
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./App.css";
+import App from "./App.jsx";
+import "./index.css";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>
+);
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (./frontend/src/App.jsx):
+
+1. import { useState } from "react";
+2. import "./App.css";
+3. 
+4. function App() {
+5.     const [count, setCount] = useState(0);
+6. 
+7.     return (
+8.         <div className="flex flex-col items-center justify-center min-h-screen w-full">
+9.             <h1 className="text-2xl">Hello World</h1>
+10.         </div>
+11.     );
+12. }
+13. 
+14. export default App;
+15. 
+
+END OF FILE
+
+Modification Request:
+Add a red button that says 'Click me' to the App component. Use Tailwind CSS classes for styling.
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "INSERT",
+            "startLine": 9,
+            "endLine": 9,
+            "code": "<button className=\"bg-red-500 text-white py-2 px-4 rounded\">Click me</button>"
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+make the red button in app turn darker on hover
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "./frontend/src/App.jsx",
+            "action": "MODIFY",
+            "prompt": "Update the existing red button to have a darker shade on hover using Tailwind CSS classes.",
+            "contextFiles": ["./frontend/src/index.css", "./frontend/src/main.jsx"]
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted BEFORE startLine (between startLine-1 and startLine) 
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/assets/react.svg
+
+CONTEXT FILES:
+
+/* ./frontend/src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+}
+
+/* ./frontend/src/main.jsx */
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./App.css";
+import App from "./App.jsx";
+import "./index.css";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>
+);
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (./frontend/src/App.jsx):
+
+1. import { useState } from "react";
+2. import "./App.css";
+3. 
+4. function App() {
+5.     const [count, setCount] = useState(0);
+6. 
+7.     return (
+8.         <div className="flex flex-col items-center justify-center min-h-screen w-full">
+9.             <button className="bg-red-500 text-white py-2 px-4 rounded">Click me</button>
+10.             <h1 className="text-2xl">Hello World</h1>
+11.         </div>
+12.     );
+13. }
+14. 
+15. export default App;
+16. 
+
+END OF FILE
+
+Modification Request:
+Update the existing red button to have a darker shade on hover using Tailwind CSS classes.
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "REPLACE",
+            "startLine": 9,
+            "endLine": 9,
+            "code": "            <button className=\"bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded\">Click me</button>"
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+extract the red button in app jsx to its own component in components/RedButton.jsx, and use that new component in app
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "./frontend/src/components/RedButton.jsx",
+            "action": "CREATE",
+            "prompt": "Create a new RedButton component that renders a red button with the same styling and functionality as the red button in App.jsx.",
+            "contextFiles": ["./frontend/src/App.jsx"]
+        },
+        {
+            "filePath": "./frontend/src/App.jsx",
+            "action": "MODIFY",
+            "prompt": "Refactor the existing code to use the RedButton component instead of the red button directly in the JSX. Ensure the new RedButton component is correctly imported.",
+            "contextFiles": ["./frontend/src/components/RedButton.jsx"]
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted BEFORE startLine (between startLine-1 and startLine) 
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/RedButton.jsx
+./frontend/src/assets/react.svg
+
+CONTEXT FILES:
+
+/* ./frontend/src/App.jsx */
+import { useState } from "react";
+import "./App.css";
+
+function App() {
+    const [count, setCount] = useState(0);
+
+    return (
+        <div className="flex flex-col items-center justify-center min-h-screen w-full">
+            <button className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded">Click me</button>
+            <h1 className="text-2xl">Hello World</h1>
+        </div>
+    );
+}
+
+export default App;
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (./frontend/src/components/RedButton.jsx):
+
+1. /* File ./frontend/src/components/RedButton.jsx is empty. */
+
+END OF FILE
+
+Modification Request:
+Create a new RedButton component that renders a red button with the same styling and functionality as the red button in App.jsx.
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "REPLACE",
+            "startLine": 1,
+            "endLine": 1,
+            "code": "import React from 'react';\nimport './RedButton.css';"
+        },
+        {
+            "type": "REPLACE",
+            "startLine": 2,
+            "endLine": 2,
+            "code": "const RedButton = ({ onClick }) => {"
+        },
+        {
+            "type": "INSERT",
+            "startLine": 3,
+            "endLine": 3,
+            "code": "    return (\n        <button className=\"bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded\" onClick={onClick}>\n            Click me\n        </button>\n    );"
+        },
+        {
+            "type": "REPLACE",
+            "startLine": 4,
+            "endLine": 4,
+            "code": "};"
+        },
+        {
+            "type": "INSERT",
+            "startLine": 5,
+            "endLine": 5,
+            "code": "\nexport default RedButton;"
+        },
+        {
+            "type": "INSERT",
+            "startLine": 1,
+            "endLine": 1,
+            "code": "import RedButton from './components/RedButton';"
+        },
+        {
+            "type": "INSERT",
+            "startLine": 11,
+            "endLine": 11,
+            "code": "<RedButton onClick={() => setCount(count + 1)} />"
+        },
+        {
+            "type": "INSERT",
+            "startLine": 2,
+            "endLine": 2,
+            "code": "\nimport RedButton from './components/RedButton';"
+        },
+        {
+            "type": "DELETE",
+            "startLine": 9,
+            "endLine": 9,
+            "code": ""
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted BEFORE startLine (between startLine-1 and startLine) 
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/RedButton.jsx
+./frontend/src/assets/react.svg
+
+CONTEXT FILES:
+
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (./frontend/src/App.jsx):
+
+1. import { useState } from "react";
+2. import "./App.css";
+3. 
+4. function App() {
+5.     const [count, setCount] = useState(0);
+6. 
+7.     return (
+8.         <div className="flex flex-col items-center justify-center min-h-screen w-full">
+9.             <button className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded">Click me</button>
+10.             <h1 className="text-2xl">Hello World</h1>
+11.         </div>
+12.     );
+13. }
+14. 
+15. export default App;
+16. 
+
+END OF FILE
+
+Modification Request:
+Refactor the existing code to use the RedButton component instead of the red button directly in the JSX. Ensure the new RedButton component is correctly imported.
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "INSERT",
+            "startLine": 2,
+            "endLine": 2,
+            "code": "import RedButton from \"./components/RedButton\";"
+        },
+        {
+            "type": "REPLACE",
+            "startLine": 9,
+            "endLine": 9,
+            "code": "<RedButton>Click me</RedButton>"
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/RedButton.jsx
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+move the export in red button to the right place
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "./frontend/src/components/RedButton.jsx",
+            "action": "MODIFY",
+            "prompt": "Move the export statement for the RedButton component to the correct place in the file.",
+            "contextFiles": []
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted BEFORE startLine (between startLine-1 and startLine) 
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/RedButton.jsx
+./frontend/src/assets/react.svg
+
+CONTEXT FILES:
+
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (./frontend/src/components/RedButton.jsx):
+
+1. import RedButton from "./components/RedButton";
+2. import "./RedButton.css";
+3. 
+4. const RedButton = ({ onClick }) => {
+5.     return (
+6.         <button className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded" onClick={onClick}>
+7.             Click me
+8.         </button>
+9.     );
+10.     export default RedButton;
+11. };
+12. 
+
+END OF FILE
+
+Modification Request:
+Move the export statement for the RedButton component to the correct place in the file.
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "REPLACE",
+            "startLine": 10,
+            "endLine": 10,
+            "code": ""
+        },
+        {
+            "type": "INSERT",
+            "startLine": 11,
+            "endLine": 11,
+            "code": "export default RedButton;"
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/RedButton.jsx
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+move the export in red button component to the bottom of the file
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "./frontend/src/components/RedButton.jsx",
+            "action": "MODIFY",
+            "prompt": "Move the export statement in the RedButton component to the bottom of the file.",
+            "contextFiles": []
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted BEFORE startLine (between startLine-1 and startLine) 
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/RedButton.jsx
+./frontend/src/assets/react.svg
+
+CONTEXT FILES:
+
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (./frontend/src/components/RedButton.jsx):
+
+1. import RedButton from "./components/RedButton";
+2. import "./RedButton.css";
+3. 
+4. const RedButton = ({ onClick }) => {
+5.     return (
+6.         <button className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded" onClick={onClick}>
+7.             Click me
+8.         </button>
+9.     );
+10. 
+11.     export default RedButton;
+12. };
+13. 
+
+END OF FILE
+
+Modification Request:
+Move the export statement in the RedButton component to the bottom of the file.
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "DELETE",
+            "startLine": 11,
+            "endLine": 11,
+            "code": ""
+        },
+        {
+            "type": "INSERT",
+            "startLine": 12,
+            "endLine": 12,
+            "code": "export default RedButton;"
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/RedButton.jsx
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+Move the export statement in the RedButton component to the bottom of the file.
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "./frontend/src/components/RedButton.jsx",
+            "action": "MODIFY",
+            "prompt": "Move the export statement in the RedButton component to the bottom of the file.",
+            "contextFiles": []
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted BEFORE startLine (between startLine-1 and startLine) 
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/RedButton.jsx
+./frontend/src/assets/react.svg
+
+CONTEXT FILES:
+
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (./frontend/src/components/RedButton.jsx):
+
+1. import RedButton from "./components/RedButton";
+2. import "./RedButton.css";
+3. 
+4. const RedButton = ({ onClick }) => {
+5.     return (
+6.         <button className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded" onClick={onClick}>
+7.             Click me
+8.         </button>
+9.     );
+10.     export default RedButton;
+11. };
+12. 
+
+END OF FILE
+
+Modification Request:
+Move the export statement in the RedButton component to the bottom of the file.
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "DELETE",
+            "startLine": 10,
+            "endLine": 10
+        },
+        {
+            "type": "INSERT",
+            "startLine": 11,
+            "code": "export default RedButton;"
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/RedButton.jsx
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+move the export in red button to the bottom of the file
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "./frontend/src/components/RedButton.jsx",
+            "action": "MODIFY",
+            "prompt": "Move the export statement to the bottom of the file in RedButton.jsx",
+            "contextFiles": []
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted AFTER startLine (starting on the next line (startLine + 1))
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/RedButton.jsx
+./frontend/src/assets/react.svg
+
+CONTEXT FILES:
+
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (./frontend/src/components/RedButton.jsx):
+
+1. import RedButton from "./components/RedButton";
+2. import "./RedButton.css";
+3. 
+4. const RedButton = ({ onClick }) => {
+5.     return (
+6.         <button className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded" onClick={onClick}>
+7.             Click me
+8.         </button>
+9.     );
+10.     export default RedButton;
+11. };
+12. 
+
+END OF FILE
+
+Modification Request:
+Move the export statement to the bottom of the file in RedButton.jsx
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "REPLACE",
+            "startLine": 10,
+            "endLine": 10,
+            "code": ""
+        },
+        {
+            "type": "INSERT",
+            "startLine": 11,
+            "endLine": 11,
+            "code": "export default RedButton;"
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/RedButton.jsx
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+move the export in red button to the bottom of the file
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "./frontend/src/components/RedButton.jsx",
+            "action": "MODIFY",
+            "prompt": "Move the export statement to the bottom of the file in RedButton.jsx",
+            "contextFiles": []
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted AFTER startLine (starting on the next line (startLine + 1))
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/RedButton.jsx
+./frontend/src/assets/react.svg
+
+CONTEXT FILES:
+
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (./frontend/src/components/RedButton.jsx):
+
+1. import RedButton from "./components/RedButton";
+2. import "./RedButton.css";
+3. 
+4. const RedButton = ({ onClick }) => {
+5.     return (
+6.         <button className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded" onClick={onClick}>
+7.             Click me
+8.         </button>
+9.     );
+10. 
+11.     export default RedButton;
+12. };
+13. 
+
+END OF FILE
+
+Modification Request:
+Move the export statement to the bottom of the file in RedButton.jsx
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "INSERT",
+            "startLine": 12,
+            "endLine": 12,
+            "code": "\nexport default RedButton;"
+        },
+        {
+            "type": "REPLACE",
+            "startLine": 11,
+            "endLine": 11,
+            "code": ""
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/RedButton.jsx
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+move the export in red button to the bottom of the file
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "./frontend/src/components/RedButton.jsx",
+            "action": "MODIFY",
+            "prompt": "Move the export statement to the bottom of the file in RedButton.jsx",
+            "contextFiles": []
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted at startLine, and the code at startLine will be pushed down
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/RedButton.jsx
+./frontend/src/assets/react.svg
+
+CONTEXT FILES:
+
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (./frontend/src/components/RedButton.jsx):
+
+1. import RedButton from "./components/RedButton";
+2. import "./RedButton.css";
+3. 
+4. const RedButton = ({ onClick }) => {
+5.     return (
+6.         <button className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded" onClick={onClick}>
+7.             Click me
+8.         </button>
+9.     );
+10. 
+11.     export default RedButton;
+12. };
+13. 
+
+END OF FILE
+
+Modification Request:
+Move the export statement to the bottom of the file in RedButton.jsx
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "DELETE",
+            "startLine": 11,
+            "endLine": 11,
+            "code": ""
+        },
+        {
+            "type": "INSERT",
+            "startLine": 12,
+            "endLine": 12,
+            "code": "export default RedButton;"
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/RedButton.jsx
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+move the export in red button to the bottom of the file,  after the closing brace
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "./frontend/src/components/RedButton.jsx",
+            "action": "MODIFY",
+            "prompt": "Move the export statement in RedButton.jsx to the bottom of the file, after the closing brace of the component.",
+            "contextFiles": []
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted at startLine, and the code at startLine will be pushed down
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/RedButton.jsx
+./frontend/src/assets/react.svg
+
+CONTEXT FILES:
+
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (./frontend/src/components/RedButton.jsx):
+
+1. import RedButton from "./components/RedButton";
+2. import "./RedButton.css";
+3. 
+4. const RedButton = ({ onClick }) => {
+5.     return (
+6.         <button className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded" onClick={onClick}>
+7.             Click me
+8.         </button>
+9.     );
+10. 
+11.     export default RedButton;
+12. };
+13. 
+
+END OF FILE
+
+Modification Request:
+Move the export statement in RedButton.jsx to the bottom of the file, after the closing brace of the component.
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "REPLACE",
+            "startLine": 11,
+            "endLine": 11,
+            "code": "};"
+        },
+        {
+            "type": "INSERT",
+            "startLine": 12,
+            "endLine": 12,
+            "code": "\nexport default RedButton;"
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted BEFORE startLine (between startLine-1 and startLine) 
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: N/A
+
+CODEBASE FILES: N/A
+
+FILE (./frontend/src/components/RedButton.jsx):
+
+1. import RedButton from "./components/RedButton";
+2. import "./RedButton.css";
+3. 
+4. const RedButton = ({ onClick }) => {
+5.     return (
+6.         <button className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded" onClick={onClick}>
+7.             Click me
+8.         </button>
+9.     );
+10. 
+11. };
+12. 
+13. export default RedButton;
+14. };
+15. 
+
+END OF FILE
+
+Modification Request:
+There was an error running prettier on the file. Check for missing opening or closing tags, mismatched parentheses or braces, missing statements, etc. Please correct the code to fix the error. Here is the error log from Prettier: {prettierInfo}
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "DELETE",
+            "startLine": 14,
+            "endLine": 14,
+            "code": ""
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/RedButton.jsx
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+make the red button take children, and then modify app to pass in the text click me
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "./frontend/src/components/RedButton.jsx",
+            "action": "MODIFY",
+            "prompt": "Modify the RedButton component to accept children props.",
+            "contextFiles": []
+        },
+        {
+            "filePath": "./frontend/src/App.jsx",
+            "action": "MODIFY",
+            "prompt": "Update the App component to pass the text 'click me' as children to the RedButton component.",
+            "contextFiles": ["./frontend/src/components/RedButton.jsx"]
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted at startLine, and the code at startLine will be pushed down
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/RedButton.jsx
+./frontend/src/assets/react.svg
+
+CONTEXT FILES:
+
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (./frontend/src/components/RedButton.jsx):
+
+1. import RedButton from "./components/RedButton";
+2. import "./RedButton.css";
+3. 
+4. const RedButton = ({ onClick }) => {
+5.     return (
+6.         <button className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded" onClick={onClick}>
+7.             Click me
+8.         </button>
+9.     );
+10. };
+11. 
+12. export default RedButton;
+13. 
+
+END OF FILE
+
+Modification Request:
+Modify the RedButton component to accept children props.
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "REPLACE",
+            "startLine": 4,
+            "endLine": 4,
+            "code": "const RedButton = ({ onClick, children }) => {"
+        },
+        {
+            "type": "REPLACE",
+            "startLine": 7,
+            "endLine": 7,
+            "code": "{children}"
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted at startLine, and the code at startLine will be pushed down
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/RedButton.jsx
+./frontend/src/assets/react.svg
+
+CONTEXT FILES:
+
+/* ./frontend/src/components/RedButton.jsx */
+import RedButton from "./components/RedButton";
+import "./RedButton.css";
+
+const RedButton = ({ onClick }) => {
+    return (
+        <button className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded" onClick={onClick}>
+            Click me
+        </button>
+    );
+};
+
+export default RedButton;
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (./frontend/src/App.jsx):
+
+1. import { useState } from "react";
+2. import "./App.css";
+3. import RedButton from "./components/RedButton";
+4. 
+5. function App() {
+6.     const [count, setCount] = useState(0);
+7. 
+8.     return (
+9.         <div className="flex flex-col items-center justify-center min-h-screen w-full">
+10.             <RedButton>Click me</RedButton>
+11.             <h1 className="text-2xl">Hello World</h1>
+12.         </div>
+13.     );
+14. }
+15. 
+16. export default App;
+17. 
+
+END OF FILE
+
+Modification Request:
+Update the App component to pass the text 'click me' as children to the RedButton component.
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "REPLACE",
+            "startLine": 3,
+            "endLine": 3,
+            "code": "import RedButton from \"./components/RedButton\";"
+        },
+        {
+            "type": "REPLACE",
+            "startLine": 10,
+            "endLine": 10,
+            "code": "<RedButton>click me</RedButton>"
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ],
+    commands: [
+        "command to run on the terminal",
+        "another command to run on the terminal",
+        ...
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+commands: commands to run on the terminal to import required packages, such as "npm install react-router-dom"
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/RedButton.jsx
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+delete the red button
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "./frontend/src/components/RedButton.jsx",
+            "action": "DELETE",
+            "prompt": "Delete the RedButton component from the project.",
+            "contextFiles": []
+        }
+    ],
+    "commands": []
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ],
+    commands: [
+        "command to run on the terminal",
+        "another command to run on the terminal",
+        ...
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+commands: commands to run on the terminal to import required packages, such as "npm install react-router-dom"
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/RedButton.jsx
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+ddelete the red button component and remove its reference in app jsx
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "./frontend/src/components/RedButton.jsx",
+            "action": "DELETE",
+            "prompt": "Remove the file as the RedButton component is no longer needed.",
+            "contextFiles": []
+        },
+        {
+            "filePath": "./frontend/src/App.jsx",
+            "action": "MODIFY",
+            "prompt": "Remove the reference to the RedButton component from the App component.",
+            "contextFiles": ["./frontend/src/components/RedButton.jsx"]
+        }
+    ],
+    "commands": []
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted at startLine, and the code at startLine will be pushed down
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/assets/react.svg
+
+CONTEXT FILES:
+
+/* ./frontend/src/components/RedButton.jsx */
+const RedButton = ({ onClick, children }) => {
+    return (
+        <button className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded" onClick={onClick}>
+            {children}
+        </button>
+    );
+};
+
+export default RedButton;
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (./frontend/src/App.jsx):
+
+1. import { useState } from "react";
+2. import "./App.css";
+3. import RedButton from "./components/RedButton";
+4. 
+5. function App() {
+6.     const [count, setCount] = useState(0);
+7. 
+8.     return (
+9.         <div className="flex flex-col items-center justify-center min-h-screen w-full">
+10.             <RedButton>click me</RedButton>
+11.             <h1 className="text-2xl">Hello World</h1>
+12.         </div>
+13.     );
+14. }
+15. 
+16. export default App;
+17. 
+
+END OF FILE
+
+Modification Request:
+Remove the reference to the RedButton component from the App component.
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "DELETE",
+            "startLine": 3,
+            "endLine": 3,
+            "code": ""
+        },
+        {
+            "type": "DELETE",
+            "startLine": 10,
+            "endLine": 10,
+            "code": ""
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ],
+    commands: [
+        "command to run on the terminal",
+        "another command to run on the terminal",
+        ...
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+commands: commands to run on the terminal to import required packages, such as "npm install react-router-dom"
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+create a home page component and profile page componennt in /components and have them say the word of their path in the center of the page, and add react router to the project and set up a router in app jsx for the two pages
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "./frontend/src/components/Home.jsx",
+            "action": "CREATE",
+            "prompt": "Create a Home component that displays the word 'Home' in the center of the page.",
+            "contextFiles": []
+        },
+        {
+            "filePath": "./frontend/src/components/Profile.jsx",
+            "action": "CREATE",
+            "prompt": "Create a Profile component that displays the word 'Profile' in the center of the page.",
+            "contextFiles": []
+        },
+        {
+            "filePath": "./frontend/src/App.jsx",
+            "action": "MODIFY",
+            "prompt": "Set up a router in App.jsx to navigate between the Home and Profile components. Make sure to import BrowserRouter, Routes, Route from 'react-router-dom', and the Home and Profile components using the correct relative paths.",
+            "contextFiles": [
+                "./frontend/src/main.jsx"
+            ]
+        }
+    ],
+    "commands": [
+        "npm install react-router-dom"
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ],
+    commands: [
+        "command to run on the terminal",
+        "another command to run on the terminal",
+        ...
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+commands: commands to run on the terminal to import required packages, such as "npm install react-router-dom"
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+create a home page component and profile page component in /components and have them say the word of their path in the center of the page, and add react router to the project and set up a router in app jsx for the two pages
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "./frontend/src/components/HomePage.jsx",
+            "action": "CREATE",
+            "prompt": "Create a HomePage component that displays the word 'Home' in the center of the page.",
+            "contextFiles": []
+        },
+        {
+            "filePath": "./frontend/src/components/ProfilePage.jsx",
+            "action": "CREATE",
+            "prompt": "Create a ProfilePage component that displays the word 'Profile' in the center of the page.",
+            "contextFiles": []
+        },
+        {
+            "filePath": "./frontend/src/App.jsx",
+            "action": "MODIFY",
+            "prompt": "Set up a router in the App component that routes to the HomePage component at the '/' path and the ProfilePage component at the '/profile' path.",
+            "contextFiles": ["./frontend/src/main.jsx"]
+        }
+    ],
+    "commands": [
+        "npm install react-router-dom"
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted at startLine, and the code at startLine will be pushed down
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/HomePage.jsx
+./frontend/src/assets/react.svg
+
+CONTEXT FILES:
+
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (./frontend/src/components/HomePage.jsx):
+
+1. /* File ./frontend/src/components/HomePage.jsx is empty. */
+
+END OF FILE
+
+Modification Request:
+Create a HomePage component that displays the word 'Home' in the center of the page.
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "INSERT",
+            "startLine": 1,
+            "endLine": 1,
+            "code": "import React from 'react';\nimport '../App.css';"
+        },
+        {
+            "type": "INSERT",
+            "startLine": 2,
+            "endLine": 2,
+            "code": "\nconst HomePage = () => {\n    return (\n        <div className=\"flex items-center justify-center min-h-screen\">\n            <h1>Home</h1>\n        </div>\n    );\n};\n\nexport default HomePage;"
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted at startLine, and the code at startLine will be pushed down
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/HomePage.jsx
+./frontend/src/components/ProfilePage.jsx
+./frontend/src/assets/react.svg
+
+CONTEXT FILES:
+
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (./frontend/src/components/ProfilePage.jsx):
+
+1. /* File ./frontend/src/components/ProfilePage.jsx is empty. */
+
+END OF FILE
+
+Modification Request:
+Create a ProfilePage component that displays the word 'Profile' in the center of the page.
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "INSERT",
+            "startLine": 1,
+            "endLine": 1,
+            "code": "import React from 'react';\nimport '../App.css';"
+        },
+        {
+            "type": "INSERT",
+            "startLine": 3,
+            "endLine": 3,
+            "code": "const ProfilePage = () => {\n  return (\n    <div className='flex justify-center items-center h-screen'>\n      <h1>Profile</h1>\n    </div>\n  );\n};\n\nexport default ProfilePage;"
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted at startLine, and the code at startLine will be pushed down
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/HomePage.jsx
+./frontend/src/components/ProfilePage.jsx
+./frontend/src/assets/react.svg
+
+CONTEXT FILES:
+
+/* ./frontend/src/main.jsx */
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./App.css";
+import App from "./App.jsx";
+import "./index.css";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>
+);
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (./frontend/src/App.jsx):
+
+1. import { useState } from "react";
+2. import "./App.css";
+3. 
+4. function App() {
+5.     const [count, setCount] = useState(0);
+6. 
+7.     return (
+8.         <div className="flex flex-col items-center justify-center min-h-screen w-full">
+9.             <h1 className="text-2xl">Hello World</h1>
+10.         </div>
+11.     );
+12. }
+13. 
+14. export default App;
+15. 
+
+END OF FILE
+
+Modification Request:
+Set up a router in the App component that routes to the HomePage component at the '/' path and the ProfilePage component at the '/profile' path.
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "INSERT",
+            "startLine": 2,
+            "endLine": 2,
+            "code": "import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';\nimport HomePage from './components/HomePage.jsx';\nimport ProfilePage from './components/ProfilePage.jsx';"
+        },
+        {
+            "type": "REPLACE",
+            "startLine": 4,
+            "endLine": 11,
+            "code": "function App() {\n    return (\n        <Router>\n            <Routes>\n                <Route path=\"/\" element={<HomePage />} />\n                <Route path=\"/profile\" element={<ProfilePage />} />\n            </Routes>\n        </Router>\n    );\n}"
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted BEFORE startLine (between startLine-1 and startLine) 
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: N/A
+
+CODEBASE FILES: N/A
+
+FILE (./frontend/src/App.jsx):
+
+1. import { useState } from "react";
+2. import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+3. import HomePage from './components/HomePage.jsx';
+4. import ProfilePage from './components/ProfilePage.jsx';
+5. import "./App.css";
+6. 
+7. function App() {
+8.     return (
+9.         <Router>
+10.             <Routes>
+11.                 <Route path="/" element={<HomePage />} />
+12.                 <Route path="/profile" element={<ProfilePage />} />
+13.             </Routes>
+14.         </Router>
+15.     );
+16. }
+17. }
+18. 
+19. export default App;
+20. 
+
+END OF FILE
+
+Modification Request:
+There was an error running prettier on the file. Check for missing opening or closing tags, mismatched parentheses or braces, missing statements, etc. Please correct the code to fix the error. Here is the error log from Prettier: {prettierInfo}
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "DELETE",
+            "startLine": 17,
+            "endLine": 17,
+            "code": ""
+        }
+    ]
+}
+
+
