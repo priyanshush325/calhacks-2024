@@ -35,7 +35,6 @@ const DashboardPage = () => {
                         <FaUser className="inline-block w-4 h-4 ml-2" />
                         Diabetes, Hypertension
                     </p>
-
                 </div>
             </div>
             <div className="grid gap-6 mb-8 md:grid-cols-2 lg:grid-cols-3">

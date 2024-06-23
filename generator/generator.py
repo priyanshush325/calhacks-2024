@@ -9,6 +9,7 @@ from util.files import *
 from util.prompting import *
 from util.coding import *
 from util.coding import ProjectInfo
+from util.ui import *
 
 import subprocess
 import threading
@@ -44,7 +45,9 @@ if len(files) != 1:
 
 print(f"Found .priyanshu file: {files[0]}")
 print(f"Project source directory: {PROJECT_SOURCE_DIRECTORY}")
-# print(f"Listening on port {args.port}")
+print(f"Running project on {args.port}")
+# print a localhost link
+print(f"Localhost: http://localhost:{args.port}")
 print("---------------------------------------")
 INFO_PATH = files[0]
 
@@ -54,7 +57,8 @@ INFO_PATH = files[0]
 PROJECT_INFO = ProjectInfo(
     "Calculator App", PROJECT_SOURCE_DIRECTORY, INFO_PATH)
 
-LOCALHOST_PORT = 5173
+UI_PORT = args.port
+PROJECT_PORT = int(args.port) + 1
 
 ##########################
 # Start the webserver
@@ -69,7 +73,7 @@ if not os.path.exists(WEBSERVER_OUTPUT):
         f.write("")
 originalDirectory = os.getcwd()
 os.chdir(args.directory)
-command = f"npm run dev"
+command = f"npm run dev -- --port {UI_PORT}"
 command += f" 2>{WEBSERVER_OUTPUT_ABSOLUTE}"
 command += f" 1>{WEBSERVER_OUTPUT_ABSOLUTE}"
 command += f" < /dev/null &"
@@ -81,6 +85,9 @@ process = subprocess.Popen(
 os.chdir(originalDirectory)
 
 ##########################
+
+# Start the UI
+startUI(UI_PORT, PROJECT_PORT)
 
 while True:
     newPrompt = input("Add prompt: ")
@@ -98,7 +105,7 @@ while True:
             print("No error found")
             continue
 
-        pr = "Fix the following error.\n"
+        pr = "Fix the following error. Keep in mind that the root cause of the error may not be what is shown in the error message.\n"
         if len(newPrompt) > 10:
             pr += newPrompt[5:]
 
