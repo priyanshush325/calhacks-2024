@@ -8,7 +8,6 @@ import os
 # - endLine: int (inclusive)
 # - code: str
 
-
 class FileModification:
     def __init__(self, type, startLine, endLine, code):
         self.type = type
@@ -16,36 +15,38 @@ class FileModification:
         self.endLine = endLine
         self.code = code
 
-
 def modifyFile(filePath, modifications):
-
-    lines = []
+    print(f"Printing modifications: {modifications}")
 
     with open(filePath, 'r') as file:
         lines = file.readlines()
 
-    # save the original lines
+    # Save the original lines (for reference/debugging, if needed)
     originalLines = lines.copy()
 
-    for modification in modifications:
+    # Sort modifications in reverse order based on startLine to avoid line number shifts
+    modifications.sort(key=lambda x: x.startLine, reverse=True)
 
+    for modification in modifications:
         modLines = modification.code.split("\n")
         for i in range(len(modLines)):
             modLines[i] = modLines[i] + "\n"
 
-        # remove the lines that are being replaced
-        del lines[modification.startLine - 1:modification.endLine]
+        if modification.type == "INSERT":
+            for i in range(len(modLines)):
+                lines.insert(modification.startLine - 1 + i, modLines[i])
+        elif modification.type == "REPLACE":
+            del lines[modification.startLine - 1:modification.endLine]
+            for i in range(len(modLines)):
+                lines.insert(modification.startLine - 1 + i, modLines[i])
+        elif modification.type == "DELETE":
+            del lines[modification.startLine - 1:modification.endLine]
 
-        # insert the new lines
-        for i in range(len(modLines)):
-            lines.insert(modification.startLine - 1 + i, modLines[i])
-
-    # rewrite the file with the modifications
+    # Rewrite the file with the modifications
     with open(filePath, 'w') as file:
         file.writelines(lines)
 
     return "SUCCESS"
-
 
 def checkPrettier(filePath):
 
@@ -67,26 +68,24 @@ def checkPrettier(filePath):
         return "PRETTIER_ERROR"
     return "SUCCESS"
 
+def organizeImports(filePath):
+    # save the current directory
+    originalDirectory = os.getcwd()
 
-# def organizeImports(filePath):
-#     # save the current directory
-#     originalDirectory = os.getcwd()
+    # change directories into the project directory
+    filePathParts = filePath.split("/")
+    projectDirectory = "/".join(filePathParts[:-1])
+    os.chdir(projectDirectory)
+    realFilePath = filePathParts[-1]
 
-#     # change directories into the project directory
-#     filePathParts = filePath.split("/")
-#     projectDirectory = "/".join(filePathParts[:-1])
-#     os.chdir(projectDirectory)
-#     realFilePath = filePathParts[-1]
+    result = subprocess.run(["npx", "organize-imports-cli", realFilePath])
 
-#     result = subprocess.run(["npx", "organize-imports-cli", realFilePath])
+    # change back to the original directory
+    os.chdir(originalDirectory)
 
-#     # change back to the original directory
-#     os.chdir(originalDirectory)
-
-#     if result.returncode != 0:
-#         return "ORGANIZE_IMPORTS_ERROR"
-#     return "SUCCESS"
-
+    if result.returncode != 0:
+        return "ORGANIZE_IMPORTS_ERROR"
+    return "SUCCESS"
 
 def parseModificationObjectsFromString(modificationsString):
 
