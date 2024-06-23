@@ -7,15 +7,15 @@ const Auth = () => {
 
     const navigate = useNavigate();
 
-const [error, setError] = useState("");
+    const [error, setError] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (username === "demo" && password === "demo") {
-            navigate("/");
+            navigate("/dashboard");
         } else {
-            setError('Invalid username or password');
+            setError("Invalid username or password");
         }
     };
 
@@ -53,7 +53,7 @@ const [error, setError] = useState("");
                     <div className="flex items-center justify-between">
                         <button
                             type="submit"
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            className="bg-teal-500 hover:bg-teal-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         >
                             Sign In
                         </button>
@@ -63,5 +63,4 @@ const [error, setError] = useState("");
         </div>
     );
 };
-
 export default Auth;
