@@ -19,9 +19,9 @@ class ProjectInfo:
 
         with open(repoInfoPath, 'r') as file:
             self.repoInfo = file.read()
-            print(f"Repo Info (read from .priyanshu file): {self.repoInfo}")
-    
-        print("---------------------------------------")
+            # print(f"Repo Info (read from .priyanshu file): {self.repoInfo}")
+
+        # print("---------------------------------------")
 
 
 # FileAction type
@@ -62,9 +62,16 @@ def createActionPlan(userPrompt, client, MODEL, projectInfo):
         print(f"Prompt: {action.prompt}")
         # print(f"Context Files: {" ".join(action.contextFiles)}")
 
+    if len(actions) == 0:
+        print("No actions generated.")
+
     # wait for user to confirm the action plan
     print("Action plan generated. Please review the actions:")
-    input("Press Enter to continue...")
+    userString = input("Press Enter to continue or x to cancel: ")
+
+    if "x" in userString.lower():
+        print("Action plan cancelled.")
+        return
 
     # run the commands
     for command in commands:
@@ -80,6 +87,8 @@ def createActionPlan(userPrompt, client, MODEL, projectInfo):
     for action in actions:
         print(f"Action: {action.action}, File: {action.filePath}")
         executeAction(action, client, MODEL, projectInfo, allContextFiles)
+
+    print("Action plan executed successfully.")
 
 
 def executeAction(action, client, MODEL, projectInfo, allContextFiles):
@@ -205,3 +214,49 @@ def handleFeaturePrompt(prompt, contextFiles, filePath, client, MODEL, projectIn
             print(f"{filePath} could not be fixed.")
     elif result == "SUCCESS":
         print(f"{filePath} modified successfully!")
+
+
+def get_latest_npm_output(WEBSERVER_OUTPUT_ABSOLUTE):
+    output_lines = []
+    with open(WEBSERVER_OUTPUT_ABSOLUTE, 'r') as file:
+        # read the file line by line
+        for line in file:
+            output_lines.append(line.strip())
+
+        # clear the file contents
+        with open(WEBSERVER_OUTPUT_ABSOLUTE, 'w') as file:
+            file.write("")
+    return output_lines
+
+
+def get_latest_error_lines(WEBSERVER_OUTPUT_ABSOLUTE):
+    output_lines = get_latest_npm_output(WEBSERVER_OUTPUT_ABSOLUTE)
+    error_lines = []
+
+    for line in reversed(output_lines):
+        if line_contains_error(line):
+            error_lines = output_lines[output_lines.index(line):]
+            break
+
+    # remove "The above"
+    if len(error_lines) > 0 and "The above" in error_lines[0]:
+        line = error_lines[0]
+        wordsIndex = line.find("The above")
+        print("wordsIndex", wordsIndex)
+        error_lines[0] = line[wordsIndex + len("The above"):]
+
+    # if a line includes "Consider adding" then remove it and all subsequent lines
+    for i, line in enumerate(error_lines):
+        if "Consider adding" in line:
+            error_lines = error_lines[:i]
+            break
+
+    return error_lines
+
+
+def line_contains_error(line):
+    if "[vite]" in line and "error" in line:
+        return True
+    if "above error occurred" in line:
+        return True
+    return False
