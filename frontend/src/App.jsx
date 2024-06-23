@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+
 import "./App.css";
 import { handleCalculate } from "./utils/helpers";
 
-// import './App.css';
-
 function App() {
+    const bgImageUrl =
+        "https://i.ytimg.com/vi/tzD9OxAHtzU/oar2.jpg?sqp=-oaymwEYCJUDENAFSFqQAgHyq4qpAwcIARUAAIhC&rs=AOn4CLAROSJukM30CxCMoacqsDFlBWSpnA";
+
     const [input, setInput] = useState("");
 
     const handleKeyDown = (event) => {
@@ -35,7 +37,7 @@ function App() {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-white">
+        <div className="flex items-center justify-center min-h-screen">
             <div className="calculator space-y-2">
                 <div className="display bg-gray-200 p-4 text-bold text-xl h-16 flex items-center justify-end rounded">
                     {input}
@@ -73,4 +75,5 @@ function App() {
         </div>
     );
 }
+
 export default App;

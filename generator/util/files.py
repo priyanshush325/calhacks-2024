@@ -18,7 +18,6 @@ class FileModification:
 
 
 def modifyFile(filePath, modifications):
-    print(f"Printing modifications: {modifications}")
 
     with open(filePath, 'r') as file:
         lines = file.readlines()
@@ -124,6 +123,10 @@ def fetchProjectTree(projectDirectory):
                 projectTree.append(os.path.join(root, file))
     except Exception as e:
         print(f"An error occurred: {e}")  # Error handling output
+
+    # remove all files that end in .priyanshu
+    projectTree = [
+        file for file in projectTree if not file.endswith(".priyanshu")]
 
     return "\n".join(projectTree)
 

@@ -4,6 +4,24 @@ from util.files import (checkPrettier, createFile, deleteFile,
                         fetchProjectTree, modifyFile, FileModification, readFile)
 from util.prompting import generatePrompt, requestGPT
 
+# ProjectInfo type
+# - projectName: str
+# - projectSourceDir: str
+# - repoInfoPath: str
+# - repoInfo: str
+
+
+class ProjectInfo:
+    def __init__(self, projectName, projectSourceDir, repoInfoPath):
+        self.projectName = projectName
+        self.projectSourceDir = projectSourceDir
+        self.repoInfoPath = repoInfoPath
+
+        with open(repoInfoPath, 'r') as file:
+            self.repoInfo = file.read()
+            print(f"Repo Info: {self.repoInfo}")
+
+
 # FileAction type
 # - action: str "CREATE" or "MODIFY" or "DELETE"
 # - filePath: str
@@ -17,8 +35,9 @@ class FileAction:
         self.prompt = prompt
 
 
-def createActionPlan(userPrompt, client, MODEL, directory):
-    projectTree = fetchProjectTree(directory)
+def createActionPlan(userPrompt, client, MODEL, projectInfo):
+
+    projectTree = fetchProjectTree(projectInfo.projectSourceDir)
 
     prompt = generatePrompt(
         "./generator/prompts/createActionPlan.txt", [
@@ -41,10 +60,10 @@ def createActionPlan(userPrompt, client, MODEL, directory):
 
     for action in actions:
         print(f"Action: {action.action}, File: {action.filePath}")
-        executeAction(action, client, MODEL, directory)
+        executeAction(action, client, MODEL, projectInfo)
 
 
-def executeAction(action, client, MODEL, directory):
+def executeAction(action, client, MODEL, projectInfo):
     if action.action == "CREATE":
         createFile(action.filePath)
     elif action.action == "DELETE":
@@ -53,7 +72,7 @@ def executeAction(action, client, MODEL, directory):
 
     # now run the prompt to modify the file
     handleFeaturePrompt(action.prompt, action.filePath,
-                        client, MODEL, directory)
+                        client, MODEL, projectInfo)
 
     return "SUCCESS"  # TODO: return "ERROR" if the file could not be modified
 
@@ -103,17 +122,18 @@ def generateFixPrompt(file, client, MODEL):
         return "FIX_ERROR"
 
 
-def handleFeaturePrompt(prompt, filePath, client, MODEL, directory):
+def handleFeaturePrompt(prompt, filePath, client, MODEL, projectInfo):
 
-    projectTree = fetchProjectTree(directory)
+    projectTree = fetchProjectTree(projectInfo.projectSourceDir)
 
     appPrompt = generatePrompt(
         "./generator/prompts/generateReplacementCode.txt", [
+            projectInfo.repoInfo,
+            projectTree,
             "React",
             filePath,
             readFile(filePath),
-            prompt,
-            projectTree
+            prompt
         ])
 
     response = requestGPT(client, MODEL, appPrompt)

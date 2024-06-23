@@ -1,6 +1,7 @@
 You will be given the following:
+- some general information about a codebase
 - a list of files in a codebase
-- a file of [PARAM0] code, where each line starts with a line number
+- a file of [PARAM2] code, where each line starts with a line number
 - a modification request for a feature to change in the code
 
 You must output the following JSON object that contains modifications that will address the modification request:
@@ -24,13 +25,15 @@ type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) wi
 
 Make sure to include modifications to add any required imports.
 
-CODEBASE FILES: [PARAM4]
+GENERAL INFORMATION: [PARAM0]
 
-FILE ([PARAM1]):
+CODEBASE FILES: [PARAM1]
 
-[PARAM2]
+FILE ([PARAM3]):
+
+[PARAM4]
 
 END OF FILE
 
 Modification Request:
-[PARAM3]
+[PARAM5]
