@@ -19,7 +19,9 @@ class ProjectInfo:
 
         with open(repoInfoPath, 'r') as file:
             self.repoInfo = file.read()
-            print(f"Repo Info: {self.repoInfo}")
+            print(f"Repo Info (read from .priyanshu file): {self.repoInfo}")
+    
+        print("---------------------------------------")
 
 
 # FileAction type
