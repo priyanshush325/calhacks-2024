@@ -1,8 +1,8 @@
 import json
 
-from util.files import (checkPrettier, createFile, deleteFile,
-                        fetchProjectTree, modifyFile, FileModification, readFile, checkFileExists, runCommandInDirectory)
+from util.files import *
 from util.prompting import generatePrompt, requestGPT
+import threading
 
 # ProjectInfo type
 # - projectName: str
@@ -17,9 +17,10 @@ class ProjectInfo:
         self.projectSourceDir = projectSourceDir
         self.repoInfoPath = repoInfoPath
 
-        with open(repoInfoPath, 'r') as file:
-            self.repoInfo = file.read()
-            # print(f"Repo Info (read from .priyanshu file): {self.repoInfo}")
+        priyanshuFile = readPriyanshuFile(repoInfoPath)
+        self.repoInfo = priyanshuFile.get("description", {})
+
+        # print(f"Repo Info (read from .priyanshu file): {self.repoInfo}")
 
         # print("---------------------------------------")
 
@@ -49,17 +50,9 @@ class FileAction:
 
 def createActionPlan(userPrompt, client, MODEL, projectInfo):
 
-    projectTree = fetchProjectTree(projectInfo.projectSourceDir)
-
-    prompt = generatePrompt(
-        "./generator/prompts/createActionPlan.txt", [
-            projectInfo.repoInfo,
-            projectTree,
-            userPrompt
-        ])
-
-    response = requestGPT(client, MODEL, prompt)
-    commands, actions = parseActionPlan(response)
+    actionPlan = APIActionPlan(userPrompt, client, MODEL, projectInfo, [])
+    commands = actionPlan["commands"]
+    actions = actionPlan["actions"]
 
     print(f"=========COMMANDS=========")
     print("\n".join(commands))
@@ -81,29 +74,14 @@ def createActionPlan(userPrompt, client, MODEL, projectInfo):
         print("Action plan cancelled.")
         return
 
-    # run the commands
-    for command in commands:
-        runCommandInDirectory(command, projectInfo.projectSourceDir)
-
-    # for each of the actions, grab the context files content and cache them in a dict called contextFiles
-    allContextFiles = {}
-    for action in actions:
-        for file in action.contextFiles:
-            if checkFileExists(file):
-                allContextFiles[file] = readFile(file, False)
-
-    for action in actions:
-        print(f"Action: {action.action}, File: {action.filePath}")
-        executeAction(action, client, MODEL, projectInfo, allContextFiles)
-
-    print("Action plan executed successfully.")
+    confirmActions(actions, client, MODEL, projectInfo)
 
 
 def APIActionPlan(userPrompt, client, MODEL, projectInfo, promptHistory):
     projectTree = fetchProjectTree(projectInfo.projectSourceDir)
 
     NUM_HISTORY = 3
-    lastTwoPrompts = promptHistory[-3:]
+    lastTwoPrompts = promptHistory[-NUM_HISTORY:]
     lastTwoPrompts = "\n".join(
         [f"{i + 1}. {p}" for i, p in enumerate(lastTwoPrompts)])
 
@@ -124,6 +102,72 @@ def APIActionPlan(userPrompt, client, MODEL, projectInfo, promptHistory):
     }
 
     return action_plan
+
+
+def confirmActions(actionPlan, client, MODEL, projectInfo):
+
+    print("PENDING_ACTIONS: ", actionPlan)
+    if actionPlan is None:
+        return "No actions found", 400
+    else:
+        print("running commands")
+        # run the commands
+        for command in actionPlan["commands"]:
+            print(f"Running command: {command}")
+            runCommandInDirectory(command, projectInfo.projectSourceDir)
+
+        # Execute actions
+
+        print("running actions")
+        allContextFiles = {}
+        for action in actionPlan["actions"]:
+            for file in action.contextFiles:
+                if checkFileExists(file):
+                    allContextFiles[file] = readFile(file, False)
+        for action in actionPlan["actions"]:
+            # print(f"Action: {action.action}, File: {
+            #       action.filePath}, Prompt: {action.prompt}")
+            print(f"Running action: {action.action} {action.filePath}")
+            executeAction(action, client, MODEL, projectInfo, allContextFiles)
+
+    # spawn another process to update the summary
+    # new thread
+    try:
+        if len(actionPlan.get("actions", [])) > 0:
+            updateSummaryThread = threading.Thread(
+                target=updateSummary, args=(actionPlan["actions"], client, MODEL, projectInfo))
+            updateSummaryThread.start()
+    except Exception as e:
+        print(f"An error occurred while trying to update the summary: {e}")
+
+    return "Actions executed", 200
+
+
+def updateSummary(actions, client, MODEL, projectInfo):
+    print("Updating summary...")
+
+    for action in actions:
+        if (action.action == "MODIFY" or action.action == "CREATE"):
+            summary = summarizeFile(action.filePath, client, MODEL)
+            updatePriyanshuFile(projectInfo.repoInfoPath,
+                                action.filePath, summary)
+
+    print("Summary updated successfully.")
+
+
+def resummariesFiles(client, MODEL, projectInfo):
+    projectTree = fetchProjectTree(projectInfo.projectSourceDir)
+    projectTree = projectTree.split("\n")
+    for file in projectTree:
+        print(f"Resummarizing file: {file}")
+        summary = summarizeFile(file, client, MODEL)
+        if summary is None:
+            print(f"Could not resummarize {file}.")
+            continue
+        print(f"Summary: {summary.description}")
+        updatePriyanshuFile(projectInfo.repoInfoPath, file, summary)
+
+    print("All files resummarized.")
 
 
 def executeAction(action, client, MODEL, projectInfo, allContextFiles):
@@ -207,9 +251,33 @@ def generateFixPrompt(file, client, MODEL, prettierInfo):
     result = checkPrettier(file)
 
     if result == "PRETTIER_ERROR":
-        return "FIX_ERROR"
+
+        print("Prettier error 2 detected. Attempting to fix...")
+        result = generateLastDitchFixPrompt(
+            file, client, MODEL, prettierInfo)
+        if result == "ERROR":
+            return "ERROR"
+        elif result == "SUCCESS":
+            return "SUCCESS"
+
     elif result == "SUCCESS":
         return "SUCCESS"
+
+
+def generateLastDitchFixPrompt(file, client, MODEL, prettierInfo):
+    correctionPrompt = generatePrompt(
+        "./generator/prompts/generateFixCode.txt", [
+            "N/A",
+            "N/A",
+            file,
+            readFile(file),
+            "Rewrite the entire file. Make sure to include all necessary imports, exports, and other required code. Make sure the new file is syntactically correct."
+        ])
+    response = requestGPT(client, MODEL, correctionPrompt)
+    mods = parseModificationObjectsFromString(response)
+    result = modifyFile(file, mods)
+    if result != "SUCCESS":
+        return "ERROR"
 
 
 def handleFeaturePrompt(prompt, contextFiles, filePath, client, MODEL, projectInfo):
@@ -296,3 +364,51 @@ def line_contains_error(line):
     if "above error occurred" in line:
         return True
     return False
+
+# summary
+# - description: str
+# - exports: str[]
+# - imports: str[]
+
+
+class Summary:
+    def __init__(self, description, exports, imports):
+        self.description = description
+        self.exports = exports
+        self.imports = imports
+
+    def to_dict(self):
+        return {
+            "description": self.description,
+            "exports": self.exports,
+            "imports": self.imports
+        }
+
+
+def summarizeFile(filePath, client, MODEL):
+
+    # check if the file exists and is a file not a directory
+    if not checkFileExists(filePath) or checkIsDirectory(filePath):
+        return None
+
+    # read the file
+    fileContent = readFile(filePath)
+    summaryPrompt = generatePrompt(
+        "./generator/prompts/summarizeFile.txt", [
+            filePath,
+            fileContent
+        ])
+
+    response = requestGPT(client, "gpt-3.5-turbo", summaryPrompt)
+
+    summary = parseSummaryResponse(response)
+
+    return summary
+
+
+def parseSummaryResponse(response):
+    summary = json.loads(response)
+    description = summary.get("description", "")
+    exports = summary.get("exports", [])
+    imports = summary.get("imports", [])
+    return Summary(description, exports, imports)

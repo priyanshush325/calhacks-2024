@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import "./App.css";
 
@@ -16,8 +16,11 @@ async function sendMessage(message) {
 		}),
 	});
 
-	const data = await response.json();
-	console.log(data);
+	let data = null;
+	if (response.status === 200) {
+		data = await response.json();
+		console.log(data);
+	}
 
 	return {
 		success: response.status === 200,
@@ -71,6 +74,13 @@ function App() {
 	const [awaitingConfirmation, setAwaitingConfirmation] = useState(false);
 
 	const [currentStatus, setCurrentStatus] = useState("");
+	const [inputEnabled, setInputEnabled] = useState(false);
+	const inputRef = useRef(null);
+	useEffect(() => {
+		if (inputEnabled) {
+			inputRef.current.focus();
+		}
+	}, [inputEnabled]);
 	const [actionPlan, setActionPlan] = useState({
 		actions: [],
 		commands: [],
@@ -129,7 +139,7 @@ function App() {
 									type="text"
 									placeholder="Absolute project path"
 									defaultValue={
-										"/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test"
+										"/Users/sonavagarwal/Documents/GitHub/calhacks-2024/health_app"
 									}
 									onChange={(e) =>
 										setProject({ ...project, path: e.target.value })
@@ -146,6 +156,7 @@ function App() {
 										if (successs) {
 											setCurrentStatus("Waiting for messages");
 											setProjectSet(true);
+											setInputEnabled(true);
 											setTimeout(() => {
 												// reload the iframe
 												setUrl(
@@ -200,6 +211,8 @@ function App() {
 					</div>
 
 					<TextareaAutosize
+						ref={inputRef}
+						disabled={!inputEnabled}
 						className="message-box"
 						type="text"
 						placeholder={
@@ -207,6 +220,10 @@ function App() {
 								? "Enter to confirm, anything else to cancel..."
 								: "Enter a prompt..."
 						}
+						style={{
+							opacity: inputEnabled ? 1 : 0.5,
+							cursor: inputEnabled ? "auto" : "not-allowed",
+						}}
 						value={message}
 						onChange={(e) => setMessage(e.target.value)}
 						onKeyDown={async (e) => {
@@ -216,6 +233,7 @@ function App() {
 								console.log("Enter pressed");
 
 								if (awaitingConfirmation) {
+									setInputEnabled(false);
 									if (message === "") {
 										setCurrentStatus("Executing plan");
 										const success = await confirmActions(true);
@@ -241,6 +259,7 @@ function App() {
 									}
 									setTimeout(() => {
 										setCurrentStatus("");
+										setInputEnabled(true);
 									}, 100);
 								} else {
 									console.log("Sending message", message);
@@ -248,16 +267,31 @@ function App() {
 									setCurrentStatus("Sending message");
 									let messageSave = message;
 									setMessage("");
+									setInputEnabled(false);
 									const result = await sendMessage(messageSave);
 									if (result.success) {
-										setAwaitingConfirmation(true);
-										setActionPlan(result.data);
-										setTimeout(() => {
-											setCurrentStatus("Awaiting confirmation");
-										}, 100);
+										if (
+											result.data?.actions?.length === 0 &&
+											result.data?.commands?.length === 0
+										) {
+											setCurrentStatus("No actions required");
+											setTimeout(() => {
+												setCurrentStatus("");
+												setInputEnabled(true);
+											}, 1000);
+											return;
+										} else {
+											setAwaitingConfirmation(true);
+											setActionPlan(result.data);
+											setTimeout(() => {
+												setCurrentStatus("Awaiting confirmation");
+												setInputEnabled(true);
+											}, 100);
+										}
 									} else {
 										alert("Error sending message");
 										setCurrentStatus("");
+										setInputEnabled(true);
 									}
 								}
 							}

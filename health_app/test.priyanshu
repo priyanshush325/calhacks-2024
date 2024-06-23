@@ -41,17 +41,9 @@
             ]
         },
         "App.jsx": {
-            "description": "A React application file that sets up routes for authentication, profile, dashboard, calculator, and playground pages.",
-            "exports": [
-                "App"
-            ],
-            "imports": [
-                "Auth",
-                "Calculator",
-                "DashboardPage",
-                "PlaygroundPage",
-                "ProfilePage"
-            ]
+            "description": "Empty file",
+            "exports": [],
+            "imports": []
         },
         "firebase.js": {
             "description": "A file that initializes Firebase SDK with a configuration object",

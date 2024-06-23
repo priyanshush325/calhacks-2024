@@ -26,6 +26,7 @@ load_dotenv()
 
 client = OpenAI()
 MODEL = "gpt-4o"
+CHEAP_MODEL = "gpt-3.5-turbo"
 
 UI_PORT = 5173
 PROJECT_PORT = 5174
@@ -73,44 +74,19 @@ def processPrompt(prompt):
 
         pr += "\n".join(error_lines)
 
-        PENDING_ACTIONS = APIActionPlan(pr, client, MODEL, PROJECT_INFO)
+        PENDING_ACTIONS = APIActionPlan(
+            pr, client, MODEL, PROJECT_INFO, [])
         return PENDING_ACTIONS, 200
-
-    elif len(newPrompt) < 10:
-        pass
+    elif newPrompt.startswith("!reindex"):
+        resummariesFiles(client, MODEL, PROJECT_INFO)
+        return {"commands": [], "actions": []}, 200
+    elif len(newPrompt) < 5:
+        return {"commands": [], "actions": []}, 400
     else:
         PENDING_ACTIONS = APIActionPlan(
             newPrompt, client, MODEL, PROJECT_INFO, PROMPT_HISTORY)
         PROMPT_HISTORY.append(newPrompt)
         return PENDING_ACTIONS, 200
-
-
-def confirmActions():
-    global PENDING_ACTIONS
-    print("PENDING_ACTIONS: ", PENDING_ACTIONS)
-    if PENDING_ACTIONS is None:
-        return "No actions found", 400
-    else:
-        print("running commands")
-        # run the commands
-        for command in PENDING_ACTIONS["commands"]:
-            print(f"Running command: {command}")
-            runCommandInDirectory(command, PROJECT_INFO.projectSourceDir)
-
-        # Execute actions
-
-        print("running actions")
-        allContextFiles = {}
-        for action in PENDING_ACTIONS["actions"]:
-            for file in action.contextFiles:
-                if checkFileExists(file):
-                    allContextFiles[file] = readFile(file, False)
-        for action in PENDING_ACTIONS["actions"]:
-            # print(f"Action: {action.action}, File: {
-            #       action.filePath}, Prompt: {action.prompt}")
-            print(f"Running action: {action.action} {action.filePath}")
-            executeAction(action, client, MODEL, PROJECT_INFO, allContextFiles)
-        return "Actions executed", 200
 
 
 @app.route("/prompt", methods=["POST"])
@@ -172,11 +148,13 @@ def info():
 @cross_origin()
 def confirm():
     global PENDING_ACTIONS
+    global PROJECT_INFO
+
     if request.json["confirm"] == False:
         PENDING_ACTIONS = None
         return "success", 200
 
-    confirmActions()
+    confirmActions(PENDING_ACTIONS, client, MODEL, PROJECT_INFO)
     PENDING_ACTIONS = None
     return "success", 200
 

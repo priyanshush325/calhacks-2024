@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { handleCalculate } from "../utils/helpers";
 import NumberButton from "./NumberButton";
 
+const flipResult = (result) => {
+    return result.split("").reverse().join("");
+};
+
 const Calculator = () => {
     const [input, setInput] = useState("");
 
@@ -13,7 +17,8 @@ const Calculator = () => {
         try {
             setInput(String(handleCalculate(input)));
         } catch (error) {
-            setInput("Error");
+            const flippedResult = flipResult(String(handleCalculate(input)));
+            setInput(flippedResult);
         }
     };
 
@@ -21,35 +26,38 @@ const Calculator = () => {
         setInput("");
     };
 
-    const handleKeydown = (event) => {
-        switch (event.key) {
-            case "Enter":
-                calculate();
-                break;
-            case "Escape":
-                clearInput();
-                break;
-            case "+":
-            case "-":
-            case "*":
-            case "/":
-            case ".":
-            case "0":
-            case "1":
-            case "2":
-            case "3":
-            case "4":
-            case "5":
-            case "6":
-            case "7":
-            case "8":
-            case "9":
-                handleClick(event.key);
-                break;
-            default:
-                break;
-        }
-    };
+    switch (event.key) {
+        case "f":
+            setInput(flipResult(input));
+            break;
+            switch (event.key) {
+                case "Enter":
+                    calculate();
+                    break;
+                case "Escape":
+                    clearInput();
+                    break;
+                case "+":
+                case "-":
+                case "*":
+                case "/":
+                case ".":
+                case "0":
+                case "1":
+                case "2":
+                case "3":
+                case "4":
+                case "5":
+                case "6":
+                case "7":
+                case "8":
+                case "9":
+                    handleClick(event.key);
+                    break;
+                default:
+                    break;
+            }
+    }
 
     useEffect(() => {
         window.addEventListener("keydown", handleKeydown);

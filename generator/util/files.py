@@ -175,6 +175,10 @@ def checkFileExists(filePath):
     return os.path.exists(filePath)
 
 
+def checkIsDirectory(filePath):
+    return os.path.isdir(filePath)
+
+
 def readFile(file, includeLineNumbers=True):
 
     content = ""
@@ -197,40 +201,80 @@ def readFile(file, includeLineNumbers=True):
     return "\n".join(lines)
 
 
-# # Asynchronous function to check for compile errors
-# async def checkPage(localhostLink):
-#     print(f"Checking for compile error in {localhostLink}")
-
-#     async def visit_link():
-#         browser = await launch(headless=True)
-#         page = await browser.newPage()
-#         await page.goto(localhostLink)
-#         # wait for selector #root
-#         await page.waitForSelector("#root")
-#         await page.waitFor(1000)
-#         content = await page.content()
-#         await browser.close()
-#         return content
-
-#     content = await visit_link()
-#     print(f"Content: {content}")
-#     soup = BeautifulSoup(content, 'html.parser')
-
-#     # find the vite-error-overlay element
-#     error_overlay = soup.find('vite-error-overlay')
-
-#     print(f"Error overlay: {error_overlay}")
-
-#     if error_overlay:
-#         print("Compile error found!")
-#         # print all the content of the error overlay
-#         print(error_overlay.)
-#         return "COMPILE_ERROR", error_overlay
-#     else:
-#         print("No compile error found!")
-#         return "SUCCESS", None
+def readPriyanshuFile(priyanshuPath):
+    with open(priyanshuPath, 'r') as f:
+        data = json.load(f)
+    return data
 
 
-# def checkForCompileError(localhostLink):
-#     res, error = asyncio.run(checkPage(localhostLink))
-#     return res, error
+def filePathToPriyanshuPath(filePath):
+    # remove everything up to the source directory
+    if not "/src" in filePath:
+        return ""
+    relativeFilePath = filePath.split("src/")[1]
+
+    # remove any extra spaces at the end
+    relativeFilePath = relativeFilePath.strip()
+
+    return relativeFilePath
+
+
+def updatePriyanshuFile(priyanshuPath, filePath, summary):
+    # read the priyanshu file
+    with open(priyanshuPath, 'r') as f:
+        data = json.load(f)
+
+    relativeFilePath = filePathToPriyanshuPath(filePath)
+    if relativeFilePath == "":
+        return
+
+    # if the attribute "files" is not present, add it
+    if "files" not in data:
+        data["files"] = {}
+
+    # create a summary of the file
+    fileSummary = summary.to_dict()
+
+    # add the file summary to the data
+    data["files"][relativeFilePath] = fileSummary
+
+    # write the updated data back to the priyanshu file
+    with open(priyanshuPath, 'w') as f:
+        json.dump(data, f, indent=4)
+
+        # # Asynchronous function to check for compile errors
+        # async def checkPage(localhostLink):
+        #     print(f"Checking for compile error in {localhostLink}")
+
+        #     async def visit_link():
+        #         browser = await launch(headless=True)
+        #         page = await browser.newPage()
+        #         await page.goto(localhostLink)
+        #         # wait for selector #root
+        #         await page.waitForSelector("#root")
+        #         await page.waitFor(1000)
+        #         content = await page.content()
+        #         await browser.close()
+        #         return content
+
+        #     content = await visit_link()
+        #     print(f"Content: {content}")
+        #     soup = BeautifulSoup(content, 'html.parser')
+
+        #     # find the vite-error-overlay element
+        #     error_overlay = soup.find('vite-error-overlay')
+
+        #     print(f"Error overlay: {error_overlay}")
+
+        #     if error_overlay:
+        #         print("Compile error found!")
+        #         # print all the content of the error overlay
+        #         print(error_overlay.)
+        #         return "COMPILE_ERROR", error_overlay
+        #     else:
+        #         print("No compile error found!")
+        #         return "SUCCESS", None
+
+        # def checkForCompileError(localhostLink):
+        #     res, error = asyncio.run(checkPage(localhostLink))
+        #     return res, error

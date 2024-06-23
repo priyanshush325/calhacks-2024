@@ -54,7 +54,11 @@ MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut functi
 
 GENERAL INFORMATION: [PARAM0]
 
-CODEBASE FILES: [PARAM1]
+CODEBASE FILES: 
+
+[PARAM1]
+
+END OF CODEBASE FILES
 
 LAST MODIFICATION REQUESTS:
 

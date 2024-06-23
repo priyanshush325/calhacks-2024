@@ -1,0 +1,31 @@
+You will be given the following:
+- a file of code
+
+You must output the following JSON object that contains a description of the file:
+{
+    "description": "A description of the file content",
+    "exports": ["exportedFunction1", "exportedFunction2"],
+    "imports": ["importedFunction1", "importedFunction2"],
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+description:
+A high level description of the file content. (LIMIT: 2 sentences)
+
+exports:
+A list of function names or components or variables that are exported from the file. (LIMIT: 10)
+
+imports:
+A list of function names or components or variables that are imported or used in the file. (LIMIT: 10)
+Only include imports from other project files. 
+Do not include imports from libraries or built-in modules or other standard imports (such as React, useState, etc.)
+
+Things to note:
+- if the file is empty, the description should be "Empty file"
+
+FILE ([PARAM0]):
+
+[PARAM1]
