@@ -64,25 +64,7 @@ PROJECT_PORT = int(args.port) + 1
 # Start the project server
 ##########################
 
-WEBSERVER_OUTPUT = "./generator-logs/webserver.txt"
-WEBSERVER_OUTPUT_ABSOLUTE = os.path.abspath(WEBSERVER_OUTPUT)
-if not os.path.exists("./generator-logs"):
-    os.mkdir("./generator-logs")
-if not os.path.exists(WEBSERVER_OUTPUT):
-    with open(WEBSERVER_OUTPUT, 'w') as f:
-        f.write("")
-originalDirectory = os.getcwd()
-os.chdir(args.directory)
-command = f"npm run dev -- --port {UI_PORT}"
-command += f" 2>{WEBSERVER_OUTPUT_ABSOLUTE}"
-command += f" 1>{WEBSERVER_OUTPUT_ABSOLUTE}"
-command += f" < /dev/null &"
-process = subprocess.Popen(
-    command,
-    shell=True,
-    text=True
-)
-os.chdir(originalDirectory)
+startProjectServer(PROJECT_SOURCE_DIRECTORY, args.directory, PROJECT_PORT)
 
 ##########################
 

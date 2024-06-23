@@ -6,26 +6,53 @@ const baseUrl = import.meta.env.VITE_PROJECT_URL;
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 
 async function sendMessage(message) {
-	response = await fetch(serverUrl + "/message", {
+	response = await fetch(serverUrl + "/prompt", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify({ message }),
+		body: JSON.stringify({
+			prompt: message,
+		}),
 	});
+
+	const data = await response.json();
+	console.log(data);
+}
+
+async function confirmActions(confirm) {
+	response = await fetch(serverUrl + "/confirm", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			confirm: confirm,
+		}),
+	});
+
+	const data = await response.json();
+	console.log(data);
+
+	return response.status === 200;
 }
 
 async function sendProject(project) {
-	response = await fetch(serverUrl + "/project", {
+	response = await fetch(serverUrl + "/info", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
 		body: {
-			projectName: project.name,
+			// projectName: project.name,
 			projectSourceDir: project.path,
 		},
 	});
+
+	const data = await response.json();
+	console.log(data);
+
+	return response.status === 200;
 }
 
 function App() {
@@ -37,7 +64,9 @@ function App() {
 
 	const [url, setUrl] = useState(baseUrl);
 	const [urlBar, setUrlBar] = useState(baseUrl);
+
 	const [message, setMessage] = useState("");
+	const [awaitingConfirmation, setAwaitingConfirmation] = useState(false);
 
 	return (
 		<>
@@ -85,7 +114,16 @@ function App() {
 										setProject({ ...project, path: e.target.value })
 									}
 								/>
-								<button>Submit</button>
+								<button
+									onClick={async () => {
+										let successs = await sendProject(project);
+										if (successs) {
+											setProjectSet(true);
+										}
+									}}
+								>
+									Submit
+								</button>
 							</div>
 						)}
 					</div>
@@ -100,7 +138,11 @@ function App() {
 					<TextareaAutosize
 						className="message-box"
 						type="text"
-						placeholder="Enter a prompt..."
+						placeholder={
+							awaitingConfirmation
+								? "Enter to confirm, anything else to cancel..."
+								: "Enter a prompt..."
+						}
 						value={message}
 						onChange={(e) => setMessage(e.target.value)}
 						onKeyDown={(e) => {
@@ -108,10 +150,23 @@ function App() {
 								e.preventDefault();
 
 								console.log("Enter pressed");
-								if (message === "") return;
 
-								sendMessage(message);
-								setMessage("");
+								if (awaitingConfirmation) {
+									if (message === "") {
+										confirmActions(true);
+										setMessage("");
+										setAwaitingConfirmation(false);
+									} else {
+										confirmActions(false);
+										setMessage("");
+										setAwaitingConfirmation(false);
+									}
+								} else {
+									if (message === "") return;
+
+									sendMessage(message);
+									setMessage("");
+								}
 							}
 						}}
 					/>
