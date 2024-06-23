@@ -8,12 +8,14 @@ import os
 # - endLine: int (inclusive)
 # - code: str
 
+
 class FileModification:
     def __init__(self, type, startLine, endLine, code):
         self.type = type
         self.startLine = startLine
         self.endLine = endLine
         self.code = code
+
 
 def modifyFile(filePath, modifications):
     print(f"Printing modifications: {modifications}")
@@ -48,6 +50,7 @@ def modifyFile(filePath, modifications):
 
     return "SUCCESS"
 
+
 def checkPrettier(filePath):
 
     # save the current directory
@@ -68,6 +71,7 @@ def checkPrettier(filePath):
         return "PRETTIER_ERROR"
     return "SUCCESS"
 
+
 def organizeImports(filePath):
     # save the current directory
     originalDirectory = os.getcwd()
@@ -87,20 +91,53 @@ def organizeImports(filePath):
         return "ORGANIZE_IMPORTS_ERROR"
     return "SUCCESS"
 
-def parseModificationObjectsFromString(modificationsString):
 
-    # read the modifications object from the string
-    modifications = json.loads(modificationsString)
+def createFile(filePath):
+    parts = filePath.split("/")
+    # recursively create the directories
+    for i in range(1, len(parts)):
+        path = "/".join(parts[:i])
+        if not os.path.exists(path):
+            os.mkdir(path)
 
-    # the key holds "modifications" a list of dictionaries
-    # convert each dictionary to a FileModification object
-    modificationObjects = []
-    for modification in modifications["modifications"]:
-        modificationObjects.append(FileModification(
-            modification["type"],
-            modification["startLine"],
-            modification["endLine"],
-            modification["code"]
-        ))
+    # create the file
+    with open(filePath, 'w') as f:
+        f.write("")
+    return
 
-    return modificationObjects
+
+def deleteFile(filePath):
+    try:
+        os.remove(filePath)
+        return
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return
+
+
+def fetchProjectTree(projectDirectory):
+    projectTree = []
+
+    try:
+        for root, dirs, files in os.walk(projectDirectory):
+            for file in files:
+                projectTree.append(os.path.join(root, file))
+    except Exception as e:
+        print(f"An error occurred: {e}")  # Error handling output
+
+    return "\n".join(projectTree)
+
+
+def readFile(file):
+    content = ""
+    with open(file, 'r') as f:
+        content = f.read()
+
+    if content == "":
+        return f"1. /* File {file} is empty. */"
+
+    lines = content.split("\n")
+    for i in range(len(lines)):
+        lines[i] = f"{i+1}. {lines[i]}"
+
+    return "\n".join(lines)

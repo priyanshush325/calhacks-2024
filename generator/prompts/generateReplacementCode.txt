@@ -1,4 +1,5 @@
 You will be given the following:
+- a list of files in a codebase
 - a file of [PARAM0] code, where each line starts with a line number
 - a modification request for a feature to change in the code
 
@@ -22,6 +23,8 @@ type "REPLACE" --> code will replace the lines from startLine (inclusive) to end
 type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
 
 Make sure to include modifications to add any required imports.
+
+CODEBASE FILES: [PARAM4]
 
 FILE ([PARAM1]):
 

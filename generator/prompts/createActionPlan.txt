@@ -1,0 +1,47 @@
+You will be given the following:
+- a list of files in a [PARAM0] codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request.
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is exported/imported, and that the import statements use the correct relative path
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js"
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function"
+============
+
+LIST OF FILES:
+
+[PARAM1]
+
+END OF LIST OF FILES
+
+Modification Request:
+[PARAM2]
