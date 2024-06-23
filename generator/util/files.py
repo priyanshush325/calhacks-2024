@@ -3,13 +3,15 @@ import subprocess
 import os
 
 # FileModification type
+# - type: str ("INSERT" or "REPLACE" or "DELETE")
 # - startLine: int (inclusive)
 # - endLine: int (inclusive)
 # - code: str
 
 
 class FileModification:
-    def __init__(self, startLine, endLine, code):
+    def __init__(self, type, startLine, endLine, code):
+        self.type = type
         self.startLine = startLine
         self.endLine = endLine
         self.code = code
@@ -96,6 +98,7 @@ def parseModificationObjectsFromString(modificationsString):
     modificationObjects = []
     for modification in modifications["modifications"]:
         modificationObjects.append(FileModification(
+            modification["type"],
             modification["startLine"],
             modification["endLine"],
             modification["code"]
