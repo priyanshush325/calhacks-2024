@@ -41,7 +41,7 @@ def createActionPlan(userPrompt, client, MODEL, projectInfo):
 
     prompt = generatePrompt(
         "./generator/prompts/createActionPlan.txt", [
-            "React",
+            projectInfo.repoInfo,
             projectTree,
             userPrompt
         ])
@@ -81,8 +81,14 @@ def parseActionPlan(string):
     actionPlan = json.loads(string)
     actions = []
     for action in actionPlan["actions"]:
-        actions.append(FileAction(
-            action["action"], action["filePath"], action["prompt"]))
+        a = action.get("action", "MODIFY")
+        fP = action.get("filePath", "")
+        p = action.get("prompt", "")
+
+        if fP == "" or a == "":
+            continue
+
+        actions.append(FileAction(a, fP, p))
     return actions
 
 
@@ -96,10 +102,10 @@ def parseModificationObjectsFromString(modificationsString):
     modificationObjects = []
     for modification in modifications["modifications"]:
         modificationObjects.append(FileModification(
-            modification["type"],
-            modification["startLine"],
-            modification["endLine"],
-            modification["code"]
+            modification.get("type", "REPLACE"),
+            modification.get("startLine", 0),
+            modification.get("endLine", 0),
+            modification.get("code", "")
         ))
 
     return modificationObjects
@@ -109,7 +115,8 @@ def generateFixPrompt(file, client, MODEL, prettierInfo):
     print(f"Prettier error log was: {prettierInfo}")
     correctionPrompt = generatePrompt(
         "./generator/prompts/generateReplacementCode.txt", [
-            "React",
+            "N/A",
+            "N/A",
             file,
             readFile(file),
             "There was an error running prettier on the file. Check for missing opening or closing tags, mismatched parentheses or braces, missing statements, etc. Please correct the code to fix the error. Here is the error log from Prettier: {prettierInfo}"
@@ -117,10 +124,15 @@ def generateFixPrompt(file, client, MODEL, prettierInfo):
     response = requestGPT(client, MODEL, correctionPrompt)
     mods = parseModificationObjectsFromString(response)
     result = modifyFile(file, mods)
-    if result == "SUCCESS":
-        return "SUCCESS"
-    else:
+    if result != "SUCCESS":
+        return "ERROR"
+
+    result = checkPrettier(file)
+
+    if result == "PRETTIER_ERROR":
         return "FIX_ERROR"
+    elif result == "SUCCESS":
+        return "SUCCESS"
 
 
 def handleFeaturePrompt(prompt, filePath, client, MODEL, projectInfo):
@@ -131,7 +143,6 @@ def handleFeaturePrompt(prompt, filePath, client, MODEL, projectInfo):
         "./generator/prompts/generateReplacementCode.txt", [
             projectInfo.repoInfo,
             projectTree,
-            "React",
             filePath,
             readFile(filePath),
             prompt
@@ -141,7 +152,7 @@ def handleFeaturePrompt(prompt, filePath, client, MODEL, projectInfo):
     mods = parseModificationObjectsFromString(response)
 
     for mod, i in zip(mods, range(len(mods))):
-        print(f"=========MOD {i}=========")
+        print(f"=========MOD {i} ({mod.type})=========")
         print(f"Start: {mod.startLine}, End: {mod.endLine}")
         print(mod.code)
 

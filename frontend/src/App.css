@@ -1,0 +1,11 @@
+body {
+    background-image: url("https://www.si.com/.image/ar_1:1,c_fill,cs_srgb,fl_progressive,q_auto:good,w_1200/MTcyNTUxNTY1Nzg0MTMwNjQz/lebron-james.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

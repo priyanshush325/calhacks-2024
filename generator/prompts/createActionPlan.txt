@@ -1,5 +1,6 @@
 You will be given the following:
-- a list of files in a [PARAM0] codebase
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
 - a modification request for a change or feature in the codebase
 
 You must output the following JSON object that contains actions to take on files:
@@ -21,10 +22,11 @@ action "MODIFY" --> the file at the specified path will be modified
 action "DELETE" --> the file at the specified path will be deleted
 
 prompt:
-The prompt is a string that describes the content to be created or modified in the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request.
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
 
 Things to consider and include in the prompt:
-- Make sure code shared across multiple files is exported/imported, and that the import statements use the correct relative path
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
 
 ============
 EXAMPLE:
@@ -37,9 +39,9 @@ MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange si
 MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function"
 ============
 
-LIST OF FILES:
+GENERAL INFORMATION: [PARAM0]
 
-[PARAM1]
+CODEBASE FILES: [PARAM1]
 
 END OF LIST OF FILES
 

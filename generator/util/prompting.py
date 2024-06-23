@@ -1,3 +1,6 @@
+import os
+
+
 def generatePrompt(promptFilePath, parameters):
     with open(promptFilePath, 'r') as file:
         prompt = file.read()
@@ -12,6 +15,20 @@ def generatePrompt(promptFilePath, parameters):
 
 
 def requestGPT(client, model, question):
+
+    # add the question we're asking to "./generator-logs/logs.txt"
+
+    # if the file doesn't exist, create it
+    if not os.path.exists("./generator-logs/logs.txt"):
+        # create the directory
+        if not os.path.exists("./generator-logs"):
+            os.mkdir("./generator-logs")
+        with open("./generator-logs/logs.txt", 'w') as file:
+            file.write("")
+
+    with open("./generator-logs/logs.txt", 'a') as file:
+        file.write(f"===============\n\n\n{question}\n\n\n")
+
     chat_completion = client.chat.completions.create(
         model=model,
         seed=69,
