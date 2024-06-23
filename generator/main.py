@@ -86,13 +86,15 @@ def confirmActions():
     if PENDING_ACTIONS is None:
         return "No actions found", 400
     else:
-
+        print("running commands")
         # run the commands
         for command in PENDING_ACTIONS["commands"]:
+            print(f"Running command: {command}")
             runCommandInDirectory(command, PROJECT_INFO.projectSourceDir)
 
         # Execute actions
 
+        print("running actions")
         allContextFiles = {}
         for action in PENDING_ACTIONS["actions"]:
             for file in action.contextFiles:
@@ -101,6 +103,7 @@ def confirmActions():
         for action in PENDING_ACTIONS["actions"]:
             # print(f"Action: {action.action}, File: {
             #       action.filePath}, Prompt: {action.prompt}")
+            print(f"Running action: {action.action} {action.filePath}")
             executeAction(action, client, MODEL, PROJECT_INFO, allContextFiles)
         return "Actions executed", 200
 
@@ -177,4 +180,4 @@ if __name__ == "__main__":
 
     startUI(UI_PORT, PROJECT_PORT)
 
-    app.run(debug=True)
+    app.run(debug=False)

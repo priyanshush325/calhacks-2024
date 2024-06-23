@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { handleCalculate } from "../utils/helpers";
+import NumberButton from "./NumberButton";
 
 const Calculator = () => {
     const [input, setInput] = useState("");
@@ -68,20 +69,12 @@ const Calculator = () => {
                 />
                 <div className="grid grid-cols-4 gap-3">
                     {["7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "0", ".", "=", "+"].map((symbol) => (
-                        <button
+                        <NumberButton
                             key={symbol}
+                            value={symbol}
                             onClick={() => (symbol === "=" ? calculate() : handleClick(symbol))}
-                            className={`p-4 ${symbol === "=" ? "bg-green-500 hover:bg-green-600" : "bg-blue-500 hover:bg-blue-600"} text-white rounded-lg transition transform`}
-                        >
-                            {symbol}
-                        </button>
+                        />
                     ))}
-                    <button
-                        onClick={clearInput}
-                        className="col-span-4 p-4 bg-red-500 text-white rounded-lg transition transform hover:bg-red-600"
-                    >
-                        Clear
-                    </button>
                 </div>
             </div>
         </div>

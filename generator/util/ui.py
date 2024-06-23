@@ -1,8 +1,18 @@
 import os
 import subprocess
 
+UI_STARTED = False
+PROJECT_SERVER_STARTED = False
+
 
 def startUI(uiPort, projectPort):
+    global UI_STARTED
+
+    if UI_STARTED:
+        print("UI already started")
+        return
+
+    print(f"Starting UI on port {uiPort}")
 
     # save the current directory
     with open("./generator/ui/.env", "w") as f:
@@ -25,8 +35,17 @@ def startUI(uiPort, projectPort):
 
     os.chdir(cwd)
 
+    UI_STARTED = True
+
 
 def startProjectServer(webServerAbsolute, sourceDirectory, projectPort):
+    global PROJECT_SERVER_STARTED
+
+    if PROJECT_SERVER_STARTED:
+        print("Project server already started")
+        return
+
+    print(f"Starting project server on port {projectPort}")
 
     if not os.path.exists("./generator-logs"):
         os.mkdir("./generator-logs")
@@ -45,3 +64,4 @@ def startProjectServer(webServerAbsolute, sourceDirectory, projectPort):
         text=True
     )
     os.chdir(originalDirectory)
+    PROJECT_SERVER_STARTED = True

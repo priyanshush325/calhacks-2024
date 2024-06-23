@@ -16,7 +16,13 @@ async function sendMessage(message) {
 		}),
 	});
 
-	return response.status === 200;
+	const data = await response.json();
+	console.log(data);
+
+	return {
+		success: response.status === 200,
+		data: data,
+	};
 }
 
 async function confirmActions(confirm) {
@@ -29,9 +35,6 @@ async function confirmActions(confirm) {
 			confirm: confirm,
 		}),
 	});
-
-	const data = await response.json();
-	console.log(data);
 
 	return response.status === 200;
 }
@@ -67,6 +70,13 @@ function App() {
 	const [message, setMessage] = useState("");
 	const [awaitingConfirmation, setAwaitingConfirmation] = useState(false);
 
+	const [currentStatus, setCurrentStatus] = useState("");
+	const [actionPlan, setActionPlan] = useState({
+		actions: [],
+		commands: [],
+	});
+	// each action has action, filePath, prompt, and contextFiles []
+
 	return (
 		<>
 			<div className="page">
@@ -85,6 +95,15 @@ function App() {
 								value={urlBar}
 								onChange={(e) => setUrlBar(e.target.value)}
 							/>
+							<button
+								onClick={() => {
+									let random = Math.floor(Math.random() * 1000000);
+									setUrl(urlBar + "?random=" + random);
+								}}
+								className="reload-button"
+							>
+								Reload
+							</button>
 						</form>
 					</div>
 					<div className="iframe-container">
@@ -109,15 +128,32 @@ function App() {
 								<input
 									type="text"
 									placeholder="Absolute project path"
+									defaultValue={
+										"/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test"
+									}
 									onChange={(e) =>
 										setProject({ ...project, path: e.target.value })
 									}
 								/>
 								<button
 									onClick={async () => {
+										if (project.path === "") {
+											alert("Please enter a project path");
+											return;
+										}
+										setCurrentStatus("Loading project");
 										let successs = await sendProject(project);
 										if (successs) {
+											setCurrentStatus("Waiting for messages");
 											setProjectSet(true);
+											setTimeout(() => {
+												// reload the iframe
+												setUrl(
+													urlBar +
+														"?random=" +
+														Math.floor(Math.random() * 1000000)
+												);
+											}, 1000);
 										}
 									}}
 								>
@@ -131,8 +167,37 @@ function App() {
 					<div
 						style={{
 							flex: 1,
+							display: "flex",
+							flexDirection: "column",
+							gap: "0.5rem",
 						}}
-					></div>
+					>
+						{!!currentStatus && <h1 className="status">{currentStatus}</h1>}
+
+						{actionPlan?.commands?.map((command, index) => (
+							<div key={index} className="command">
+								Run {command}
+							</div>
+						))}
+						{actionPlan?.actions?.map((action, index) => (
+							<div key={index} className="action">
+								<div className="action-action">
+									{action.action}{" "}
+									<span className="action-file">{action.filePath}</span>
+								</div>
+								<div className="action-prompt">{action.prompt}</div>
+								<ul className="action-context">
+									{action.contextFiles.length > 0 && "Context files:"}
+									{action.contextFiles.map((contextFile, index) => (
+										<li key={index} className="context-file">
+											{contextFile}
+										</li>
+									))}
+									{action.contextFiles.length === 0 && "No context files"}
+								</ul>
+							</div>
+						))}
+					</div>
 
 					<TextareaAutosize
 						className="message-box"
@@ -144,7 +209,7 @@ function App() {
 						}
 						value={message}
 						onChange={(e) => setMessage(e.target.value)}
-						onKeyDown={(e) => {
+						onKeyDown={async (e) => {
 							if (e.key === "Enter") {
 								e.preventDefault();
 
@@ -152,19 +217,48 @@ function App() {
 
 								if (awaitingConfirmation) {
 									if (message === "") {
-										confirmActions(true);
-										setMessage("");
+										setCurrentStatus("Executing plan");
+										const success = await confirmActions(true);
 										setAwaitingConfirmation(false);
+										setMessage("");
+										if (success) {
+											setActionPlan({
+												actions: [],
+												commands: [],
+											});
+										}
 									} else {
-										confirmActions(false);
-										setMessage("");
+										setCurrentStatus("Cancelling plan");
+										const success = await confirmActions(false);
 										setAwaitingConfirmation(false);
+										setMessage("");
+										if (success) {
+											setActionPlan({
+												actions: [],
+												commands: [],
+											});
+										}
 									}
+									setTimeout(() => {
+										setCurrentStatus("");
+									}, 100);
 								} else {
+									console.log("Sending message", message);
 									if (message === "") return;
-
-									sendMessage(message);
+									setCurrentStatus("Sending message");
+									let messageSave = message;
 									setMessage("");
+									const result = await sendMessage(messageSave);
+									if (result.success) {
+										setAwaitingConfirmation(true);
+										setActionPlan(result.data);
+										setTimeout(() => {
+											setCurrentStatus("Awaiting confirmation");
+										}, 100);
+									} else {
+										alert("Error sending message");
+										setCurrentStatus("");
+									}
 								}
 							}
 						}}

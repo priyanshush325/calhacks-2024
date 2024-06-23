@@ -47,7 +47,6 @@ class FileAction:
         }
 
 
-
 def createActionPlan(userPrompt, client, MODEL, projectInfo):
 
     projectTree = fetchProjectTree(projectInfo.projectSourceDir)
@@ -99,6 +98,7 @@ def createActionPlan(userPrompt, client, MODEL, projectInfo):
 
     print("Action plan executed successfully.")
 
+
 def APIActionPlan(userPrompt, client, MODEL, projectInfo):
     projectTree = fetchProjectTree(projectInfo.projectSourceDir)
 
@@ -119,8 +119,10 @@ def APIActionPlan(userPrompt, client, MODEL, projectInfo):
 
     return action_plan
 
+
 def executeAction(action, client, MODEL, projectInfo, allContextFiles):
     if action.action == "CREATE":
+        print(f"Creating file: {action.filePath}")
         createFile(action.filePath)
     elif action.action == "DELETE":
         deleteFile(action.filePath)

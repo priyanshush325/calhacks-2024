@@ -5,6 +5,7 @@ import os
 from pyppeteer import launch
 import asyncio
 from bs4 import BeautifulSoup
+import errno
 
 
 # FileModification type
@@ -131,12 +132,12 @@ def organizeImports(filePath):
 
 
 def createFile(filePath):
-    parts = filePath.split("/")
-    # recursively create the directories
-    for i in range(1, len(parts)):
-        path = "/".join(parts[:i])
-        if not os.path.exists(path):
-            os.mkdir(path)
+    if not os.path.exists(os.path.dirname(filePath)):
+        try:
+            os.makedirs(os.path.dirname(filePath))
+        except OSError as exc:  # Guard against race condition
+            if exc.errno != errno.EEXIST:
+                raise
 
     # create the file
     with open(filePath, 'w') as f:

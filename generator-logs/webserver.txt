@@ -2,14 +2,16 @@
 > frontend@0.0.0 dev
 > vite --port 5174
 
-Port 5174 is in use, trying another one...
-Port 5175 is in use, trying another one...
-Port 5176 is in use, trying another one...
-Port 5177 is in use, trying another one...
-Port 5178 is in use, trying another one...
-Port 5179 is in use, trying another one...
 
-  VITE v5.3.1  ready in 292 ms
+  VITE v5.3.1  ready in 112 ms
 
-  ➜  Local:   http://localhost:5180/
+  ➜  Local:   http://localhost:5174/
   ➜  Network: use --host to expose
+» [vite] connected.
+» [vite] connected.
+» [vite] connected.
+» [vite] connected.
+» [vite] connected.
+4:45:52 AM [vite] hmr update /src/App.jsx, /src/index.css
+4:45:53 AM [vite] hmr update /src/App.jsx, /src/index.css
+» [vite] connected.

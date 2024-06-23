@@ -38,6 +38,7 @@ commands: commands to run on the terminal to import required packages, such as "
 Things to consider and include in the prompt:
 - Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
 - Make sure things are exported correctly when needed
+- Try to generate the actions in the order they need to be executed
 
 ============
 EXAMPLE:
