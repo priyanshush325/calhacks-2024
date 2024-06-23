@@ -41,8 +41,10 @@
             ]
         },
         "App.jsx": {
-            "description": "Empty file",
-            "exports": [],
+            "description": "A simple React component that renders 'Hello World' in the center of the page.",
+            "exports": [
+                "App"
+            ],
             "imports": []
         },
         "firebase.js": {

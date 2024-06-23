@@ -2,7 +2,7 @@
     "description": "This project is a frontend demo meant to be a prototype for a health web app. This project is a React App created with Vite. This project uses Tailwind CSS for styling. DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES. Tailwind is already installed",
     "files": {
         "components/Auth.jsx": {
-            "description": "A component for user authentication with form fields for username, email, and password. Validates user credentials and navigates to dashboard if valid.",
+            "description": "A file that defines a component for user authentication. It includes form fields for username, email, and password input with validation logic.",
             "exports": [
                 "Auth"
             ],

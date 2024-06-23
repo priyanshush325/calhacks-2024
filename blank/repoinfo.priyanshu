@@ -2,7 +2,7 @@
     "description": "This project is a React App created with Vite. This project uses Tailwind CSS for styling. DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.",
     "files": {
         "App.jsx": {
-            "description": "A React application file that renders a personal website with navigation links and routes to different pages.",
+            "description": "A simple React component for Priyanshu Sharma's personal website.",
             "exports": [
                 "App"
             ],
@@ -11,20 +11,16 @@
                 "Route",
                 "BrowserRouter",
                 "Routes",
-                "AboutPage",
-                "ContactPage",
-                "HomePage",
-                "ProjectsPage"
+                "ProjectsPage",
+                "ContactPage"
             ]
         },
         "pages/HomePage.jsx": {
-            "description": "A simple functional component for the home page displaying information about Priyanshu Sharma",
+            "description": "A simple React functional component for the Home page with a 'Hello World' heading.",
             "exports": [
                 "HomePage"
             ],
-            "imports": [
-                "img"
-            ]
+            "imports": []
         },
         "pages/ProjectsPage.jsx": {
             "description": "A file that defines the ProjectsPage component, which displays multiple ProjectCard components in a grid layout.",
@@ -84,15 +80,6 @@
             ],
             "imports": [
                 "useState"
-            ]
-        },
-        "pages/AboutPage.jsx": {
-            "description": "A simple React component for displaying an About Me page with placeholder text.",
-            "exports": [
-                "AboutPage"
-            ],
-            "imports": [
-                "React"
             ]
         }
     }

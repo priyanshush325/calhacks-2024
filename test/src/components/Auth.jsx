@@ -76,7 +76,7 @@ const Auth = () => {
                             className="bg-gradient-to-r from-purple-500 to-blue-500 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
                             type="submit"
                         >
-                            Sign In
+                            Login
                         </button>
                     </div>
                 </form>
