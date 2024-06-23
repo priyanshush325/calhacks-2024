@@ -37,8 +37,8 @@ function App() {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen">
-            <div className="calculator space-y-2">
+        <div className="flex items-center justify-center min-h-screen p-4">
+            <div className="calculator space-y-4 w-96">
                 <div className="display bg-gray-200 p-4 text-bold text-xl h-16 flex items-center justify-end rounded">
                     {input}
                 </div>
@@ -46,26 +46,38 @@ function App() {
                     {[...Array(10).keys()].map((num) => (
                         <button
                             key={num}
-                            className="bg-gray-200 rounded w-16 h-16"
+                            className="bg-gray-200 rounded-full w-20 h-20 flex items-center justify-center"
                             onClick={() => handleButtonClick(num.toString())}
                         >
                             {num}
                         </button>
                     ))}
-                    <button className="bg-blue-500 rounded w-16 h-16" onClick={() => handleButtonClick("+")}>
+                    <button
+                        className="bg-blue-500 rounded-full w-20 h-20 flex items-center justify-center"
+                        onClick={() => handleButtonClick("+")}
+                    >
                         +
                     </button>
-                    <button className="bg-blue-500 rounded w-16 h-16" onClick={() => handleButtonClick("-")}>
+                    <button
+                        className="bg-blue-500 rounded-full w-20 h-20 flex items-center justify-center"
+                        onClick={() => handleButtonClick("-")}
+                    >
                         -
                     </button>
-                    <button className="bg-blue-500 rounded w-16 h-16" onClick={() => handleButtonClick("*")}>
+                    <button
+                        className="bg-blue-500 rounded-full w-20 h-20 flex items-center justify-center"
+                        onClick={() => handleButtonClick("*")}
+                    >
                         *
                     </button>
-                    <button className="bg-gray-500 rounded w-16 h-16" onClick={handleClear}>
+                    <button
+                        className="bg-gray-500 rounded-full w-20 h-20 flex items-center justify-center"
+                        onClick={() => handleClear()}
+                    >
                         C
                     </button>
                     <button
-                        className="bg-orange-500 rounded w-16 h-16"
+                        className="bg-orange-500 rounded-full w-20 h-20 flex items-center justify-center"
                         onClick={() => setInput(handleCalculate(input))}
                     >
                         =

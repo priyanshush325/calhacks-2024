@@ -105,13 +105,14 @@ def parseModificationObjectsFromString(modificationsString):
     return modificationObjects
 
 
-def generateFixPrompt(file, client, MODEL):
+def generateFixPrompt(file, client, MODEL, prettierInfo):
+    print(f"Prettier error log was: {prettierInfo}")
     correctionPrompt = generatePrompt(
         "./generator/prompts/generateReplacementCode.txt", [
             "React",
             file,
             readFile(file),
-            "There was an error running prettier on the file. Check for missing opening or closing tags, mismatched parentheses or braces, missing statements, etc. Please correct the code to fix the error."
+            "There was an error running prettier on the file. Check for missing opening or closing tags, mismatched parentheses or braces, missing statements, etc. Please correct the code to fix the error. Here is the error log from Prettier: {prettierInfo}"
         ])
     response = requestGPT(client, MODEL, correctionPrompt)
     mods = parseModificationObjectsFromString(response)
@@ -151,9 +152,9 @@ def handleFeaturePrompt(prompt, filePath, client, MODEL, projectInfo):
 
     result = checkPrettier(filePath)
 
-    if result == "PRETTIER_ERROR":
+    if result[0] == "PRETTIER_ERROR":
         print("Prettier error detected. Attempting to fix...")
-        result = generateFixPrompt(filePath, client, MODEL)
+        result = generateFixPrompt(filePath, client, MODEL, result[2])
         if result == "SUCCESS":
             print(f"{filePath} modified successfully!")
         else:

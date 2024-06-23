@@ -50,8 +50,10 @@ def modifyFile(filePath, modifications):
     return "SUCCESS"
 
 
-def checkPrettier(filePath):
+import os
+import subprocess
 
+def checkPrettier(filePath):
     # save the current directory
     originalDirectory = os.getcwd()
 
@@ -61,14 +63,25 @@ def checkPrettier(filePath):
     os.chdir(projectDirectory)
     realFilePath = filePathParts[-1]
 
-    result = subprocess.run(["npx", "prettier", "--write", realFilePath])
+    # run the prettier command and capture the output
+    result = subprocess.run(
+        ["npx", "prettier", "--write", realFilePath],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True
+    )
 
     # change back to the original directory
     os.chdir(originalDirectory)
 
+    # print the output and error
+    # print(f"STANDARD OUTPUT FROM PRETTIER: {result.stdout}")
+    # print(f"STANDARD ERROR FROM PRETTIER: {result.stderr}")
+
     if result.returncode != 0:
-        return "PRETTIER_ERROR"
+        return "PRETTIER_ERROR", result.stdout, result.stderr
     return "SUCCESS"
+
 
 
 def organizeImports(filePath):
