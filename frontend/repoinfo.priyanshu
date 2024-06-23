@@ -33,12 +33,13 @@
             ]
         },
         "pages/ContactPage.jsx": {
-            "description": "A simple contact page component that displays 'ContactPage' in a centered text",
+            "description": "A simple contact page for contacting Priyanshu",
             "exports": [
                 "ContactPage"
             ],
             "imports": [
-                "App.css"
+                "App.css",
+                "ContactForm"
             ]
         },
         "App.css": {
@@ -71,6 +72,15 @@
             ],
             "imports": [
                 "useNavigate"
+            ]
+        },
+        "components/ContactForm.jsx": {
+            "description": "A React component ContactForm that handles form submission logic and input fields for name, email, and message.",
+            "exports": [
+                "ContactForm"
+            ],
+            "imports": [
+                "useState"
             ]
         }
     }

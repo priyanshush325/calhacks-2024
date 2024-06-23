@@ -198,11 +198,21 @@ def executeAction(action, client, MODEL, projectInfo, allContextFiles):
     contextFiles = []
 
     for file in action.contextFiles:
-        cFS = allContextFiles.get(file, "")
+        try:
+            cFS = readFile(file, False)
 
-        if cFS != "":
-            # prepend the file name to the content and add it to the contextFiles array
-            contextFiles.append(f"/* {file} */\n{cFS}")
+            if cFS != "":
+                # prepend the file name to the content and add it to the contextFiles array
+                contextFiles.append(f"/* {file} */\n{cFS}")
+        except Exception as e:
+            print("Trying to read file from allContextFiles.")
+            try:
+                cFS = allContextFiles.get(file, "")
+                if cFS != "":
+                    # prepend the file name to the content and add it to the contextFiles array
+                    contextFiles.append(f"/* {file} */\n{cFS}")
+            except Exception as e2:
+                print(f"Could not read file {file}.")
 
     contextFiles = "\n".join(contextFiles)
 
