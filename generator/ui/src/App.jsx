@@ -6,7 +6,7 @@ const baseUrl = import.meta.env.VITE_PROJECT_URL;
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 
 async function sendMessage(message) {
-	response = await fetch(serverUrl + "/prompt", {
+	let response = await fetch(serverUrl + "/prompt", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -21,7 +21,7 @@ async function sendMessage(message) {
 }
 
 async function confirmActions(confirm) {
-	response = await fetch(serverUrl + "/confirm", {
+	let response = await fetch(serverUrl + "/confirm", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -38,7 +38,8 @@ async function confirmActions(confirm) {
 }
 
 async function sendProject(project) {
-	response = await fetch(serverUrl + "/info", {
+	console.log(project);
+	let response = await fetch(serverUrl + "/info", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -48,6 +49,8 @@ async function sendProject(project) {
 			projectSourceDir: project.path,
 		},
 	});
+
+	console.log(response);
 
 	const data = await response.json();
 	console.log(data);

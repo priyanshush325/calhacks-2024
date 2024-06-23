@@ -99,8 +99,8 @@ def confirmActions():
                 if checkFileExists(file):
                     allContextFiles[file] = readFile(file, False)
         for action in PENDING_ACTIONS["actions"]:
-            print(f"Action: {action.action}, File: {
-                  action.filePath}, Prompt: {action.prompt}")
+            # print(f"Action: {action.action}, File: {
+            #       action.filePath}, Prompt: {action.prompt}")
             executeAction(action, client, MODEL, PROJECT_INFO, allContextFiles)
         return "Actions executed", 200
 
