@@ -145,6 +145,30 @@ function App() {
 									onChange={(e) =>
 										setProject({ ...project, path: e.target.value })
 									}
+									onKeyDown={async (e) => {
+										if (e.key === "Enter") {
+											if (project.path === "") {
+												alert("Please enter a project path");
+												return;
+											} else {
+												setCurrentStatus("Loading project");
+												let successs = await sendProject(project);
+												if (successs) {
+													setCurrentStatus("Waiting for messages");
+													setProjectSet(true);
+													setInputEnabled(true);
+													setTimeout(() => {
+														// reload the iframe
+														setUrl(
+															urlBar +
+																"?random=" +
+																Math.floor(Math.random() * 1000000)
+														);
+													}, 1000);
+												}
+											}
+										}
+									}}
 								/>
 								<button
 									onClick={async () => {
@@ -168,14 +192,6 @@ function App() {
 											}, 1000);
 										}
 									}}
-									onKeyDown={(e) => {
-										if (e.key === "Enter") {
-											if (project.path === "") {
-												alert("Please enter a project path");
-												return;
-											}
-										}
-									}}
 								>
 									Submit
 								</button>
@@ -190,6 +206,7 @@ function App() {
 							display: "flex",
 							flexDirection: "column",
 							gap: "0.5rem",
+							overflowY: "scroll",
 						}}
 					>
 						{!!currentStatus && <h1 className="status">{currentStatus}</h1>}

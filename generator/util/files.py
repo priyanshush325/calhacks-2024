@@ -219,6 +219,31 @@ def filePathToPriyanshuPath(filePath):
     return relativeFilePath
 
 
+def getPriyanshuFileFileDetails(filePath, priyanshuFile):
+
+    priyanshuPath = filePathToPriyanshuPath(filePath)
+
+    if priyanshuPath == "":
+        return None
+
+    if "files" not in priyanshuFile:
+        return None
+
+    if priyanshuPath not in priyanshuFile["files"]:
+        return None
+
+    details = priyanshuFile["files"][priyanshuPath]
+    retString = f"{filePath}"
+    if "description" in details:
+        retString += f" DESCRIPTION: {details['description']}"
+    if "imports" in details:
+        retString += f" IMPORTS: {", ".join(details.get('imports', []))}"
+    if "exports" in details:
+        retString += f" EXPORTS: {", ".join(details.get('exports', []))}"
+
+    return retString
+
+
 def updatePriyanshuFile(priyanshuPath, filePath, summary):
     # read the priyanshu file
     with open(priyanshuPath, 'r') as f:

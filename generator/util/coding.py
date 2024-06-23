@@ -85,10 +85,27 @@ def APIActionPlan(userPrompt, client, MODEL, projectInfo, promptHistory):
     lastTwoPrompts = "\n".join(
         [f"{i + 1}. {p}" for i, p in enumerate(lastTwoPrompts)])
 
+    print("APIActionPlan: ", userPrompt)
+    # print cwd
+    print("CWD: ", os.getcwd())
+
+    # fetch file information from project tree and .priyanshu file
+    priyanshuFile = readPriyanshuFile(projectInfo.repoInfoPath)
+    projectTree = projectTree.split("\n")
+    projectFiles = []
+    for file in projectTree:
+        fileDetails = getPriyanshuFileFileDetails(file, priyanshuFile)
+        if fileDetails is not None:
+            projectFiles.append(fileDetails)
+        else:
+            projectFiles.append(file)
+
+    projectTreeWithInfo = "\n".join(projectFiles)
+
     prompt = generatePrompt(
         "./generator/prompts/createActionPlan.txt", [
             projectInfo.repoInfo,
-            projectTree,
+            projectTreeWithInfo,
             lastTwoPrompts,
             userPrompt
         ])
@@ -251,7 +268,6 @@ def generateFixPrompt(file, client, MODEL, prettierInfo):
     result = checkPrettier(file)
 
     if result == "PRETTIER_ERROR":
-
         print("Prettier error 2 detected. Attempting to fix...")
         result = generateLastDitchFixPrompt(
             file, client, MODEL, prettierInfo)
@@ -259,8 +275,8 @@ def generateFixPrompt(file, client, MODEL, prettierInfo):
             return "ERROR"
         elif result == "SUCCESS":
             return "SUCCESS"
-
     elif result == "SUCCESS":
+        print("Prettier error fixed successfully (1)")
         return "SUCCESS"
 
 

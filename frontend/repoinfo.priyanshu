@@ -1,3 +1,65 @@
 {
-    "description": "This project is a simple calculator app. This project is a React App created with Vite. This project uses Tailwind CSS for styling. DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES."
+    "description": "This project is a React App created with Vite. This project uses Tailwind CSS for styling. DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.",
+    "files": {
+        "App.jsx": {
+            "description": "A React component for Priyanshu Sharma's personal website that uses react-router-dom for routing.",
+            "exports": [
+                "App"
+            ],
+            "imports": [
+                "Link",
+                "Route",
+                "BrowserRouter",
+                "Routes",
+                "ContactPage",
+                "HomePage",
+                "ProjectsPage"
+            ]
+        },
+        "pages/HomePage.jsx": {
+            "description": "A simple functional component for the Home Page of the application.",
+            "exports": [
+                "HomePage"
+            ],
+            "imports": []
+        },
+        "pages/ProjectsPage.jsx": {
+            "description": "A simple component that displays 'ProjectsPage' text in the center of the page.",
+            "exports": [
+                "ProjectsPage"
+            ],
+            "imports": []
+        },
+        "pages/ContactPage.jsx": {
+            "description": "A simple contact page component that displays 'ContactPage' in a centered text",
+            "exports": [
+                "ContactPage"
+            ],
+            "imports": [
+                "App.css"
+            ]
+        },
+        "App.css": {
+            "description": "Empty file",
+            "exports": [],
+            "imports": []
+        },
+        "index.css": {
+            "description": "Empty file",
+            "exports": [],
+            "imports": []
+        },
+        "main.jsx": {
+            "description": "A file that renders the App component using ReactDOM.createRoot",
+            "exports": [],
+            "imports": [
+                "App"
+            ]
+        },
+        "assets/react.svg": {
+            "description": "Empty file",
+            "exports": [],
+            "imports": []
+        }
+    }
 }
