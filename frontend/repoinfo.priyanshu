@@ -2,16 +2,15 @@
     "description": "This project is a React App created with Vite. This project uses Tailwind CSS for styling. DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.",
     "files": {
         "App.jsx": {
-            "description": "A React application file that renders a personal website with navigation links and routes to different pages.",
+            "description": "A React component for Priyanshu Sharma's personal website with routing using react-router-dom.",
             "exports": [
-                "App"
+                "default"
             ],
             "imports": [
                 "Link",
                 "Route",
                 "BrowserRouter",
                 "Routes",
-                "AboutPage",
                 "ContactPage",
                 "HomePage",
                 "ProjectsPage"

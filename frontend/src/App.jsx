@@ -1,5 +1,4 @@
 import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import HomePage from "./pages/HomePage";
 import ProjectsPage from "./pages/ProjectsPage";
@@ -17,16 +16,12 @@ function App() {
                     </Link>
                     <Link to="/contact" className="ml-4">
                         Contact
-                        <Link to="/about" className="ml-4">
-                            About
-                        </Link>
                     </Link>
                 </div>
             </div>
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/projects" element={<ProjectsPage />} />
-                <Route path="/about" element={<AboutPage />} />
                 <Route path="/contact" element={<ContactPage />} />
             </Routes>
         </Router>
