@@ -2230,3 +2230,967 @@ There was an error running prettier on the file. Check for missing opening or cl
 
 
 
+===============
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js"
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function"
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/CalculatorComponent.jsx
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+make the output on the calculator also transparent like the buttons
+
+
+
+===============
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted BEFORE startLine (between startLine-1 and startLine) 
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/CalculatorComponent.jsx
+./frontend/src/assets/react.svg
+
+FILE (./frontend/src/components/CalculatorComponent.jsx):
+
+1. import { useState } from "react";
+2. 
+3. const CalculatorComponent = () => {
+4.     const [input, setInput] = useState("");
+5.     const [result, setResult] = useState("");
+6. 
+7.     const handleClick = (value) => {
+8.         setInput(input + value);
+9.     };
+10. 
+11.     const handleClear = () => {
+12.         setInput("");
+13.         setResult("");
+14.     };
+15. 
+16.     const handleBackspace = () => {
+17.         setInput(input.slice(0, -1));
+18.     };
+19. 
+20.     const handleCalculate = () => {
+21.         try {
+22.             setResult(eval(input)); // Note: Using eval() is not recommended for production-level code due to security risks.
+23.         } catch (error) {
+24.             setResult("Error");
+25.         }
+26.     };
+27. 
+28.     return (
+29.         <div className="calculator bg-transparent p-4 rounded-lg shadow-lg w-full">
+30.             <div className="display bg-white p-4 rounded text-right mb-4">
+31.                 <div className="text-gray-500 h-8">{input}</div>
+32.                 <div className="text-black text-2xl h-8">{result}</div>
+33.             </div>
+34.             <div className="buttons grid grid-cols-4 gap-2">
+35.                 {["7", "8", "9", "/"].map((value) => (
+36.                     <button key={value} className="btn bg-gray-200 bg-opacity-50" onClick={() => handleClick(value)}>
+37.                         {value}
+38.                     </button>
+39.                 ))}
+40.                 {["4", "5", "6", "*"].map((value) => (
+41.                     <button key={value} className="btn bg-gray-200 bg-opacity-50" onClick={() => handleClick(value)}>
+42.                         {value}
+43.                     </button>
+44.                 ))}
+45.                 {["1", "2", "3", "-"].map((value) => (
+46.                     <button key={value} className="btn bg-gray-200 bg-opacity-50" onClick={() => handleClick(value)}>
+47.                         {value}
+48.                     </button>
+49.                 ))}
+50.                 {["0", "=", "+"].map((value) =>
+51.                     value === "=" ? (
+52.                         <button key={value} className="btn bg-blue-500 text-white" onClick={handleCalculate}>
+53.                             {value}
+54.                         </button>
+55.                     ) : (
+56.                         <button
+57.                             key={value}
+58.                             className="btn bg-gray-200 bg-opacity-50"
+59.                             onClick={() => handleClick(value)}
+60.                         >
+61.                             {value}
+62.                         </button>
+63.                     )
+64.                 )}
+65.                 <button className="btn bg-red-500 col-span-2 text-white" onClick={handleClear}>
+66.                     C
+67.                 </button>
+68.             </div>
+69.         </div>
+70.     );
+71. };
+72. 
+73. export default CalculatorComponent;
+74. 
+
+END OF FILE
+
+Modification Request:
+Update the styling of the calculator's output to make it transparent like the buttons by using Tailwind CSS classes.
+
+
+
+===============
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js"
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function"
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/CalculatorComponent.jsx
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+remove the equals button on the calculator, and add a new equals button under the clear button that is the full width of the screen
+
+
+
+===============
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted BEFORE startLine (between startLine-1 and startLine) 
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/CalculatorComponent.jsx
+./frontend/src/assets/react.svg
+
+FILE (./frontend/src/components/CalculatorComponent.jsx):
+
+1. import { useState } from "react";
+2. 
+3. const CalculatorComponent = () => {
+4.     const [input, setInput] = useState("");
+5.     const [result, setResult] = useState("");
+6. 
+7.     const handleClick = (value) => {
+8.         setInput(input + value);
+9.     };
+10. 
+11.     const handleClear = () => {
+12.         setInput("");
+13.         setResult("");
+14.     };
+15. 
+16.     const handleBackspace = () => {
+17.         setInput(input.slice(0, -1));
+18.     };
+19. 
+20.     const handleCalculate = () => {
+21.         try {
+22.             setResult(eval(input)); // Note: Using eval() is not recommended for production-level code due to security risks.
+23.         } catch (error) {
+24.             setResult("Error");
+25.         }
+26.     };
+27. 
+28.     return (
+29.         <div className="calculator bg-transparent p-4 rounded-lg shadow-lg w-full">
+30.             <div className="display bg-transparent p-4 rounded text-right mb-4">
+31.                 <div className="text-gray-500 h-8 bg-white bg-opacity-50 p-1 rounded mb-2">{input}</div>
+32.                 <div className="text-black text-2xl h-8 bg-white bg-opacity-50 p-1 rounded">{result}</div>
+33.             </div>
+34.             <div className="buttons grid grid-cols-4 gap-2">
+35.                 {["7", "8", "9", "/"].map((value) => (
+36.                     <button key={value} className="btn bg-gray-200 bg-opacity-50" onClick={() => handleClick(value)}>
+37.                         {value}
+38.                     </button>
+39.                 ))}
+40.                 {["4", "5", "6", "*"].map((value) => (
+41.                     <button key={value} className="btn bg-gray-200 bg-opacity-50" onClick={() => handleClick(value)}>
+42.                         {value}
+43.                     </button>
+44.                 ))}
+45.                 {["1", "2", "3", "-"].map((value) => (
+46.                     <button key={value} className="btn bg-gray-200 bg-opacity-50" onClick={() => handleClick(value)}>
+47.                         {value}
+48.                     </button>
+49.                 ))}
+50.                 {["0", "=", "+"].map((value) =>
+51.                     value === "=" ? (
+52.                         <button key={value} className="btn bg-blue-500 text-white" onClick={handleCalculate}>
+53.                             {value}
+54.                         </button>
+55.                     ) : (
+56.                         <button
+57.                             key={value}
+58.                             className="btn bg-gray-200 bg-opacity-50"
+59.                             onClick={() => handleClick(value)}
+60.                         >
+61.                             {value}
+62.                         </button>
+63.                     )
+64.                 )}
+65.                 <button className="btn bg-red-500 col-span-2 text-white" onClick={handleClear}>
+66.                     C
+67.                 </button>
+68.             </div>
+69.         </div>
+70.     );
+71. };
+72. 
+73. export default CalculatorComponent;
+74. 
+
+END OF FILE
+
+Modification Request:
+Remove the existing equals button on the calculator. Add a new equals button under the clear button that spans the full width of the screen. Make sure to use Tailwind CSS classes for styling. Ensure the button maintains its functionality when placed in its new location.
+
+
+
+===============
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted BEFORE startLine (between startLine-1 and startLine) 
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: N/A
+
+CODEBASE FILES: N/A
+
+FILE (./frontend/src/components/CalculatorComponent.jsx):
+
+1. import { useState } from "react";
+2. 
+3. const CalculatorComponent = () => {
+4.     const [input, setInput] = useState("");
+5.     const [result, setResult] = useState("");
+6. 
+7.     const handleClick = (value) => {
+8.         setInput(input + value);
+9.     };
+10. 
+11.     const handleClear = () => {
+12.         setInput("");
+13.         setResult("");
+14.     };
+15. 
+16.     const handleBackspace = () => {
+17.         setInput(input.slice(0, -1));
+18.     };
+19. 
+20.     const handleCalculate = () => {
+21.         try {
+22.             setResult(eval(input)); // Note: Using eval() is not recommended for production-level code due to security risks.
+23.         } catch (error) {
+24.             setResult("Error");
+25.         }
+26.     };
+27. 
+28.     return (
+29.         <div className="calculator bg-transparent p-4 rounded-lg shadow-lg w-full">
+30.             <div className="display bg-transparent p-4 rounded text-right mb-4">
+31.                 <div className="text-gray-500 h-8 bg-white bg-opacity-50 p-1 rounded mb-2">{input}</div>
+32.                 <div className="text-black text-2xl h-8 bg-white bg-opacity-50 p-1 rounded">{result}</div>
+33.             </div>
+34.             <div className="buttons grid grid-cols-4 gap-2">
+35.                 {["7", "8", "9", "/"].map((value) => (
+36.                     <button key={value} className="btn bg-gray-200 bg-opacity-50" onClick={() => handleClick(value)}>
+37.                         {value}
+38.                     </button>
+39.                 ))}
+40.                 {["4", "5", "6", "*"].map((value) => (
+41.                     <button key={value} className="btn bg-gray-200 bg-opacity-50" onClick={() => handleClick(value)}>
+42.                         {value}
+43.                     </button>
+44.                 ))}
+45.                 {["1", "2", "3", "-"].map((value) => (
+46.                     <button key={value} className="btn bg-gray-200 bg-opacity-50" onClick={() => handleClick(value)}>
+47.                         {value}
+48.                     </button>
+49.                 ))}
+50.                 {["0", "=", "+"].map((value) =>
+51.                         <button
+52.                             key={value}
+53.                             className="btn bg-gray-200 bg-opacity-50"
+54.                             onClick={() => handleClick(value)}
+55.                         >
+56.                             {value}
+57.                         </button>
+58.                     )
+59.                 )}
+60.                 <button className="btn bg-red-500 col-span-2 text-white" onClick={handleClear}>
+61.                     C
+62.                 </button>
+63.                 <button className="btn bg-blue-500 text-white w-full" onClick={handleCalculate}>
+64.                     =
+65.                 </button>
+66. 
+67.             </div>
+68.         </div>
+69.     );
+70. };
+71. 
+72. export default CalculatorComponent;
+73. 
+
+END OF FILE
+
+Modification Request:
+There was an error running prettier on the file. Check for missing opening or closing tags, mismatched parentheses or braces, missing statements, etc. Please correct the code to fix the error. Here is the error log from Prettier: {prettierInfo}
+
+
+
+===============
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js"
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function"
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/CalculatorComponent.jsx
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+fix calculator component
+
+
+
+===============
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted BEFORE startLine (between startLine-1 and startLine) 
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/CalculatorComponent.jsx
+./frontend/src/assets/react.svg
+
+FILE (./frontend/src/components/CalculatorComponent.jsx):
+
+1. import { useState } from "react";
+2. 
+3. const CalculatorComponent = () => {
+4.     const [input, setInput] = useState("");
+5.     const [result, setResult] = useState("");
+6. 
+7.     const handleClick = (value) => {
+8.         setInput(input + value);
+9.     };
+10. 
+11.     const handleClear = () => {
+12.         setInput("");
+13.         setResult("");
+14.     };
+15. 
+16.     const handleBackspace = () => {
+17.         setInput(input.slice(0, -1));
+18.     };
+19. 
+20.     const handleCalculate = () => {
+21.         try {
+22.             setResult(eval(input)); // Note: Using eval() is not recommended for production-level code due to security risks.
+23.         } catch (error) {
+24.             setResult("Error");
+25.         }
+26.     };
+27. 
+28.     return (
+29.         <div className="calculator bg-transparent p-4 rounded-lg shadow-lg w-full">
+30.             <div className="display bg-transparent p-4 rounded text-right mb-4">
+31.                 <div className="text-gray-500 h-8 bg-white bg-opacity-50 p-1 rounded mb-2">{input}</div>
+32.                 <div className="text-black text-2xl h-8 bg-white bg-opacity-50 p-1 rounded">{result}</div>
+33.             </div>
+34.             <div className="buttons grid grid-cols-4 gap-2">
+35.                 {["7", "8", "9", "/"].map((value) => (
+36.                     <button key={value} className="btn bg-gray-200 bg-opacity-50" onClick={() => handleClick(value)}>
+37.                         {value}
+38.                     </button>
+39.                 ))}
+40.                 {["4", "5", "6", "*"].map((value) => (
+41.                     <button key={value} className="btn bg-gray-200 bg-opacity-50" onClick={() => handleClick(value)}>
+42.                         {value}
+43.                     </button>
+44.                 ))}
+45.                 {["1", "2", "3", "-"].map((value) => (
+46.                     <button key={value} className="btn bg-gray-200 bg-opacity-50" onClick={() => handleClick(value)}>
+47.                         {value}
+48.                     </button>
+49.                 ))}
+50.                 {["0", "=", "+"].map((value) =>
+51.                         <button
+52.                             key={value}
+53.                             className="btn bg-gray-200 bg-opacity-50"
+54.                             onClick={() => handleClick(value)}
+55.                         >
+56.                             {value}
+57. 
+58. 			                </button>
+59. 			            )}
+60.                         </button>
+61.                     )
+62.                 )}
+63.                 <button className="btn bg-red-500 col-span-2 text-white" onClick={handleClear}>
+64.                     C
+65.                 </button>
+66.                 <button className="btn bg-blue-500 text-white w-full" onClick={handleCalculate}>
+67.                     =
+68.                 </button>
+69. 
+70.             </div>
+71.         </div>
+72.     );
+73. };
+74. 
+75. export default CalculatorComponent;
+76. 
+
+END OF FILE
+
+Modification Request:
+Inspect and fix any issues in the CalculatorComponent. Ensure that all calculator functionalities (addition, subtraction, multiplication, division) are working correctly. If necessary, import helper functions from ../utils/helpers.js. Use Tailwind CSS classes for styling any new or modified UI elements.
+
+
+
+===============
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js"
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function"
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/CalculatorComponent.jsx
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+delete the calculator compnent and remove any extra styles in the css files, and make the app jsx just a hello world
+
+
+
+===============
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted BEFORE startLine (between startLine-1 and startLine) 
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/assets/react.svg
+
+FILE (./frontend/src/App.css):
+
+1. body {
+2.     background-image: url("https://www.si.com/.image/ar_1:1,c_fill,cs_srgb,fl_progressive,q_auto:good,w_1200/MTcyNTUxNTY1Nzg0MTMwNjQz/lebron-james.jpg");
+3.     background-size: cover;
+4.     background-repeat: no-repeat;
+5.     background-position: center center;
+6.     height: 100vh;
+7.     margin: 0;
+8.     display: flex;
+9.     justify-content: center;
+10.     align-items: center;
+11. }
+12. 
+
+END OF FILE
+
+Modification Request:
+Remove any styles related to the Calculator component.
+
+
+
+===============
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted BEFORE startLine (between startLine-1 and startLine) 
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/assets/react.svg
+
+FILE (./frontend/src/index.css):
+
+1. @tailwind base;
+2. @tailwind components;
+3. @tailwind utilities;
+4. 
+5. html {
+6.     background-color: #f7fafc;
+7. }
+8. 
+9. @layer base {
+10.     #root {
+11.         width: 100%;
+12.     }
+13. }
+14. 
+
+END OF FILE
+
+Modification Request:
+Remove any styles related to the Calculator component.
+
+
+
+===============
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted BEFORE startLine (between startLine-1 and startLine) 
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/assets/react.svg
+
+FILE (./frontend/src/App.jsx):
+
+1. import { useState } from "react";
+2. import "./App.css";
+3. import CalculatorComponent from "./components/CalculatorComponent.jsx";
+4. 
+5. function App() {
+6.     const [count, setCount] = useState(0);
+7. 
+8.     return (
+9.         <div className="flex flex-col items-center justify-center min-h-screen w-full">
+10.             <CalculatorComponent />
+11.         </div>
+12.     );
+13. }
+14. 
+15. export default App;
+16. 
+
+END OF FILE
+
+Modification Request:
+Update the App component to only display 'Hello World'. Remove any references to the Calculator component.
+
+
+
