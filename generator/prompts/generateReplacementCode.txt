@@ -20,11 +20,13 @@ You must output the following JSON object that contains modifications that will 
     ]
 }
 
-type "INSERT" --> code will be inserted at startLine, and the code at startLine will be pushed down
+type "INSERT" --> code will be inserted AT startLine, and the code at startLine will be PUSHED DOWN
 type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
 type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
 
-Make sure to include modifications to add any required imports.
+Things to consider:
+- Make sure to include modifications to add any required imports.
+- Note that all modifications are applied at the same time, so line numbers will not change as modifications are made.
 
 GENERAL INFORMATION: [PARAM0]
 

@@ -19,9 +19,13 @@ You must output the following JSON object that contains modifications that will 
     ]
 }
 
-type "INSERT" --> code will be inserted BEFORE startLine (between startLine-1 and startLine) 
+type "INSERT" --> code will be inserted AT startLine, and the code at startLine will be PUSHED DOWN
 type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
 type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Things to consider:
+- Make sure to include modifications to add any required imports.
+- Note that all modifications are applied at the same time, so line numbers will not change as modifications are made.
 
 Make sure to include modifications to add any required imports.
 
