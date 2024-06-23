@@ -5,6 +5,9 @@ import "./App.css";
 const baseUrl = import.meta.env.VITE_PROJECT_URL;
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 
+const DEFAULT_PROJECT_PATH =
+	"/Users/sonavagarwal/Documents/GitHub/calhacks-2024/health_app";
+
 async function sendMessage(message) {
 	let response = await fetch(serverUrl + "/prompt", {
 		method: "POST",
@@ -63,7 +66,7 @@ async function sendProject(project) {
 function App() {
 	const [project, setProject] = useState({
 		name: "It literally doesn't matter",
-		path: "",
+		path: DEFAULT_PROJECT_PATH,
 	});
 	const [projectSet, setProjectSet] = useState(false);
 
@@ -138,9 +141,7 @@ function App() {
 								<input
 									type="text"
 									placeholder="Absolute project path"
-									defaultValue={
-										"/Users/sonavagarwal/Documents/GitHub/calhacks-2024/health_app"
-									}
+									defaultValue={DEFAULT_PROJECT_PATH}
 									onChange={(e) =>
 										setProject({ ...project, path: e.target.value })
 									}
@@ -165,6 +166,14 @@ function App() {
 														Math.floor(Math.random() * 1000000)
 												);
 											}, 1000);
+										}
+									}}
+									onKeyDown={(e) => {
+										if (e.key === "Enter") {
+											if (project.path === "") {
+												alert("Please enter a project path");
+												return;
+											}
 										}
 									}}
 								>
