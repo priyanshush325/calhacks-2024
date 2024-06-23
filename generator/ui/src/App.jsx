@@ -286,6 +286,10 @@ function App() {
 									setTimeout(() => {
 										setCurrentStatus("");
 										setInputEnabled(true);
+										setActionPlan({
+											actions: [],
+											commands: [],
+										});
 									}, 100);
 								} else {
 									console.log("Sending message", message);

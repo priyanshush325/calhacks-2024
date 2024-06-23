@@ -40,6 +40,7 @@ Things to consider and include in the prompt:
 - Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
 - Make sure things are exported correctly when needed
 - Try to generate the actions in the order they need to be executed
+- If the modification request includes specific details like file names or links or text to add, make sure to include them in the corresponding prompts
 
 ============
 EXAMPLE:

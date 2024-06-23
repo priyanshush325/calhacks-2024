@@ -181,6 +181,8 @@ def checkIsDirectory(filePath):
 
 def readFile(file, includeLineNumbers=True):
 
+    print(f"Reading file: {file}")
+
     content = ""
     with open(file, 'r') as f:
         content = f.read()
