@@ -61,7 +61,7 @@ UI_PORT = args.port
 PROJECT_PORT = int(args.port) + 1
 
 ##########################
-# Start the webserver
+# Start the project server
 ##########################
 
 WEBSERVER_OUTPUT = "./generator-logs/webserver.txt"

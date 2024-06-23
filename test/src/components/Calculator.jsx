@@ -71,7 +71,7 @@ const Calculator = () => {
                         <button
                             key={symbol}
                             onClick={() => (symbol === "=" ? calculate() : handleClick(symbol))}
-                            className="p-4 bg-blue-500 text-white rounded-lg transition transform hover:bg-blue-600"
+                            className={`p-4 ${symbol === "=" ? "bg-green-500 hover:bg-green-600" : "bg-blue-500 hover:bg-blue-600"} text-white rounded-lg transition transform`}
                         >
                             {symbol}
                         </button>

@@ -90,6 +90,25 @@ def createActionPlan(userPrompt, client, MODEL, projectInfo):
 
     print("Action plan executed successfully.")
 
+def APIActionPlan(userPrompt, client, MODEL, projectInfo):
+    projectTree = fetchProjectTree(projectInfo.projectSourceDir)
+
+    prompt = generatePrompt(
+        "./generator/prompts/createActionPlan.txt", [
+            projectInfo.repoInfo,
+            projectTree,
+            userPrompt
+        ])
+
+    response = requestGPT(client, MODEL, prompt)
+    commands, actions = parseActionPlan(response)
+
+    action_plan = {
+        "commands": commands,
+        "actions": actions
+    }
+
+    return action_plan
 
 def executeAction(action, client, MODEL, projectInfo, allContextFiles):
     if action.action == "CREATE":
