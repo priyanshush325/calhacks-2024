@@ -51,6 +51,7 @@ print(f"Localhost: http://localhost:{args.port}")
 print("---------------------------------------")
 INFO_PATH = files[0]
 
+WEBSERVER_LOGS = "./generator-logs/webserver.txt"
 
 # INFO_PATH = PROJECT_SOURCE_DIRECTORY + "/repoinfo.priyanshu"
 
@@ -64,7 +65,7 @@ PROJECT_PORT = int(args.port) + 1
 # Start the project server
 ##########################
 
-startProjectServer(PROJECT_SOURCE_DIRECTORY, args.directory, PROJECT_PORT)
+startProjectServer(WEBSERVER_LOGS, args.directory, PROJECT_PORT)
 
 ##########################
 
@@ -81,7 +82,7 @@ while True:
     elif newPrompt.startswith("!fix"):
         print("Fixing the error")
 
-        error_lines = get_latest_error_lines(WEBSERVER_OUTPUT_ABSOLUTE)
+        error_lines = get_latest_error_lines(WEBSERVER_LOGS)
 
         if len(error_lines) == 0:
             print("No error found")

@@ -1,103 +1,15 @@
 
 > frontend@0.0.0 dev
-> vite --port 5173
+> vite --port 5174
 
-Port 5173 is in use, trying another one...
+Port 5174 is in use, trying another one...
+Port 5175 is in use, trying another one...
+Port 5176 is in use, trying another one...
+Port 5177 is in use, trying another one...
+Port 5178 is in use, trying another one...
+Port 5179 is in use, trying another one...
 
-  VITE v5.3.1  ready in 368 ms
+  VITE v5.3.1  ready in 292 ms
 
-  ➜  Local:   http://127.0.0.1:5174/
+  ➜  Local:   http://localhost:5180/
   ➜  Network: use --host to expose
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» The above error occurred in the <Router> component:
-  
-      at Router (http://localhost:5174/node_modules/.vite/deps/react-router-dom.js?v=84913b0e:4012:15)
-      at BrowserRouter (http://localhost:5174/node_modules/.vite/deps/react-router-dom.js?v=84913b0e:4752:5)
-      at App
-      at RenderedRoute (http://localhost:5174/node_modules/.vite/deps/react-router-dom.js?v=84913b0e:3635:5)
-      at Routes (http://localhost:5174/node_modules/.vite/deps/react-router-dom.js?v=84913b0e:4069:5)
-      at Router (http://localhost:5174/node_modules/.vite/deps/react-router-dom.js?v=84913b0e:4012:15)
-      at BrowserRouter (http://localhost:5174/node_modules/.vite/deps/react-router-dom.js?v=84913b0e:4752:5)
-  
-  Consider adding an error boundary to your tree to customize error handling behavior.
-  Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
-» The above error occurred in the <Router> component:
-  
-      at Router (http://localhost:5174/node_modules/.vite/deps/react-router-dom.js?v=84913b0e:4012:15)
-      at BrowserRouter (http://localhost:5174/node_modules/.vite/deps/react-router-dom.js?v=84913b0e:4752:5)
-      at App
-      at RenderedRoute (http://localhost:5174/node_modules/.vite/deps/react-router-dom.js?v=84913b0e:3635:5)
-      at Routes (http://localhost:5174/node_modules/.vite/deps/react-router-dom.js?v=84913b0e:4069:5)
-      at Router (http://localhost:5174/node_modules/.vite/deps/react-router-dom.js?v=84913b0e:4012:15)
-      at BrowserRouter (http://localhost:5174/node_modules/.vite/deps/react-router-dom.js?v=84913b0e:4752:5)
-  
-  Consider adding an error boundary to your tree to customize error handling behavior.
-  Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
-» The above error occurred in the <Router> component:
-  
-      at Router (http://localhost:5174/node_modules/.vite/deps/react-router-dom.js?v=84913b0e:4012:15)
-      at BrowserRouter (http://localhost:5174/node_modules/.vite/deps/react-router-dom.js?v=84913b0e:4752:5)
-      at App
-      at RenderedRoute (http://localhost:5174/node_modules/.vite/deps/react-router-dom.js?v=84913b0e:3635:5)
-      at Routes (http://localhost:5174/node_modules/.vite/deps/react-router-dom.js?v=84913b0e:4069:5)
-      at Router (http://localhost:5174/node_modules/.vite/deps/react-router-dom.js?v=84913b0e:4012:15)
-      at BrowserRouter (http://localhost:5174/node_modules/.vite/deps/react-router-dom.js?v=84913b0e:4752:5)
-  
-  Consider adding an error boundary to your tree to customize error handling behavior.
-  Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
-1:09:14 AM [vite] page reload src/main.jsx
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.
-» [vite] connected.

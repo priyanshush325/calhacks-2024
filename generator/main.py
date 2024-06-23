@@ -35,7 +35,7 @@ ROOT_DIRECTORY = None
 PROJECT_SOURCE_DIRECTORY = None
 INFO_PATH = None
 PROJECT_INFO = None
-WEBSERVER_OUTPUT_ABSOLUTE = os.path.abspath("./generator/webserver/output.log")
+WEBSERVER_OUTPUT_ABSOLUTE = os.path.abspath("./generator-logs/webserver.txt")
 PENDING_ACTIONS = None
 
 # Utility Functions

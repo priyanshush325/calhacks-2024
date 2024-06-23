@@ -16,8 +16,7 @@ async function sendMessage(message) {
 		}),
 	});
 
-	const data = await response.json();
-	console.log(data);
+	return response.status === 200;
 }
 
 async function confirmActions(confirm) {
@@ -44,16 +43,13 @@ async function sendProject(project) {
 		headers: {
 			"Content-Type": "application/json",
 		},
-		body: {
+		body: JSON.stringify({
 			// projectName: project.name,
 			projectSourceDir: project.path,
-		},
+		}),
 	});
 
 	console.log(response);
-
-	const data = await response.json();
-	console.log(data);
 
 	return response.status === 200;
 }
