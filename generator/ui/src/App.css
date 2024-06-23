@@ -1,3 +1,7 @@
+* {
+	font-family: monospace;
+}
+
 html {
 	overflow: hidden;
 	height: 100%;
@@ -5,24 +9,44 @@ html {
 
 body {
 	height: 100%;
-	overflow: auto;
+	overflow: hidden;
 }
 
 .page {
 	width: 100vw;
-	height: calc(100vh - 2.5rem);
+	height: 100vh;
 	background-color: seagreen;
 	box-sizing: border-box;
+
+	box-sizing: border-box;
+	/* padding: 1rem; */
+	display: flex;
+}
+
+.iframe-container {
+	/* display: flex;
+	flex-direction: column; */
+	flex: 1;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0.5rem;
+	padding-top: 0;
+	background-color: lightgray;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 #iframe {
 	background-color: white;
+	border-radius: 0.5rem;
 	overflow: hidden;
 	flex: 1;
 	height: 100%;
+	width: 100%;
 }
 
-.url-bar {
+.url-bar-container {
 	display: flex;
 	width: 100%;
 	justify-content: center;
@@ -32,24 +56,87 @@ body {
 	box-sizing: border-box;
 	outline: none;
 	border: none;
-	padding-left: 0.5rem;
-	padding-right: 0.5rem;
+	padding: 0.5rem;
 	font-weight: bold;
 	font-size: 1.5rem;
 }
 
-.content {
-	display: flex;
-	flex-direction: row;
+.url-bar {
+	width: 100%;
 	height: 100%;
+	border: none;
+	outline: none;
+	box-sizing: border-box;
+	background-color: rgba(255, 255, 255, 0.5);
+	padding: 0.5rem;
+	border-radius: 0.5rem;
+}
+
+.content {
+	height: 100%;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+.chat-settings {
+	/* width: 40rem; */
+	width: 100%;
+	height: 100%;
+	background-color: rgba(255, 255, 255, 0.5);
+	box-sizing: border-box;
+	padding: 0.5rem;
+	border-radius: 0.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+
+	justify-content: center;
+	align-items: center;
+}
+
+.chat-settings > h1 {
+	text-align: center;
+	font-weight: bold;
+	font-family: monospace;
+	width: 100%;
+	max-width: 30rem;
+	font-size: 1.5rem;
+}
+
+.chat-settings > input,
+button {
+	width: 100%;
+	max-width: 30rem;
+	height: 2.5rem;
+	border: none;
+	outline: none;
+	box-sizing: border-box;
+	background-color: rgba(255, 255, 255, 0.5);
+	padding: 0.5rem;
+	border-radius: 0.5rem;
+}
+
+.chat-settings > button {
+	background-color: #1e90ff;
+	font-weight: bold;
+	transition: background-color 0.2s;
+}
+.chat-settings > button:hover {
+	background-color: #75a8ff;
 }
 
 .chat {
 	width: 20rem;
 	background-color: lightgray;
 	box-sizing: border-box;
-	padding: 1rem;
+	padding: 0.5rem;
 	height: 100%;
+
+	border-left: 1px solid darkgray;
+
+	display: flex;
+	flex-direction: column;
 }
 
 .message-box {
@@ -61,5 +148,5 @@ body {
 	background-color: rgba(255, 255, 255, 0.5);
 
 	padding: 1rem;
-	min-height: 20rem;
+	border-radius: 0.5rem;
 }
