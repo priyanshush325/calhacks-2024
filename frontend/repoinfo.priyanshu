@@ -17,13 +17,12 @@
             ]
         },
         "pages/HomePage.jsx": {
-            "description": "A React component for the Home Page with an image, text, and dynamic text changing every 2 seconds.",
+            "description": "A simple functional component for the home page displaying information about Priyanshu Sharma",
             "exports": [
                 "HomePage"
             ],
             "imports": [
-                "useState",
-                "useEffect"
+                "img"
             ]
         },
         "pages/ProjectsPage.jsx": {
