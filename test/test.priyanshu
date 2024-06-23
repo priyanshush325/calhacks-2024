@@ -41,11 +41,14 @@
             ]
         },
         "App.jsx": {
-            "description": "A React application file that sets up routes for authentication, profile, dashboard, calculator, and playground pages.",
+            "description": "A React application file that sets up routes for different pages.",
             "exports": [
-                "App"
+                "default App"
             ],
             "imports": [
+                "BrowserRouter as Router",
+                "Route",
+                "Routes",
                 "Auth",
                 "Calculator",
                 "DashboardPage",
@@ -54,10 +57,8 @@
             ]
         },
         "firebase.js": {
-            "description": "A file that initializes Firebase SDK with a configuration object",
-            "exports": [
-                "None"
-            ],
+            "description": "A file with configuration settings for Firebase SDK initialization.",
+            "exports": [],
             "imports": []
         },
         "utils/helpers.js": {
@@ -70,9 +71,9 @@
             "imports": []
         },
         "components/Calculator.jsx": {
-            "description": "A simple calculator component that allows users to input and calculate mathematical expressions.",
+            "description": "A calculator component that allows users to input and calculate mathematical expressions.",
             "exports": [
-                "Calculator"
+                "default Calculator"
             ],
             "imports": [
                 "handleCalculate",
@@ -113,7 +114,7 @@
             ]
         },
         "components/ProfilePage.jsx": {
-            "description": "A simple profile page component with useState hook for user state",
+            "description": "A simple profile page component with useState hook to manage user data",
             "exports": [
                 "ProfilePage"
             ],
@@ -132,16 +133,16 @@
             "imports": []
         },
         "pages/CalculatorPage.jsx": {
-            "description": "A simple calculator page that imports and uses the Calculator component",
+            "description": "A simple React component that renders a Calculator component in the center of the screen.",
             "exports": [
-                "default"
+                "CalculatorPage"
             ],
             "imports": [
                 "Calculator"
             ]
         },
         "pages/PlaygroundPage.jsx": {
-            "description": "A simple React component for a playground page with basic text elements.",
+            "description": "A simple React component for the PlaygroundPage with basic text content.",
             "exports": [
                 "PlaygroundPage"
             ],
