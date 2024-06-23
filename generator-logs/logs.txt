@@ -6839,3 +6839,452 @@ There was an error running prettier on the file. Check for missing opening or cl
 }
 
 
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ],
+    commands: [
+        "command to run on the terminal",
+        "another command to run on the terminal",
+        ...
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+commands: commands to run on the terminal to import required packages, such as "npm install react-router-dom"
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/HomePage.jsx
+./frontend/src/components/ProfilePage.jsx
+./frontend/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+Change the "Home" text rendered at the default route to say "Priyanshu"
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "./frontend/src/components/HomePage.jsx",
+            "action": "MODIFY",
+            "prompt": "Change the 'Home' text rendered at the default route to say 'Priyanshu'. Ensure that any related links or buttons still function correctly after the change.",
+            "contextFiles": []
+        }
+    ],
+    "commands": []
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted at startLine, and the code at startLine will be pushed down
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./frontend/src/App.css
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/App.jsx
+./frontend/src/firebase.js
+./frontend/src/utils/helpers.js
+./frontend/src/components/HomePage.jsx
+./frontend/src/components/ProfilePage.jsx
+./frontend/src/assets/react.svg
+
+CONTEXT FILES:
+
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (./frontend/src/components/HomePage.jsx):
+
+1. import "../App.css";
+2. 
+3. const HomePage = () => {
+4.     return (
+5.         <div className="flex items-center justify-center min-h-screen">
+6.             <h1>Home</h1>
+7.         </div>
+8.     );
+9. };
+10. 
+11. export default HomePage;
+12. 
+
+END OF FILE
+
+Modification Request:
+Change the 'Home' text rendered at the default route to say 'Priyanshu'. Ensure that any related links or buttons still function correctly after the change.
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "REPLACE",
+            "startLine": 6,
+            "endLine": 6,
+            "code": "<h1>Priyanshu</h1>"
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ],
+    commands: [
+        "command to run on the terminal",
+        "another command to run on the terminal",
+        ...
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+commands: commands to run on the terminal to import required packages, such as "npm install react-router-dom"
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: 
+
+END OF LIST OF FILES
+
+Modification Request:
+change the "Home" text rendered at the default route to say "Priyanshu"
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "src/routes/Home.js",
+            "action": "MODIFY",
+            "prompt": "Change the text rendered at the default route to say 'Priyanshu' instead of 'Home'.",
+            "contextFiles": []
+        }
+    ],
+    "commands": []
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ],
+    commands: [
+        "command to run on the terminal",
+        "another command to run on the terminal",
+        ...
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+commands: commands to run on the terminal to import required packages, such as "npm install react-router-dom"
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./test/src/App.css
+./test/src/index.css
+./test/src/main.jsx
+./test/src/App.jsx
+./test/src/firebase.js
+./test/src/utils/helpers.js
+./test/src/components/HomePage.jsx
+./test/src/components/ProfilePage.jsx
+./test/src/assets/react.svg
+
+END OF LIST OF FILES
+
+Modification Request:
+Change the "Home" text rendered at the default route to say "Priyanshu"
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "./test/src/components/HomePage.jsx",
+            "action": "MODIFY",
+            "prompt": "Change the 'Home' text rendered at the default route to say 'Priyanshu'. Ensure that any related links or buttons still function correctly after the change.",
+            "contextFiles": []
+        }
+    ],
+    "commands": []
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted at startLine, and the code at startLine will be pushed down
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Make sure to include modifications to add any required imports.
+
+GENERAL INFORMATION: This project is a simple calculator app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: ./test/src/App.css
+./test/src/index.css
+./test/src/main.jsx
+./test/src/App.jsx
+./test/src/firebase.js
+./test/src/utils/helpers.js
+./test/src/components/HomePage.jsx
+./test/src/components/ProfilePage.jsx
+./test/src/assets/react.svg
+
+CONTEXT FILES:
+
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (./test/src/components/HomePage.jsx):
+
+1. import "../App.css";
+2. 
+3. const HomePage = () => {
+4.     return (
+5.         <div className="flex items-center justify-center min-h-screen">
+6.             <h1>Priyanshu</h1>
+7.         </div>
+8.     );
+9. };
+10. 
+11. export default HomePage;
+12. 
+
+END OF FILE
+
+Modification Request:
+Change the 'Home' text rendered at the default route to say 'Priyanshu'. Ensure that any related links or buttons still function correctly after the change.
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "REPLACE",
+            "startLine": 6,
+            "endLine": 6,
+            "code": "<h1>Home</h1>"
+        }
+    ]
+}
+
+
