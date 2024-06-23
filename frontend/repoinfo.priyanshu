@@ -17,18 +17,20 @@
             ]
         },
         "pages/HomePage.jsx": {
-            "description": "A simple functional component for the Home Page of the application.",
+            "description": "A React component for the Home page that displays a rotating text",
             "exports": [
                 "HomePage"
             ],
             "imports": []
         },
         "pages/ProjectsPage.jsx": {
-            "description": "A simple component that displays 'ProjectsPage' text in the center of the page.",
+            "description": "A file that defines the ProjectsPage component, which displays multiple ProjectCard components in a grid layout.",
             "exports": [
                 "ProjectsPage"
             ],
-            "imports": []
+            "imports": [
+                "ProjectCard"
+            ]
         },
         "pages/ContactPage.jsx": {
             "description": "A simple contact page component that displays 'ContactPage' in a centered text",
@@ -60,6 +62,16 @@
             "description": "Empty file",
             "exports": [],
             "imports": []
+        },
+        "components/ProjectCard.jsx": {
+            "description": "A component that renders a card with an image and title which opens a link when clicked.",
+            "exports": [
+                "ProjectCard",
+                "LAHacksCard"
+            ],
+            "imports": [
+                "useNavigate"
+            ]
         }
     }
 }
