@@ -58,7 +58,7 @@ def createActionPlan(userPrompt, client, MODEL, projectInfo):
         print(f"=========ACTION=========")
         print(f"Action: {action.action}, File: {action.filePath}")
         print(f"Prompt: {action.prompt}")
-        print(f"Context Files: {" ".join(action.contextFiles)}")
+        # print(f"Context Files: {" ".join(action.contextFiles)}")
 
     # wait for user to confirm the action plan
     print("Action plan generated. Please review the actions:")
