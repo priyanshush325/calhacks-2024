@@ -1,0 +1,14 @@
+
+> frontend@0.0.0 dev
+> vite --port 5174
+
+
+  VITE v5.3.1  ready in 278 ms
+
+  ➜  Local:   http://localhost:5174/
+  ➜  Network: use --host to expose
+» [vite] connected.
+8:54:56 AM [vite] hmr update /src/components/Auth.jsx, /src/index.css
+8:54:56 AM [vite] hmr update /src/components/Auth.jsx, /src/index.css
+8:55:10 AM [vite] hmr update /src/components/Auth.jsx, /src/index.css
+8:55:10 AM [vite] hmr update /src/components/Auth.jsx, /src/index.css

@@ -38,6 +38,8 @@ PROJECT_INFO = None
 WEBSERVER_OUTPUT_ABSOLUTE = os.path.abspath("./generator-logs/webserver.txt")
 PENDING_ACTIONS = None
 
+PROMPT_HISTORY = []
+
 # Utility Functions
 
 
@@ -45,6 +47,7 @@ def processPrompt(prompt):
     global PROJECT_INFO
     global PROJECT_SOURCE_DIRECTORY
     global PENDING_ACTIONS
+    global PROMPT_HISTORY
 
     print(PROJECT_INFO)
     print(PROJECT_SOURCE_DIRECTORY)
@@ -76,7 +79,9 @@ def processPrompt(prompt):
     elif len(newPrompt) < 10:
         pass
     else:
-        PENDING_ACTIONS = APIActionPlan(newPrompt, client, MODEL, PROJECT_INFO)
+        PENDING_ACTIONS = APIActionPlan(
+            newPrompt, client, MODEL, PROJECT_INFO, PROMPT_HISTORY)
+        PROMPT_HISTORY.append(newPrompt)
         return PENDING_ACTIONS, 200
 
 

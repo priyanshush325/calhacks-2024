@@ -1,0 +1,1417 @@
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- the last two modification requests sent by the user (for context)
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ],
+    commands: [
+        "command to run on the terminal",
+        "another command to run on the terminal",
+        ...
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+commands: commands to run on the terminal to import required packages, such as "npm install react-router-dom"
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+- Try to generate the actions in the order they need to be executed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a frontend demo meant to be a prototype for a health web app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: /Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/App.css
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/index.css
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/main.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/App.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/firebase.js
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/utils/helpers.js
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Calculator.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/MenuBar.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/NumberButton.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/HomePage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/DashboardPage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Auth.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/ProfilePage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/assets/react.svg
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/assets/people-icon.svg
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/pages/CalculatorPage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/pages/PlaygroundPage.jsx
+
+LAST MODIFICATION REQUESTS:
+
+
+
+END OF OLD MODIFICATION REQUESTS
+
+Modification Request:
+make the sign in button on the login page red
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Auth.jsx",
+            "action": "MODIFY",
+            "prompt": "Change the sign-in button on the login page to have a red background.",
+            "contextFiles": []
+        }
+    ],
+    "commands": []
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted AT startLine, and the code at startLine will be PUSHED DOWN
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Things to consider:
+- Make sure to include modifications to add any required imports.
+- Note that all modifications are applied at the same time, so line numbers will not change as modifications are made.
+
+GENERAL INFORMATION: This project is a frontend demo meant to be a prototype for a health web app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: /Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/App.css
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/index.css
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/main.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/App.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/firebase.js
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/utils/helpers.js
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Calculator.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/MenuBar.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/NumberButton.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/HomePage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/DashboardPage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Auth.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/ProfilePage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/assets/react.svg
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/assets/people-icon.svg
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/pages/CalculatorPage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/pages/PlaygroundPage.jsx
+
+CONTEXT FILES:
+
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Auth.jsx):
+
+1. import { useState } from "react";
+2. 
+3. import { useNavigate } from "react-router-dom";
+4. 
+5. const Auth = () => {
+6.     const [username, setUsername] = useState("");
+7. 
+8.     const navigate = useNavigate();
+9. 
+10.     const [error, setError] = useState("");
+11.     const [password, setPassword] = useState("");
+12. 
+13.     const handleSubmit = (e) => {
+14.         e.preventDefault();
+15.         if (username === "demo" && password === "demo") {
+16.             navigate("/dashboard");
+17.         } else {
+18.             setError("Invalid username or password");
+19.         }
+20.     };
+21. 
+22.     return (
+23.         <div className="flex items-center justify-center h-screen bg-gray-100">
+24.             <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
+25.                 <h2 className="text-2xl font-bold mb-6 text-center">Sign up for FAMHEALTH!</h2>
+26.                 <form onSubmit={handleSubmit}>
+27.                     <div className="mb-4">
+28.                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+29.                             Username
+30.                         </label>
+31.                         <input
+32.                             type="text"
+33.                             id="username"
+34.                             value={username}
+35.                             onChange={(e) => setUsername(e.target.value)}
+36.                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+37.                             placeholder="Enter your username"
+38.                         />
+39.                     </div>
+40.                     <div className="mb-6">
+41.                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+42.                             Password
+43.                         </label>
+44.                         <input
+45.                             type="password"
+46.                             id="password"
+47.                             value={password}
+48.                             onChange={(e) => setPassword(e.target.value)}
+49.                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+50.                             placeholder="Enter your password"
+51.                         />
+52.                     </div>
+53.                     <div className="flex items-center justify-between">
+54.                         <button
+55.                             type="submit"
+56.                             className="bg-orange-500 hover:bg-orange-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+57.                         >
+58.                             Sign In
+59.                         </button>
+60.                     </div>
+61.                 </form>
+62.             </div>
+63.         </div>
+64.     );
+65. };
+66. export default Auth;
+67. 
+
+END OF FILE
+
+Modification Request:
+Change the sign-in button on the login page to have a red background.
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "REPLACE",
+            "startLine": 56,
+            "endLine": 56,
+            "code": "className=\"bg-red-500 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline\""
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- the last two modification requests sent by the user (for context)
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ],
+    commands: [
+        "command to run on the terminal",
+        "another command to run on the terminal",
+        ...
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+commands: commands to run on the terminal to import required packages, such as "npm install react-router-dom"
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+- Try to generate the actions in the order they need to be executed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a frontend demo meant to be a prototype for a health web app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: /Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/App.css
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/index.css
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/main.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/App.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/firebase.js
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/utils/helpers.js
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Calculator.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/MenuBar.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/NumberButton.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/HomePage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/DashboardPage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Auth.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/ProfilePage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/assets/react.svg
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/assets/people-icon.svg
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/pages/CalculatorPage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/pages/PlaygroundPage.jsx
+
+LAST MODIFICATION REQUESTS:
+
+1. make the sign in button on the login page red
+
+END OF OLD MODIFICATION REQUESTS
+
+Modification Request:
+actually make it yellow
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Auth.jsx",
+            "action": "MODIFY",
+            "prompt": "Change the sign-in button on the login page to have a yellow background. Ensure this change uses Tailwind CSS classes.",
+            "contextFiles": []
+        }
+    ],
+    "commands": []
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted AT startLine, and the code at startLine will be PUSHED DOWN
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Things to consider:
+- Make sure to include modifications to add any required imports.
+- Note that all modifications are applied at the same time, so line numbers will not change as modifications are made.
+
+GENERAL INFORMATION: This project is a frontend demo meant to be a prototype for a health web app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: /Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/App.css
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/index.css
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/main.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/App.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/firebase.js
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/utils/helpers.js
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Calculator.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/MenuBar.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/NumberButton.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/HomePage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/DashboardPage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Auth.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/ProfilePage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/assets/react.svg
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/assets/people-icon.svg
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/pages/CalculatorPage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/pages/PlaygroundPage.jsx
+
+CONTEXT FILES:
+
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Auth.jsx):
+
+1. import { useState } from "react";
+2. 
+3. import { useNavigate } from "react-router-dom";
+4. 
+5. const Auth = () => {
+6.     const [username, setUsername] = useState("");
+7. 
+8.     const navigate = useNavigate();
+9. 
+10.     const [error, setError] = useState("");
+11.     const [password, setPassword] = useState("");
+12. 
+13.     const handleSubmit = (e) => {
+14.         e.preventDefault();
+15.         if (username === "demo" && password === "demo") {
+16.             navigate("/dashboard");
+17.         } else {
+18.             setError("Invalid username or password");
+19.         }
+20.     };
+21. 
+22.     return (
+23.         <div className="flex items-center justify-center h-screen bg-gray-100">
+24.             <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
+25.                 <h2 className="text-2xl font-bold mb-6 text-center">Sign up for FAMHEALTH!</h2>
+26.                 <form onSubmit={handleSubmit}>
+27.                     <div className="mb-4">
+28.                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+29.                             Username
+30.                         </label>
+31.                         <input
+32.                             type="text"
+33.                             id="username"
+34.                             value={username}
+35.                             onChange={(e) => setUsername(e.target.value)}
+36.                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+37.                             placeholder="Enter your username"
+38.                         />
+39.                     </div>
+40.                     <div className="mb-6">
+41.                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+42.                             Password
+43.                         </label>
+44.                         <input
+45.                             type="password"
+46.                             id="password"
+47.                             value={password}
+48.                             onChange={(e) => setPassword(e.target.value)}
+49.                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+50.                             placeholder="Enter your password"
+51.                         />
+52.                     </div>
+53.                     <div className="flex items-center justify-between">
+54.                         <button
+55.                             type="submit"
+56.                             className="bg-red-500 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+57.                         >
+58.                             Sign In
+59.                         </button>
+60.                     </div>
+61.                 </form>
+62.             </div>
+63.         </div>
+64.     );
+65. };
+66. export default Auth;
+67. 
+
+END OF FILE
+
+Modification Request:
+Change the sign-in button on the login page to have a yellow background. Ensure this change uses Tailwind CSS classes.
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "REPLACE",
+            "startLine": 56,
+            "endLine": 56,
+            "code": "className=\"bg-yellow-500 hover:bg-yellow-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline\""
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- the last two modification requests sent by the user (for context)
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ],
+    commands: [
+        "command to run on the terminal",
+        "another command to run on the terminal",
+        ...
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+commands: commands to run on the terminal to import required packages, such as "npm install react-router-dom"
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+- Try to generate the actions in the order they need to be executed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a frontend demo meant to be a prototype for a health web app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: /Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/App.css
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/index.css
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/main.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/App.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/firebase.js
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/utils/helpers.js
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Calculator.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/MenuBar.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/NumberButton.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/HomePage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/DashboardPage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Auth.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/ProfilePage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/assets/react.svg
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/assets/people-icon.svg
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/pages/CalculatorPage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/pages/PlaygroundPage.jsx
+
+LAST MODIFICATION REQUESTS:
+
+1. make the sign in button on the login page red
+2. actually make it yellow
+
+END OF OLD MODIFICATION REQUESTS
+
+Modification Request:
+actually make it green
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Auth.jsx",
+            "action": "MODIFY",
+            "prompt": "Change the color of the sign-in button to green using Tailwind CSS classes.",
+            "contextFiles": ["/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/index.css"]
+        }
+    ],
+    "commands": []
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted AT startLine, and the code at startLine will be PUSHED DOWN
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Things to consider:
+- Make sure to include modifications to add any required imports.
+- Note that all modifications are applied at the same time, so line numbers will not change as modifications are made.
+
+GENERAL INFORMATION: This project is a frontend demo meant to be a prototype for a health web app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: /Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/App.css
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/index.css
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/main.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/App.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/firebase.js
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/utils/helpers.js
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Calculator.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/MenuBar.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/NumberButton.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/HomePage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/DashboardPage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Auth.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/ProfilePage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/assets/react.svg
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/assets/people-icon.svg
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/pages/CalculatorPage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/pages/PlaygroundPage.jsx
+
+CONTEXT FILES:
+
+/* /Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Auth.jsx):
+
+1. import { useState } from "react";
+2. 
+3. import { useNavigate } from "react-router-dom";
+4. 
+5. const Auth = () => {
+6.     const [username, setUsername] = useState("");
+7. 
+8.     const navigate = useNavigate();
+9. 
+10.     const [error, setError] = useState("");
+11.     const [password, setPassword] = useState("");
+12. 
+13.     const handleSubmit = (e) => {
+14.         e.preventDefault();
+15.         if (username === "demo" && password === "demo") {
+16.             navigate("/dashboard");
+17.         } else {
+18.             setError("Invalid username or password");
+19.         }
+20.     };
+21. 
+22.     return (
+23.         <div className="flex items-center justify-center h-screen bg-gray-100">
+24.             <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
+25.                 <h2 className="text-2xl font-bold mb-6 text-center">Sign up for FAMHEALTH!</h2>
+26.                 <form onSubmit={handleSubmit}>
+27.                     <div className="mb-4">
+28.                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+29.                             Username
+30.                         </label>
+31.                         <input
+32.                             type="text"
+33.                             id="username"
+34.                             value={username}
+35.                             onChange={(e) => setUsername(e.target.value)}
+36.                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+37.                             placeholder="Enter your username"
+38.                         />
+39.                     </div>
+40.                     <div className="mb-6">
+41.                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+42.                             Password
+43.                         </label>
+44.                         <input
+45.                             type="password"
+46.                             id="password"
+47.                             value={password}
+48.                             onChange={(e) => setPassword(e.target.value)}
+49.                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+50.                             placeholder="Enter your password"
+51.                         />
+52.                     </div>
+53.                     <div className="flex items-center justify-between">
+54.                         <button
+55.                             type="submit"
+56.                             className="bg-yellow-500 hover:bg-yellow-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+57.                         >
+58.                             Sign In
+59.                         </button>
+60.                     </div>
+61.                 </form>
+62.             </div>
+63.         </div>
+64.     );
+65. };
+66. export default Auth;
+67. 
+
+END OF FILE
+
+Modification Request:
+Change the color of the sign-in button to green using Tailwind CSS classes.
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "REPLACE",
+            "startLine": 56,
+            "endLine": 56,
+            "code": "className=\"bg-green-500 hover:bg-green-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline\""
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- the last two modification requests sent by the user (for context)
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ],
+    commands: [
+        "command to run on the terminal",
+        "another command to run on the terminal",
+        ...
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+commands: commands to run on the terminal to import required packages, such as "npm install react-router-dom"
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+- Try to generate the actions in the order they need to be executed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a frontend demo meant to be a prototype for a health web app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: /Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/App.css
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/index.css
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/main.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/App.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/firebase.js
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/utils/helpers.js
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Calculator.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/MenuBar.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/NumberButton.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/HomePage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/DashboardPage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Auth.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/ProfilePage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/assets/react.svg
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/assets/people-icon.svg
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/pages/CalculatorPage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/pages/PlaygroundPage.jsx
+
+LAST MODIFICATION REQUESTS:
+
+1. actually make it yellow
+2. actually make it green
+
+END OF OLD MODIFICATION REQUESTS
+
+Modification Request:
+actually make it blue
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/MenuBar.jsx",
+            "action": "MODIFY",
+            "prompt": "Update the MenuBar component to be styled with Tailwind classes so that its background or relevant elements are blue.",
+            "contextFiles": []
+        }
+    ],
+    "commands": []
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- the last two modification requests sent by the user (for context)
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ],
+    commands: [
+        "command to run on the terminal",
+        "another command to run on the terminal",
+        ...
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+commands: commands to run on the terminal to import required packages, such as "npm install react-router-dom"
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+- Try to generate the actions in the order they need to be executed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a frontend demo meant to be a prototype for a health web app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: /Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/App.css
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/index.css
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/main.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/App.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/firebase.js
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/utils/helpers.js
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Calculator.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/MenuBar.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/NumberButton.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/HomePage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/DashboardPage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Auth.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/ProfilePage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/assets/react.svg
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/assets/people-icon.svg
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/pages/CalculatorPage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/pages/PlaygroundPage.jsx
+
+LAST MODIFICATION REQUESTS:
+
+
+
+END OF OLD MODIFICATION REQUESTS
+
+Modification Request:
+make the sign in button on login page red
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Auth.jsx",
+            "action": "MODIFY",
+            "prompt": "Change the sign-in button on the login page to have a red background using Tailwind CSS classes.",
+            "contextFiles": []
+        }
+    ],
+    "commands": []
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted AT startLine, and the code at startLine will be PUSHED DOWN
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Things to consider:
+- Make sure to include modifications to add any required imports.
+- Note that all modifications are applied at the same time, so line numbers will not change as modifications are made.
+
+GENERAL INFORMATION: This project is a frontend demo meant to be a prototype for a health web app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: /Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/App.css
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/index.css
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/main.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/App.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/firebase.js
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/utils/helpers.js
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Calculator.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/MenuBar.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/NumberButton.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/HomePage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/DashboardPage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Auth.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/ProfilePage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/assets/react.svg
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/assets/people-icon.svg
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/pages/CalculatorPage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/pages/PlaygroundPage.jsx
+
+CONTEXT FILES:
+
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Auth.jsx):
+
+1. import { useState } from "react";
+2. 
+3. import { useNavigate } from "react-router-dom";
+4. 
+5. const Auth = () => {
+6.     const [username, setUsername] = useState("");
+7. 
+8.     const navigate = useNavigate();
+9. 
+10.     const [error, setError] = useState("");
+11.     const [password, setPassword] = useState("");
+12. 
+13.     const handleSubmit = (e) => {
+14.         e.preventDefault();
+15.         if (username === "demo" && password === "demo") {
+16.             navigate("/dashboard");
+17.         } else {
+18.             setError("Invalid username or password");
+19.         }
+20.     };
+21. 
+22.     return (
+23.         <div className="flex items-center justify-center h-screen bg-gray-100">
+24.             <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
+25.                 <h2 className="text-2xl font-bold mb-6 text-center">Sign up for FAMHEALTH!</h2>
+26.                 <form onSubmit={handleSubmit}>
+27.                     <div className="mb-4">
+28.                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+29.                             Username
+30.                         </label>
+31.                         <input
+32.                             type="text"
+33.                             id="username"
+34.                             value={username}
+35.                             onChange={(e) => setUsername(e.target.value)}
+36.                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+37.                             placeholder="Enter your username"
+38.                         />
+39.                     </div>
+40.                     <div className="mb-6">
+41.                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+42.                             Password
+43.                         </label>
+44.                         <input
+45.                             type="password"
+46.                             id="password"
+47.                             value={password}
+48.                             onChange={(e) => setPassword(e.target.value)}
+49.                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+50.                             placeholder="Enter your password"
+51.                         />
+52.                     </div>
+53.                     <div className="flex items-center justify-between">
+54.                         <button
+55.                             type="submit"
+56.                             className="bg-green-500 hover:bg-green-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+57.                         >
+58.                             Sign In
+59.                         </button>
+60.                     </div>
+61.                 </form>
+62.             </div>
+63.         </div>
+64.     );
+65. };
+66. export default Auth;
+67. 
+
+END OF FILE
+
+Modification Request:
+Change the sign-in button on the login page to have a red background using Tailwind CSS classes.
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "REPLACE",
+            "startLine": 56,
+            "endLine": 56,
+            "code": "className=\"bg-red-500 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline\""
+        }
+    ]
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in the codebase
+- the last two modification requests sent by the user (for context)
+- a modification request for a change or feature in the codebase
+
+You must output the following JSON object that contains actions to take on files:
+{
+    actions: [
+        {
+            filePath: "path/to/file",
+            action: "CREATE" or "MODIFY" or "DELETE",
+            prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
+        },
+        {
+            further action objects...
+        }
+    ],
+    commands: [
+        "command to run on the terminal",
+        "another command to run on the terminal",
+        ...
+    ]
+}
+
+action "CREATE" --> a new file will be created at the specified path
+action "MODIFY" --> the file at the specified path will be modified
+action "DELETE" --> the file at the specified path will be deleted
+
+prompt:
+The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
+
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+commands: commands to run on the terminal to import required packages, such as "npm install react-router-dom"
+
+Things to consider and include in the prompt:
+- Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
+- Make sure things are exported correctly when needed
+- Try to generate the actions in the order they need to be executed
+
+============
+EXAMPLE:
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
+modification request: Add an orange sign out button to the Navbar component
+
+EXPECTED OUT:
+
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
+============
+
+GENERAL INFORMATION: This project is a frontend demo meant to be a prototype for a health web app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: /Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/App.css
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/index.css
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/main.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/App.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/firebase.js
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/utils/helpers.js
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Calculator.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/MenuBar.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/NumberButton.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/HomePage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/DashboardPage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Auth.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/ProfilePage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/assets/react.svg
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/assets/people-icon.svg
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/pages/CalculatorPage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/pages/PlaygroundPage.jsx
+
+LAST MODIFICATION REQUESTS:
+
+1. make the sign in button on login page red
+
+END OF OLD MODIFICATION REQUESTS
+
+Modification Request:
+actually make it orange
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "actions": [
+        {
+            "filePath": "/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Auth.jsx",
+            "action": "MODIFY",
+            "prompt": "Change the color of the sign-in button to orange using the Tailwind CSS class for orange background.",
+            "contextFiles": []
+        }
+    ],
+    "commands": []
+}
+
+
+=========== NEW LOG ===========
+
+
+You will be given the following:
+- some general information about a codebase and instructions for contributing to it
+- a list of files in a codebase
+- the contents of some of the files in the codebase for context
+- a code file, where each line starts with a line number
+- a modification request for a feature to change in the code
+
+You must output the following JSON object that contains modifications that will address the modification request:
+{
+    modifications: [
+        {
+            type: "INSERT" or "REPLACE" or "DELETE"
+            startLine: number,
+            endLine: number,
+            code: "new code"
+        },
+        {
+            further modification objects...
+        }
+    ]
+}
+
+type "INSERT" --> code will be inserted AT startLine, and the code at startLine will be PUSHED DOWN
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
+
+Things to consider:
+- Make sure to include modifications to add any required imports.
+- Note that all modifications are applied at the same time, so line numbers will not change as modifications are made.
+
+GENERAL INFORMATION: This project is a frontend demo meant to be a prototype for a health web app.
+This project is a React App created with Vite.
+This project uses Tailwind CSS for styling.
+DO NOT WRITE CSS IN THIS PROJECT UNLESS EXPLICITLY INSTRUCTED. ONLY USE TAILWIND CLASSES.
+
+CODEBASE FILES: /Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/App.css
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/index.css
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/main.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/App.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/firebase.js
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/utils/helpers.js
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Calculator.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/MenuBar.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/NumberButton.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/HomePage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/DashboardPage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Auth.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/ProfilePage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/assets/react.svg
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/assets/people-icon.svg
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/pages/CalculatorPage.jsx
+/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/pages/PlaygroundPage.jsx
+
+CONTEXT FILES:
+
+
+
+END OF CONTEXT FILES
+
+MAIN CODE FILE (/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test/src/components/Auth.jsx):
+
+1. import { useState } from "react";
+2. 
+3. import { useNavigate } from "react-router-dom";
+4. 
+5. const Auth = () => {
+6.     const [username, setUsername] = useState("");
+7. 
+8.     const navigate = useNavigate();
+9. 
+10.     const [error, setError] = useState("");
+11.     const [password, setPassword] = useState("");
+12. 
+13.     const handleSubmit = (e) => {
+14.         e.preventDefault();
+15.         if (username === "demo" && password === "demo") {
+16.             navigate("/dashboard");
+17.         } else {
+18.             setError("Invalid username or password");
+19.         }
+20.     };
+21. 
+22.     return (
+23.         <div className="flex items-center justify-center h-screen bg-gray-100">
+24.             <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
+25.                 <h2 className="text-2xl font-bold mb-6 text-center">Sign up for FAMHEALTH!</h2>
+26.                 <form onSubmit={handleSubmit}>
+27.                     <div className="mb-4">
+28.                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+29.                             Username
+30.                         </label>
+31.                         <input
+32.                             type="text"
+33.                             id="username"
+34.                             value={username}
+35.                             onChange={(e) => setUsername(e.target.value)}
+36.                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+37.                             placeholder="Enter your username"
+38.                         />
+39.                     </div>
+40.                     <div className="mb-6">
+41.                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+42.                             Password
+43.                         </label>
+44.                         <input
+45.                             type="password"
+46.                             id="password"
+47.                             value={password}
+48.                             onChange={(e) => setPassword(e.target.value)}
+49.                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+50.                             placeholder="Enter your password"
+51.                         />
+52.                     </div>
+53.                     <div className="flex items-center justify-between">
+54.                         <button
+55.                             type="submit"
+56.                             className="bg-red-500 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+57.                         >
+58.                             Sign In
+59.                         </button>
+60.                     </div>
+61.                 </form>
+62.             </div>
+63.         </div>
+64.     );
+65. };
+66. export default Auth;
+67. 
+
+END OF FILE
+
+Modification Request:
+Change the color of the sign-in button to orange using the Tailwind CSS class for orange background.
+
+
+
+=========== GPT RESPONSE ===========
+
+
+{
+    "modifications": [
+        {
+            "type": "REPLACE",
+            "startLine": 56,
+            "endLine": 56,
+            "code": "className=\"bg-orange-500 hover:bg-orange-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline\""
+        }
+    ]
+}
+
+

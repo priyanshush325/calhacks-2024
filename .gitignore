@@ -1,3 +1,4 @@
 .env
 */.env
+./generator-logs
 ./generator-logs/*

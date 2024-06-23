@@ -99,13 +99,19 @@ def createActionPlan(userPrompt, client, MODEL, projectInfo):
     print("Action plan executed successfully.")
 
 
-def APIActionPlan(userPrompt, client, MODEL, projectInfo):
+def APIActionPlan(userPrompt, client, MODEL, projectInfo, promptHistory):
     projectTree = fetchProjectTree(projectInfo.projectSourceDir)
+
+    NUM_HISTORY = 3
+    lastTwoPrompts = promptHistory[-3:]
+    lastTwoPrompts = "\n".join(
+        [f"{i + 1}. {p}" for i, p in enumerate(lastTwoPrompts)])
 
     prompt = generatePrompt(
         "./generator/prompts/createActionPlan.txt", [
             projectInfo.repoInfo,
             projectTree,
+            lastTwoPrompts,
             userPrompt
         ])
 

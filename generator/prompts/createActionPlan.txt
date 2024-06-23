@@ -1,6 +1,7 @@
 You will be given the following:
 - some general information about a codebase and instructions for contributing to it
 - a list of files in the codebase
+- the last two modification requests sent by the user (for context)
 - a modification request for a change or feature in the codebase
 
 You must output the following JSON object that contains actions to take on files:
@@ -55,7 +56,11 @@ GENERAL INFORMATION: [PARAM0]
 
 CODEBASE FILES: [PARAM1]
 
-END OF LIST OF FILES
+LAST MODIFICATION REQUESTS:
+
+[PARAM2]
+
+END OF OLD MODIFICATION REQUESTS
 
 Modification Request:
-[PARAM2]
+[PARAM3]
