@@ -275,12 +275,17 @@ def generateFixPrompt(file, client, MODEL, prettierInfo):
     if result != "SUCCESS":
         return "ERROR"
 
+    print("Checking prettier again...")
+
     result = checkPrettier(file)
 
-    if result == "PRETTIER_ERROR":
+    print(f"HEREHEHE Result: {result}")
+    print(result[0])
+
+    if result[0] == "PRETTIER_ERROR":
         print("Prettier error 2 detected. Attempting to fix...")
         result = generateLastDitchFixPrompt(
-            file, client, MODEL, prettierInfo)
+            file, client, MODEL, result[2])
         if result == "ERROR":
             return "ERROR"
         elif result == "SUCCESS":
@@ -288,6 +293,8 @@ def generateFixPrompt(file, client, MODEL, prettierInfo):
     elif result == "SUCCESS":
         print("Prettier error fixed successfully (1)")
         return "SUCCESS"
+    else:
+        return "ERROR"
 
 
 def generateLastDitchFixPrompt(file, client, MODEL, prettierInfo):
@@ -338,6 +345,7 @@ def handleFeaturePrompt(prompt, contextFiles, filePath, client, MODEL, projectIn
     if result[0] == "PRETTIER_ERROR":
         print("Prettier error detected. Attempting to fix...")
         result = generateFixPrompt(filePath, client, MODEL, result[2])
+
         if result == "SUCCESS":
             print(f"{filePath} modified successfully!")
         else:

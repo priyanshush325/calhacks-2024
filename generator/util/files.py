@@ -83,7 +83,7 @@ def checkPrettier(filePath):
 
     if result.returncode != 0:
         return "PRETTIER_ERROR", result.stdout, result.stderr
-    return "SUCCESS"
+    return "SUCCESS", result.stdout, result.stderr
 
 
 def runCommandInDirectory(command, directory):

@@ -1,6 +1,10 @@
+import "regenerator-runtime";
 import { useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import "./App.css";
+import SpeechRecognition, {
+	useSpeechRecognition,
+} from "react-speech-recognition";
 
 const baseUrl = import.meta.env.VITE_PROJECT_URL;
 const serverUrl = import.meta.env.VITE_SERVER_URL;
@@ -88,6 +92,23 @@ function App() {
 		actions: [],
 		commands: [],
 	});
+
+	const {
+		transcript,
+		listening,
+		resetTranscript,
+		browserSupportsSpeechRecognition,
+	} = useSpeechRecognition({});
+
+	useEffect(() => {
+		// when the transcript changes, update the message
+		// set messaage to message + transcript using function
+		// setMessage((message) => message + " " + transcript);
+		// resetTranscript();
+		if (listening) setMessage(transcript);
+		else resetTranscript();
+	}, [transcript, listening]);
+
 	// each action has action, filePath, prompt, and contextFiles []
 
 	return (
@@ -235,98 +256,128 @@ function App() {
 							</div>
 						))}
 					</div>
-
-					<TextareaAutosize
-						ref={inputRef}
-						disabled={!inputEnabled}
-						className="message-box"
-						type="text"
-						placeholder={
-							awaitingConfirmation
-								? "Enter to confirm, anything else to cancel..."
-								: "Enter a prompt..."
-						}
+					<div
 						style={{
-							opacity: inputEnabled ? 1 : 0.5,
-							cursor: inputEnabled ? "auto" : "not-allowed",
+							display: "flex",
+							flexDirection: "column",
+							gap: "0.5rem",
 						}}
-						value={message}
-						onChange={(e) => setMessage(e.target.value)}
-						onKeyDown={async (e) => {
-							if (e.key === "Enter") {
-								e.preventDefault();
-
-								console.log("Enter pressed");
-
-								if (awaitingConfirmation) {
-									setInputEnabled(false);
-									if (message === "") {
-										setCurrentStatus("Executing plan");
-										const success = await confirmActions(true);
-										setAwaitingConfirmation(false);
-										setMessage("");
-										if (success) {
-											setActionPlan({
-												actions: [],
-												commands: [],
-											});
-										}
-									} else {
-										setCurrentStatus("Cancelling plan");
-										const success = await confirmActions(false);
-										setAwaitingConfirmation(false);
-										setMessage("");
-										if (success) {
-											setActionPlan({
-												actions: [],
-												commands: [],
-											});
-										}
+					>
+						{browserSupportsSpeechRecognition && (
+							<button
+								onClick={() => {
+									if (listening) {
+										setTimeout(() => {
+											setInputEnabled(true);
+										}, 100);
+										setInputEnabled(true);
+										SpeechRecognition.stopListening();
+										// setMessage(message + " " + transcript);
+										// resetTranscript();
 									}
-									setTimeout(() => {
-										setCurrentStatus("");
-										setInputEnabled(true);
-										setActionPlan({
-											actions: [],
-											commands: [],
-										});
-									}, 100);
-								} else {
-									console.log("Sending message", message);
-									if (message === "") return;
-									setCurrentStatus("Sending message");
-									let messageSave = message;
-									setMessage("");
+									resetTranscript();
+									SpeechRecognition.startListening({
+										continuous: true,
+										language: "en-US",
+									});
 									setInputEnabled(false);
-									const result = await sendMessage(messageSave);
-									if (result.success) {
-										if (
-											result.data?.actions?.length === 0 &&
-											result.data?.commands?.length === 0
-										) {
-											setCurrentStatus("No actions required");
-											setTimeout(() => {
-												setCurrentStatus("");
-												setInputEnabled(true);
-											}, 1000);
-											return;
+								}}
+							>
+								{listening ? "Stop" : "Start"} Listening
+							</button>
+						)}
+						<TextareaAutosize
+							ref={inputRef}
+							disabled={!inputEnabled}
+							className="message-box"
+							type="text"
+							placeholder={
+								awaitingConfirmation
+									? "Enter to confirm, anything else to cancel..."
+									: "Enter a prompt..."
+							}
+							style={{
+								opacity: inputEnabled ? 1 : 0.5,
+								cursor: inputEnabled ? "auto" : "not-allowed",
+							}}
+							value={message}
+							onChange={(e) => setMessage(e.target.value)}
+							onKeyDown={async (e) => {
+								if (e.key === "Enter") {
+									e.preventDefault();
+
+									console.log("Enter pressed");
+
+									if (awaitingConfirmation) {
+										setInputEnabled(false);
+										if (message === "") {
+											setCurrentStatus("Executing plan");
+											const success = await confirmActions(true);
+											setAwaitingConfirmation(false);
+											setMessage("");
+											if (success) {
+												setActionPlan({
+													actions: [],
+													commands: [],
+												});
+											}
 										} else {
-											setAwaitingConfirmation(true);
-											setActionPlan(result.data);
-											setTimeout(() => {
-												setCurrentStatus("Awaiting confirmation");
-												setInputEnabled(true);
-											}, 100);
+											setCurrentStatus("Cancelling plan");
+											const success = await confirmActions(false);
+											setAwaitingConfirmation(false);
+											setMessage("");
+											if (success) {
+												setActionPlan({
+													actions: [],
+													commands: [],
+												});
+											}
 										}
+										setTimeout(() => {
+											setCurrentStatus("");
+											setInputEnabled(true);
+											setActionPlan({
+												actions: [],
+												commands: [],
+											});
+										}, 100);
 									} else {
-										alert("Error sending message");
-										setCurrentStatus("");
-										setInputEnabled(true);
+										console.log("Sending message", message);
+										if (message === "") return;
+										setCurrentStatus("Sending message");
+										let messageSave = message;
+										setMessage("");
+										setInputEnabled(false);
+										const result = await sendMessage(messageSave);
+										if (result.success) {
+											if (
+												result.data?.actions?.length === 0 &&
+												result.data?.commands?.length === 0
+											) {
+												setCurrentStatus("No actions required");
+												setTimeout(() => {
+													setCurrentStatus("");
+													setInputEnabled(true);
+												}, 1000);
+												return;
+											} else {
+												setAwaitingConfirmation(true);
+												setActionPlan(result.data);
+												setTimeout(() => {
+													setCurrentStatus("Awaiting confirmation");
+													setInputEnabled(true);
+												}, 100);
+											}
+										} else {
+											alert("Error sending message");
+											setCurrentStatus("");
+											setInputEnabled(true);
+										}
 									}
 								}
-							}
-						}}
-					/>
+							}}
+						/>
+					</div>
 				</div>
 			</div>
 		</>

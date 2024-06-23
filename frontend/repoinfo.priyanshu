@@ -17,11 +17,14 @@
             ]
         },
         "pages/HomePage.jsx": {
-            "description": "A React component for the Home page that displays a rotating text",
+            "description": "A React component for the Home Page with an image, text, and dynamic text changing every 2 seconds.",
             "exports": [
                 "HomePage"
             ],
-            "imports": []
+            "imports": [
+                "useState",
+                "useEffect"
+            ]
         },
         "pages/ProjectsPage.jsx": {
             "description": "A file that defines the ProjectsPage component, which displays multiple ProjectCard components in a grid layout.",
