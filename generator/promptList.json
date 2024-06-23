@@ -1,6 +1,1 @@
-{
-	"prompts": [
-		"Remove the current page and replace it with a page that displays a simple calculator with 10 number buttons in a row, and 4 standard arithmentic buttons (addition, subtraction, multiplication, division). The calculator should have an equals button that displays the result of the calculation. The calculator should have a clear button that clears the current calculation.",
-		"Add styles using tailwindcss. Make the page flexed, and show the buttons in a grid in the center of the page. Make the equals button orange, the rest of the buttons light gray, and the background white. Make the buttons square, rounded, no border, no shadow. Make the input/output field have a light gray background as well, and make its font bold. Remember that tailwind doesn't have a light gray, it just has numbers."
-	]
-}
+{"prompts": []}

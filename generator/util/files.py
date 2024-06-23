@@ -1,5 +1,6 @@
 import json
 import subprocess
+import os
 
 # FileModification type
 # - startLine: int (inclusive)
@@ -41,18 +42,48 @@ def modifyFile(filePath, modifications):
     with open(filePath, 'w') as file:
         file.writelines(lines)
 
-    # run prettier on the file and check the error output ("npx", "prettier", "--write", filePath)
-    result = subprocess.run(["npx", "prettier", "--write", filePath])
-    if result.returncode != 0:
-        print("An error occurred while running prettier on the file.")
-
-        # # restore the original file
-        # with open(filePath, 'w') as file:
-        #     file.writelines(originalLines)
-
-        return "PRETTIER_ERROR"
-
     return "SUCCESS"
+
+
+def checkPrettier(filePath):
+
+    # save the current directory
+    originalDirectory = os.getcwd()
+
+    # change directories into the project directory
+    filePathParts = filePath.split("/")
+    projectDirectory = "/".join(filePathParts[:-1])
+    os.chdir(projectDirectory)
+    realFilePath = filePathParts[-1]
+
+    result = subprocess.run(["npx", "prettier", "--write", realFilePath])
+
+    # change back to the original directory
+    os.chdir(originalDirectory)
+
+    if result.returncode != 0:
+        return "PRETTIER_ERROR"
+    return "SUCCESS"
+
+
+# def organizeImports(filePath):
+#     # save the current directory
+#     originalDirectory = os.getcwd()
+
+#     # change directories into the project directory
+#     filePathParts = filePath.split("/")
+#     projectDirectory = "/".join(filePathParts[:-1])
+#     os.chdir(projectDirectory)
+#     realFilePath = filePathParts[-1]
+
+#     result = subprocess.run(["npx", "organize-imports-cli", realFilePath])
+
+#     # change back to the original directory
+#     os.chdir(originalDirectory)
+
+#     if result.returncode != 0:
+#         return "ORGANIZE_IMPORTS_ERROR"
+#     return "SUCCESS"
 
 
 def parseModificationObjectsFromString(modificationsString):

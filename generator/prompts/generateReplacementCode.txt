@@ -8,7 +8,7 @@ You must output the following JSON object that contains modifications that will 
         {
             startLine: number,
             endLine: number,
-            code: "code that replaces the existing code from startLine to endLine inclusive"
+            code: "Code that replaces the existing code from startLine to endLine inclusive. Do not inclue line numbers."
         },
         {
             further modification objects...
@@ -16,6 +16,7 @@ You must output the following JSON object that contains modifications that will 
     ]
 }
 
+Make sure to include modifications to add any required imports.
 
 FILE ([PARAM1]):
 
