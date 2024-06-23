@@ -6,15 +6,20 @@ You must output the following JSON object that contains modifications that will 
 {
     modifications: [
         {
+            type: "INSERT" or "REPLACE" or "DELETE"
             startLine: number,
             endLine: number,
-            code: "Code that replaces the existing code from startLine to endLine inclusive. Do not inclue line numbers."
+            code: "new code"
         },
         {
             further modification objects...
         }
     ]
 }
+
+type "INSERT" --> code will be inserted BEFORE startLine (between startLine-1 and startLine) 
+type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
+type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
 
 Make sure to include modifications to add any required imports.
 
