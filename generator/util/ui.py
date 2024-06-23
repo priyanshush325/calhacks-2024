@@ -7,7 +7,7 @@ def startUI(uiPort, projectPort):
     # save the current directory
     with open("./generator/ui/.env", "w") as f:
         f.write(f"VITE_PROJECT_URL=http://localhost:{projectPort}\n")
-        f.write(f"VITE_SERVER_URL=http://localhost:5000")
+        f.write(f"VITE_SERVER_URL=http://127.0.0.1:5000")
 
     # start the UI
     cwd = os.getcwd()
@@ -34,7 +34,7 @@ def startProjectServer(webServerAbsolute, sourceDirectory, projectPort):
         with open(webServerAbsolute, 'w') as f:
             f.write("")
     originalDirectory = os.getcwd()
-    os.chdir(args.directory)
+    os.chdir(sourceDirectory)
     command = f"npm run dev -- --port {projectPort}"
     command += f" 2>{webServerAbsolute}"
     command += f" 1>{webServerAbsolute}"

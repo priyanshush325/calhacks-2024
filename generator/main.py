@@ -21,7 +21,7 @@ import os
 
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 load_dotenv()
 
 client = OpenAI()
@@ -123,10 +123,15 @@ def prompt():
 @app.route("/info", methods=["POST"])
 @cross_origin()
 def info():
+
+    print("Received info request")
+
     global ROOT_DIRECTORY
     global PROJECT_SOURCE_DIRECTORY
     global INFO_PATH
     global PROJECT_INFO
+
+    print(f"Request: {request.json}")
 
     ROOT_DIRECTORY = request.json["projectSourceDir"]
     PROJECT_SOURCE_DIRECTORY = os.path.join(ROOT_DIRECTORY, "src")
