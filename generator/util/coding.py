@@ -119,7 +119,7 @@ def generateFixPrompt(file, client, MODEL, prettierInfo):
             "N/A",
             file,
             readFile(file),
-            "There was an error running prettier on the file. Check for missing opening or closing tags, mismatched parentheses or braces, missing statements, etc. Please correct the code to fix the error. Here is the error log from Prettier: {prettierInfo}"
+            "There was an error running prettier on the file. Here is the error log from Prettier: {prettierInfo}. Check for missing opening or closing tags, mismatched parentheses or braces, missing statements, etc. Please correct the code to fix the error."
         ])
     response = requestGPT(client, MODEL, correctionPrompt)
     mods = parseModificationObjectsFromString(response)
