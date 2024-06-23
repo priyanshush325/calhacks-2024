@@ -154,8 +154,13 @@ def confirm():
         PENDING_ACTIONS = None
         return "success", 200
 
-    confirmActions(PENDING_ACTIONS, client, MODEL, PROJECT_INFO)
-    PENDING_ACTIONS = None
+    try:
+        confirmActions(PENDING_ACTIONS, client, MODEL, PROJECT_INFO)
+        PENDING_ACTIONS = None
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        PENDING_ACTIONS = None
+        return "failure", 400
     return "success", 200
 
 
