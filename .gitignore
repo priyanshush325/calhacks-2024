@@ -3,3 +3,4 @@
 ./generator-logs
 ./generator-logs/*
 generator-logs/webserver.txt
+generator-logs/logs.txt
