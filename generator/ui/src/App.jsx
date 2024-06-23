@@ -1,12 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useState, useEffect } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import "./App.css";
 
 const baseUrl = import.meta.env.VITE_PROJECT_URL;
 const serverUrl = import.meta.env.VITE_SERVER_URL;
-
-const DEFAULT_PROJECT_PATH =
-	"/Users/sonavagarwal/Documents/GitHub/calhacks-2024/health_app";
 
 async function sendMessage(message) {
 	let response = await fetch(serverUrl + "/prompt", {
@@ -19,11 +16,8 @@ async function sendMessage(message) {
 		}),
 	});
 
-	let data = null;
-	if (response.status === 200) {
-		data = await response.json();
-		console.log(data);
-	}
+	const data = await response.json();
+	console.log(data);
 
 	return {
 		success: response.status === 200,
@@ -66,7 +60,7 @@ async function sendProject(project) {
 function App() {
 	const [project, setProject] = useState({
 		name: "It literally doesn't matter",
-		path: DEFAULT_PROJECT_PATH,
+		path: "",
 	});
 	const [projectSet, setProjectSet] = useState(false);
 
@@ -77,18 +71,54 @@ function App() {
 	const [awaitingConfirmation, setAwaitingConfirmation] = useState(false);
 
 	const [currentStatus, setCurrentStatus] = useState("");
-	const [inputEnabled, setInputEnabled] = useState(false);
-	const inputRef = useRef(null);
-	useEffect(() => {
-		if (inputEnabled) {
-			inputRef.current.focus();
-		}
-	}, [inputEnabled]);
 	const [actionPlan, setActionPlan] = useState({
 		actions: [],
 		commands: [],
 	});
 	// each action has action, filePath, prompt, and contextFiles []
+
+	// Listen for speech to text
+	const SpeechRecognition =
+		window.SpeechRecognition || window.webkitSpeechRecognition;
+	const recognition = new SpeechRecognition();
+
+	recognition.continuous = true;
+	recognition.interimResults = true;
+	recognition.lang = "en-US";
+
+	const [listening, setListening] = useState(false);
+
+	useEffect(() => {
+		recognition.onresult = (event) => {
+			const transcript = Array.from(event.results)
+				.map((result) => result[0])
+				.map((result) => result.transcript)
+				.join("");
+			setMessage(transcript);
+		};
+
+		recognition.onend = () => {
+			if (listening) {
+				recognition.start();
+			} else {
+				// Update the message state variable with the final transcription when listening stops
+				setMessage((prevMessage) => prevMessage);
+			}
+		};
+
+		return () => {
+			recognition.stop();
+		};
+	}, [listening]);
+
+	const handleListen = () => {
+		if (listening) {
+			recognition.stop();
+		} else {
+			recognition.start();
+		}
+		setListening(!listening);
+	};
 
 	return (
 		<>
@@ -141,34 +171,12 @@ function App() {
 								<input
 									type="text"
 									placeholder="Absolute project path"
-									defaultValue={DEFAULT_PROJECT_PATH}
+									defaultValue={
+										"/Users/sonavagarwal/Documents/GitHub/calhacks-2024/test"
+									}
 									onChange={(e) =>
 										setProject({ ...project, path: e.target.value })
 									}
-									onKeyDown={async (e) => {
-										if (e.key === "Enter") {
-											if (project.path === "") {
-												alert("Please enter a project path");
-												return;
-											} else {
-												setCurrentStatus("Loading project");
-												let successs = await sendProject(project);
-												if (successs) {
-													setCurrentStatus("Waiting for messages");
-													setProjectSet(true);
-													setInputEnabled(true);
-													setTimeout(() => {
-														// reload the iframe
-														setUrl(
-															urlBar +
-																"?random=" +
-																Math.floor(Math.random() * 1000000)
-														);
-													}, 1000);
-												}
-											}
-										}
-									}}
 								/>
 								<button
 									onClick={async () => {
@@ -181,7 +189,6 @@ function App() {
 										if (successs) {
 											setCurrentStatus("Waiting for messages");
 											setProjectSet(true);
-											setInputEnabled(true);
 											setTimeout(() => {
 												// reload the iframe
 												setUrl(
@@ -206,7 +213,6 @@ function App() {
 							display: "flex",
 							flexDirection: "column",
 							gap: "0.5rem",
-							overflowY: "scroll",
 						}}
 					>
 						{!!currentStatus && <h1 className="status">{currentStatus}</h1>}
@@ -237,8 +243,6 @@ function App() {
 					</div>
 
 					<TextareaAutosize
-						ref={inputRef}
-						disabled={!inputEnabled}
 						className="message-box"
 						type="text"
 						placeholder={
@@ -246,10 +250,6 @@ function App() {
 								? "Enter to confirm, anything else to cancel..."
 								: "Enter a prompt..."
 						}
-						style={{
-							opacity: inputEnabled ? 1 : 0.5,
-							cursor: inputEnabled ? "auto" : "not-allowed",
-						}}
 						value={message}
 						onChange={(e) => setMessage(e.target.value)}
 						onKeyDown={async (e) => {
@@ -259,7 +259,6 @@ function App() {
 								console.log("Enter pressed");
 
 								if (awaitingConfirmation) {
-									setInputEnabled(false);
 									if (message === "") {
 										setCurrentStatus("Executing plan");
 										const success = await confirmActions(true);
@@ -297,36 +296,24 @@ function App() {
 									setCurrentStatus("Sending message");
 									let messageSave = message;
 									setMessage("");
-									setInputEnabled(false);
 									const result = await sendMessage(messageSave);
 									if (result.success) {
-										if (
-											result.data?.actions?.length === 0 &&
-											result.data?.commands?.length === 0
-										) {
-											setCurrentStatus("No actions required");
-											setTimeout(() => {
-												setCurrentStatus("");
-												setInputEnabled(true);
-											}, 1000);
-											return;
-										} else {
-											setAwaitingConfirmation(true);
-											setActionPlan(result.data);
-											setTimeout(() => {
-												setCurrentStatus("Awaiting confirmation");
-												setInputEnabled(true);
-											}, 100);
-										}
+										setAwaitingConfirmation(true);
+										setActionPlan(result.data);
+										setTimeout(() => {
+											setCurrentStatus("Awaiting confirmation");
+										}, 100);
 									} else {
 										alert("Error sending message");
 										setCurrentStatus("");
-										setInputEnabled(true);
 									}
 								}
 							}
 						}}
 					/>
+					<button onClick={handleListen} className="mic-button">
+						{listening ? "Stop Listening" : "Start Listening"}
+					</button>
 				</div>
 			</div>
 		</>

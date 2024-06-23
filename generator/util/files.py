@@ -239,9 +239,9 @@ def getPriyanshuFileFileDetails(filePath, priyanshuFile):
     if "description" in details:
         retString += f" DESCRIPTION: {details['description']}"
     if "imports" in details:
-        retString += f" IMPORTS: {", ".join(details.get('imports', []))}"
+        retString += f" IMPORTS: {', '.join(details.get('imports', []))}"
     if "exports" in details:
-        retString += f" EXPORTS: {", ".join(details.get('exports', []))}"
+        retString += f" EXPORTS: {', '.join(details.get('exports', []))}"
 
     return retString
 
