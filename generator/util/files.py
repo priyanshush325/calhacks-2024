@@ -50,9 +50,6 @@ def modifyFile(filePath, modifications):
     return "SUCCESS"
 
 
-import os
-import subprocess
-
 def checkPrettier(filePath):
     # save the current directory
     originalDirectory = os.getcwd()
@@ -82,6 +79,30 @@ def checkPrettier(filePath):
         return "PRETTIER_ERROR", result.stdout, result.stderr
     return "SUCCESS"
 
+
+def runCommandInDirectory(command, directory):
+
+    print(f"Running command: {command} in directory: {directory}")
+
+    # save the current directory
+    originalDirectory = os.getcwd()
+
+    # change directories into the project directory
+    os.chdir(directory)
+
+    # run the command and capture the output
+    result = subprocess.run(
+        command,
+        shell=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True
+    )
+
+    # change back to the original directory
+    os.chdir(originalDirectory)
+
+    return result.stdout, result.stderr
 
 
 def organizeImports(filePath):
@@ -144,16 +165,27 @@ def fetchProjectTree(projectDirectory):
     return "\n".join(projectTree)
 
 
-def readFile(file):
+def checkFileExists(filePath):
+    return os.path.exists(filePath)
+
+
+def readFile(file, includeLineNumbers=True):
+
     content = ""
     with open(file, 'r') as f:
         content = f.read()
 
     if content == "":
-        return f"1. /* File {file} is empty. */"
+        if includeLineNumbers:
+            return f"1. /* File {file} is empty. */"
+        else:
+            return "/* File is empty. */"
 
     lines = content.split("\n")
     for i in range(len(lines)):
-        lines[i] = f"{i+1}. {lines[i]}"
+        if includeLineNumbers:
+            lines[i] = f"{i+1}. {lines[i]}"
+        else:
+            lines[i] = lines[i]
 
     return "\n".join(lines)

@@ -1,7 +1,7 @@
 import json
 
 from util.files import (checkPrettier, createFile, deleteFile,
-                        fetchProjectTree, modifyFile, FileModification, readFile)
+                        fetchProjectTree, modifyFile, FileModification, readFile, checkFileExists, runCommandInDirectory)
 from util.prompting import generatePrompt, requestGPT
 
 # ProjectInfo type
@@ -25,14 +25,16 @@ class ProjectInfo:
 # FileAction type
 # - action: str "CREATE" or "MODIFY" or "DELETE"
 # - filePath: str
+# - contextFiles: string array
 # - prompt: str
 
 
 class FileAction:
-    def __init__(self, action, filePath, prompt):
+    def __init__(self, action, filePath, prompt, contextFiles):
         self.action = action
         self.filePath = filePath
         self.prompt = prompt
+        self.contextFiles = contextFiles
 
 
 def createActionPlan(userPrompt, client, MODEL, projectInfo):
@@ -47,31 +49,57 @@ def createActionPlan(userPrompt, client, MODEL, projectInfo):
         ])
 
     response = requestGPT(client, MODEL, prompt)
-    actions = parseActionPlan(response)
+    commands, actions = parseActionPlan(response)
+
+    print(f"=========COMMANDS=========")
+    print("\n".join(commands))
 
     for action in actions:
         print(f"=========ACTION=========")
         print(f"Action: {action.action}, File: {action.filePath}")
         print(f"Prompt: {action.prompt}")
+        print(f"Context Files: {" ".join(action.contextFiles)}")
 
     # wait for user to confirm the action plan
     print("Action plan generated. Please review the actions:")
     input("Press Enter to continue...")
 
+    # run the commands
+    for command in commands:
+        runCommandInDirectory(command, projectInfo.projectSourceDir)
+
+    # for each of the actions, grab the context files content and cache them in a dict called contextFiles
+    allContextFiles = {}
+    for action in actions:
+        for file in action.contextFiles:
+            if checkFileExists(file):
+                allContextFiles[file] = readFile(file, False)
+
     for action in actions:
         print(f"Action: {action.action}, File: {action.filePath}")
-        executeAction(action, client, MODEL, projectInfo)
+        executeAction(action, client, MODEL, projectInfo, allContextFiles)
 
 
-def executeAction(action, client, MODEL, projectInfo):
+def executeAction(action, client, MODEL, projectInfo, allContextFiles):
     if action.action == "CREATE":
         createFile(action.filePath)
     elif action.action == "DELETE":
         deleteFile(action.filePath)
         return "SUCCESS"
 
+    contextFiles = []
+
+    for file in action.contextFiles:
+        cFS = allContextFiles.get(file, "")
+
+        if cFS != "":
+            # prepend the file name to the content and add it to the contextFiles array
+            contextFiles.append(f"/* {file} */\n{cFS}")
+
+    contextFiles = "\n".join(contextFiles)
+
     # now run the prompt to modify the file
-    handleFeaturePrompt(action.prompt, action.filePath,
+    handleFeaturePrompt(action.prompt, contextFiles, action.filePath,
                         client, MODEL, projectInfo)
 
     return "SUCCESS"  # TODO: return "ERROR" if the file could not be modified
@@ -79,17 +107,19 @@ def executeAction(action, client, MODEL, projectInfo):
 
 def parseActionPlan(string):
     actionPlan = json.loads(string)
+    commands = actionPlan.get("commands", [])
     actions = []
     for action in actionPlan["actions"]:
         a = action.get("action", "MODIFY")
         fP = action.get("filePath", "")
         p = action.get("prompt", "")
+        cF = action.get("contextFiles", [])
 
         if fP == "" or a == "":
             continue
 
-        actions.append(FileAction(a, fP, p))
-    return actions
+        actions.append(FileAction(a, fP, p, cF))
+    return commands, actions
 
 
 def parseModificationObjectsFromString(modificationsString):
@@ -114,7 +144,7 @@ def parseModificationObjectsFromString(modificationsString):
 def generateFixPrompt(file, client, MODEL, prettierInfo):
     print(f"Prettier error log was: {prettierInfo}")
     correctionPrompt = generatePrompt(
-        "./generator/prompts/generateReplacementCode.txt", [
+        "./generator/prompts/generateFixCode.txt", [
             "N/A",
             "N/A",
             file,
@@ -135,7 +165,7 @@ def generateFixPrompt(file, client, MODEL, prettierInfo):
         return "SUCCESS"
 
 
-def handleFeaturePrompt(prompt, filePath, client, MODEL, projectInfo):
+def handleFeaturePrompt(prompt, contextFiles, filePath, client, MODEL, projectInfo):
 
     projectTree = fetchProjectTree(projectInfo.projectSourceDir)
 
@@ -143,6 +173,7 @@ def handleFeaturePrompt(prompt, filePath, client, MODEL, projectInfo):
         "./generator/prompts/generateReplacementCode.txt", [
             projectInfo.repoInfo,
             projectTree,
+            contextFiles,
             filePath,
             readFile(filePath),
             prompt

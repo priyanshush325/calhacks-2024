@@ -1,7 +1,6 @@
 You will be given the following:
 - some general information about a codebase and instructions for contributing to it
 - a list of files in a codebase
-- the contents of some of the files in the codebase for context
 - a code file, where each line starts with a line number
 - a modification request for a feature to change in the code
 
@@ -20,7 +19,7 @@ You must output the following JSON object that contains modifications that will 
     ]
 }
 
-type "INSERT" --> code will be inserted at startLine, and the code at startLine will be pushed down
+type "INSERT" --> code will be inserted BEFORE startLine (between startLine-1 and startLine) 
 type "REPLACE" --> code will replace the lines from startLine (inclusive) to endLine (inclusive)
 type "DELETE" --> the lines from startLine (inclusive) to endLine (inclusive) will be deleted
 
@@ -30,17 +29,11 @@ GENERAL INFORMATION: [PARAM0]
 
 CODEBASE FILES: [PARAM1]
 
-CONTEXT FILES:
+FILE ([PARAM2]):
 
-[PARAM2]
-
-END OF CONTEXT FILES
-
-MAIN CODE FILE ([PARAM3]):
-
-[PARAM4]
+[PARAM3]
 
 END OF FILE
 
 Modification Request:
-[PARAM5]
+[PARAM4]

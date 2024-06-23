@@ -10,10 +10,16 @@ You must output the following JSON object that contains actions to take on files
             filePath: "path/to/file",
             action: "CREATE" or "MODIFY" or "DELETE",
             prompt: "prompt for the modification",
+            contextFiles: ["path/to/file1", "path/to/file2", ...]
         },
         {
-            further modification objects...
+            further action objects...
         }
+    ],
+    commands: [
+        "command to run on the terminal",
+        "another command to run on the terminal",
+        ...
     ]
 }
 
@@ -24,19 +30,24 @@ action "DELETE" --> the file at the specified path will be deleted
 prompt:
 The prompt is a string that describes the content to be created or modified in the file, that will be executed by an agent on the file. It should not state what file to create or modify. It should be a human-readable description of the modification request. It should describe the change or content at a high level, and should pass on any details included in the modification request. If any information is needed for the agent to complete the modification, it should be included in the prompt.
 
+contextFiles:
+Up to three file paths that the agent may need to reference in order to complete the modification. These files may contain code that the agent needs to import or copy etc.
+
+commands: commands to run on the terminal to import required packages, such as "npm install react-router-dom"
+
 Things to consider and include in the prompt:
 - Make sure code shared across multiple files is imported, and that the import statements use the correct relative path
 - Make sure things are exported correctly when needed
 
 ============
 EXAMPLE:
-files: "./src/components/Navbar.js", "./src/utils/helpers.js"
+files: "./src/components/Navbar.js", "./src/utils/helpers.js", "./src/utils/auth.js"
 modification request: Add an orange sign out button to the Navbar component
 
 EXPECTED OUT:
 
-MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js"
-MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function"
+MODIFY "./src/components/Navbar.js" with the following prompt: "Add an orange sign out button to the Navbar and call signOut from ../utils/helpers.js", no context files
+MODIFY "./src/utils/helpers.js" with the following prompt: "Add a signOut function", context files ["./src/utils/auth.js"]
 ============
 
 GENERAL INFORMATION: [PARAM0]

@@ -27,7 +27,7 @@ def requestGPT(client, model, question):
             file.write("")
 
     with open("./generator-logs/logs.txt", 'a') as file:
-        file.write(f"===============\n\n\n{question}\n\n\n")
+        file.write(f"=========== NEW LOG ===========\n\n\n{question}\n\n\n")
 
     chat_completion = client.chat.completions.create(
         model=model,
@@ -35,4 +35,9 @@ def requestGPT(client, model, question):
         response_format={"type": "json_object"},
         messages=[{"role": "user", "content": question}],
     )
+
+    with open("./generator-logs/logs.txt", 'a') as file:
+        file.write(f"=========== GPT RESPONSE ===========\n\n\n")
+        file.write(f"{chat_completion.choices[0].message.content}\n\n\n")
+
     return chat_completion.choices[0].message.content

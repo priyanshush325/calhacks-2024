@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
+import HomePage from "./components/HomePage.jsx";
+import ProfilePage from "./components/ProfilePage.jsx";
 
 function App() {
-    const [count, setCount] = useState(0);
-
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen w-full">
-            <h1 className="text-2xl">Hello World</h1>
-        </div>
+        <Router>
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+            </Routes>
+        </Router>
     );
 }
 
