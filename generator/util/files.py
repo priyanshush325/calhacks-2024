@@ -168,6 +168,10 @@ def fetchProjectTree(projectDirectory):
     projectTree = [
         file for file in projectTree if not file.endswith(".priyanshu")]
 
+    # remove all files that start with . (hidden files)
+    projectTree = [
+        file for file in projectTree if not file.split("/")[-1].startswith(".")]
+
     return "\n".join(projectTree)
 
 
